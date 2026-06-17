@@ -1,0 +1,146 @@
+/* ============================================================
+   Wallaroo BBQ Boats — Tailwind source
+   Self-hosted fonts declared here so PurgeCSS never strips them.
+   ============================================================ */
+
+/* --- Anton (Headings) -------------------------------------- */
+@font-face {
+  font-family: 'Anton';
+  src: url('../../assets/fonts/anton-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* --- Inter (Body) ------------------------------------------
+   Only the Regular (400) static file is currently available.
+   We declare a weight range of 400–600 so the browser uses
+   this file for all three weights we need (400, 500, 600).
+   Visually they will look identical until proper weight files
+   (inter-medium.woff2, inter-semibold.woff2) are added.
+   When you add those files, replace this block with three
+   separate @font-face declarations, one per weight.
+   ---------------------------------------------------------- */
+@font-face {
+  font-family: 'Inter';
+  src: url('../../assets/fonts/inter-regular.woff2') format('woff2');
+  font-weight: 400 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* --- Tailwind layers --------------------------------------- */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- CSS custom properties --------------------------------- */
+@layer base {
+  :root {
+    --color-navy:  #0A2A5E;
+    --color-white: #FFFFFF;
+    --color-red:   #D32027;
+    --color-sky:   #3FA9DC;
+    --color-cream: #F2E8D5;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-body text-gray-800 bg-white antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading uppercase;
+  }
+
+  /* ── WordPress admin bar offset ──────────────────────────
+     When logged in, WP fixes the admin bar at the top of the
+     viewport and adds margin-top to <html>. Our fixed header
+     must shift down by the same amount so it sits below the bar.
+     32px = desktop admin bar height (≥782px)
+     46px = mobile admin bar height (<782px)
+  ────────────────────────────────────────────────────────── */
+  body.admin-bar #site-header {
+    top: 32px;
+  }
+
+  @media screen and (max-width: 782px) {
+    body.admin-bar #site-header {
+      top: 46px;
+    }
+  }
+}
+
+/* --- Reusable component classes ---------------------------- */
+@layer components {
+
+  /* Buttons */
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-6 py-3 bg-brand-red text-white font-body font-semibold rounded-2xl transition-all duration-200 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center px-6 py-3 border-2 border-white text-white font-body font-semibold rounded-2xl transition-all duration-200 hover:bg-white hover:text-brand-navy focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2;
+  }
+
+  .btn-outline-navy {
+    @apply inline-flex items-center justify-center px-6 py-3 border-2 border-brand-navy text-brand-navy font-body font-semibold rounded-2xl transition-all duration-200 hover:bg-brand-navy hover:text-white focus:outline-none focus:ring-2 focus:ring-brand-navy focus:ring-offset-2;
+  }
+
+  /* Cards */
+  .card {
+    @apply bg-white rounded-3xl shadow-card p-6;
+  }
+
+  /* Nav pill — border-radius applied directly in header.php as utility class */
+  .nav-pill {
+    @apply flex items-center gap-0.5 px-3 py-2 border border-gray-200 bg-white;
+  }
+
+  .nav-link {
+    @apply px-4 py-2 text-sm font-body font-medium text-gray-700 rounded-xl transition-colors duration-150 hover:text-brand-navy hover:bg-gray-50;
+  }
+
+  .nav-link-active {
+    @apply text-brand-navy font-semibold;
+  }
+
+  /* Section headings */
+  .section-heading {
+    @apply font-heading text-brand-navy uppercase text-3xl md:text-4xl tracking-wide;
+  }
+
+  .section-subheading {
+    @apply font-heading text-brand-sky uppercase text-xl tracking-widest;
+    letter-spacing: 0.15em;
+  }
+
+  /* Form inputs */
+  .form-input {
+    @apply w-full px-4 py-3 border border-gray-200 rounded-xl text-sm font-body text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-brand-sky focus:border-transparent placeholder-gray-400 transition;
+  }
+
+  /* Star rating */
+  .star-rating {
+    @apply flex gap-0.5;
+  }
+}
+
+/* --- Utility overrides ------------------------------------- */
+@layer utilities {
+  .text-shadow-hero {
+    text-shadow: 0 2px 16px rgba(0,0,0,0.45);
+  }
+
+  /* Wave/blob decorative backgrounds */
+  .bg-wave-sky {
+    background-image: radial-gradient(ellipse 60% 40% at 80% 50%, rgba(63,169,220,0.07) 0%, transparent 70%);
+  }
+
+  .bg-wave-navy {
+    background-image: radial-gradient(ellipse 50% 50% at 20% 50%, rgba(10,42,94,0.06) 0%, transparent 70%);
+  }
+}

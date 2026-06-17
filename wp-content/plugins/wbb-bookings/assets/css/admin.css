@@ -1,0 +1,741 @@
+/*
+ * WBB Bookings — Admin styles
+ * Clean, functional. Follows WordPress admin conventions.
+ */
+
+/* ── Page layout ──────────────────────────────────────────────────────── */
+.wbb-settings-wrap,
+.wbb-av-wrap,
+.wbb-bk-wrap {
+  max-width: 1100px;
+}
+
+.wbb-page-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px !important;
+}
+
+.wbb-page-title .dashicons {
+  color: #0A2A5E;
+  font-size: 22px;
+  width: 22px;
+  height: 22px;
+}
+
+/* ── Card ─────────────────────────────────────────────────────────────── */
+.wbb-card {
+  background: #fff;
+  border: 1px solid #c3c4c7;
+  border-radius: 4px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  max-width: 880px;
+}
+
+.wbb-card h2 {
+  margin-top: 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f0f0f1;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.wbb-card--danger {
+  border-color: #f87171;
+}
+
+.wbb-card--danger h2 {
+  color: #b91c1c;
+}
+
+/* ── Settings tabs ────────────────────────────────────────────────────── */
+.wbb-settings-form .form-table th {
+  width: 220px;
+}
+
+.wbb-settings-footer {
+  padding: 16px 0;
+}
+
+.wbb-duration-check {
+  display: inline-block;
+  margin-right: 12px;
+  margin-bottom: 6px;
+}
+
+/* ── Status badges ────────────────────────────────────────────────────── */
+.wbb-status-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.wbb-status-badge--pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.wbb-status-badge--confirmed {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.wbb-status-badge--cancelled {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+/* ── Count badge ──────────────────────────────────────────────────────── */
+.wbb-count-badge {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 10px;
+}
+
+.wbb-count-badge.wbb-badge--pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+/* ── Flag icon ────────────────────────────────────────────────────────── */
+.wbb-flag-icon {
+  color: #D32027;
+  font-size: 14px;
+  cursor: help;
+  margin-left: 4px;
+}
+
+.wbb-row-flagged > td:first-child {
+  border-left: 3px solid #D32027;
+}
+
+/* ── Bookings table ───────────────────────────────────────────────────── */
+.wbb-table-wrap {
+  overflow-x: auto;
+}
+
+/* Long emails should wrap at sensible points, not one character per line */
+.wbb-bookings-table td small {
+  display: block;
+  color: #646970;
+  overflow-wrap: anywhere;
+}
+
+.wbb-bookings-table .wbb-row-actions a {
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.wbb-confirm-btn {
+  color: #0a6b3b !important;
+}
+
+.wbb-cancel-btn {
+  color: #b91c1c !important;
+}
+
+.wbb-view-btn {
+  color: #0A2A5E !important;
+}
+
+.wbb-action-sep {
+  color: #c3c4c7;
+  margin: 0 2px;
+  font-size: 12px;
+}
+
+/* ── Inline detail panel ──────────────────────────────────────────────── */
+.wbb-detail-row > td {
+  background: #f8f9fa !important;
+  padding: 0 !important;
+}
+
+.wbb-detail-panel {
+  padding: 20px 24px;
+  border-top: 2px solid #0A2A5E;
+}
+
+.wbb-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px 24px;
+  margin-bottom: 16px;
+}
+
+.wbb-detail-field label {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #9ca3af;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.wbb-detail-field p {
+  margin: 0;
+  font-size: 14px;
+  color: #1f2937;
+}
+
+.wbb-detail-notes {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #f0f0f1;
+}
+
+.wbb-detail-notes textarea {
+  width: 100%;
+  max-width: 500px;
+  min-height: 80px;
+  font-family: inherit;
+  font-size: 13px;
+  padding: 8px 10px;
+  border: 1px solid #8c8f94;
+  border-radius: 3px;
+  resize: vertical;
+}
+
+.wbb-save-notes-btn {
+  margin-top: 8px;
+}
+
+/* ── Filters ──────────────────────────────────────────────────────────── */
+.wbb-filters {
+  margin-bottom: 16px;
+}
+
+.wbb-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.wbb-filter-row select,
+.wbb-filter-row input[type="date"],
+.wbb-filter-row input[type="search"] {
+  font-size: 13px;
+}
+
+/* ── Results info / empty ─────────────────────────────────────────────── */
+.wbb-results-info {
+  color: #646970;
+  font-size: 13px;
+  margin: 0 0 10px;
+}
+
+.wbb-empty {
+  background: #f8f9fa;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  padding: 32px;
+  text-align: center;
+  color: #646970;
+}
+
+/* ── Pagination ───────────────────────────────────────────────────────── */
+.wbb-pagination {
+  margin-top: 16px;
+}
+
+.wbb-pagination .page-numbers {
+  display: inline-block;
+  padding: 5px 10px;
+  border: 1px solid #c3c4c7;
+  border-radius: 3px;
+  font-size: 13px;
+  margin-right: 3px;
+  text-decoration: none;
+  color: #1d2327;
+  background: #fff;
+}
+
+.wbb-pagination .page-numbers.current {
+  background: #0A2A5E;
+  color: #fff;
+  border-color: #0A2A5E;
+}
+
+/* ── Status message ───────────────────────────────────────────────────── */
+.wbb-status-msg {
+  font-size: 13px;
+  margin-left: 10px;
+  color: #0a6b3b;
+}
+
+.wbb-status-msg.is-error {
+  color: #b91c1c;
+}
+
+/* ── Availability page ────────────────────────────────────────────────── */
+.wbb-av-wrap .wbb-card {
+  max-width: 100%;
+}
+
+.wbb-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.wbb-row--gap {
+  gap: 16px;
+}
+
+.wbb-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 160px;
+}
+
+.wbb-form-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: #1d2327;
+}
+
+.wbb-date-input {
+  padding: 6px 10px;
+  border: 1px solid #8c8f94;
+  border-radius: 3px;
+  font-size: 13px;
+}
+
+/* ── Default slot rows ────────────────────────────────────────────────── */
+.wbb-slot-row {
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  padding: 12px;
+  margin-bottom: 8px;
+  background: #f9fafb;
+}
+
+.wbb-slot-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.wbb-slot-fields > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.wbb-slot-time,
+.wbb-slot-duration,
+.wbb-slot-boats,
+.wbb-slot-price {
+  padding: 5px 8px;
+  border: 1px solid #8c8f94;
+  border-radius: 3px;
+  font-size: 13px;
+}
+
+.wbb-slot-remove-wrap {
+  align-self: flex-end;
+}
+
+/* ── Availability calendar ────────────────────────────────────────────── */
+.wbb-calendar-section {
+  margin-top: 24px;
+}
+
+.wbb-cal-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.wbb-cal-title {
+  flex: 1;
+  text-align: center;
+  font-size: 18px;
+  margin: 0;
+}
+
+.wbb-cal-nav {
+  background: #fff;
+  border: 1px solid #c3c4c7;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px 12px;
+  line-height: 1.5;
+}
+
+.wbb-cal-nav:hover {
+  background: #f6f7f7;
+}
+
+.wbb-cal-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  font-size: 13px;
+  margin-bottom: 12px;
+  color: #3c434a;
+}
+
+.wbb-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+.wbb-dot--available { background: #10b981; }
+.wbb-dot--partial   { background: #f59e0b; }
+.wbb-dot--full      { background: #ef4444; }
+.wbb-dot--blocked   { background: #9ca3af; }
+.wbb-dot--none      { background: #e5e7eb; border: 1px solid #d1d5db; }
+
+/* ── Calendar grid ────────────────────────────────────────────────────── */
+.wbb-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  min-height: 200px;
+}
+
+.wbb-cal-dow {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #646970;
+  padding-bottom: 6px;
+}
+
+.wbb-cal-cell {
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  padding: 6px;
+  min-height: 64px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+  font-size: 12px;
+  vertical-align: top;
+}
+
+.wbb-cal-cell:hover:not(.wbb-cal-cell--empty) {
+  border-color: #0A2A5E;
+}
+
+.wbb-cal-cell--empty {
+  border: none;
+  cursor: default;
+}
+
+.wbb-cal-cell--selected {
+  border-color: #0A2A5E;
+  background: #f0f4ff;
+}
+
+.wbb-cal-cell__day {
+  font-weight: 600;
+  color: #1d2327;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.wbb-cal-cell__status {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 4px;
+}
+
+.wbb-cal-cell--available  .wbb-cal-cell__status { background: #10b981; }
+.wbb-cal-cell--partial    .wbb-cal-cell__status { background: #f59e0b; }
+.wbb-cal-cell--full       .wbb-cal-cell__status { background: #ef4444; }
+.wbb-cal-cell--blocked    .wbb-cal-cell__status { background: #9ca3af; }
+.wbb-cal-cell--none       .wbb-cal-cell__status { background: #e5e7eb; }
+
+.wbb-cal-cell__count {
+  font-size: 11px;
+  color: #646970;
+}
+
+/* ── Day edit panel ───────────────────────────────────────────────────── */
+.wbb-day-panel {
+  border-top: 2px solid #0A2A5E;
+  margin-top: 16px;
+}
+
+.wbb-day-panel__inner {
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 0 0 4px 4px;
+}
+
+.wbb-day-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.wbb-day-panel__header h3 {
+  margin: 0;
+  font-size: 15px;
+}
+
+.wbb-panel-close {
+  background: none;
+  border: 1px solid #c3c4c7;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 3px 8px;
+  color: #646970;
+}
+
+.wbb-panel-close:hover {
+  background: #f6f7f7;
+}
+
+/* Day slot row in edit panel */
+.wbb-edit-slot-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: flex-end;
+  margin-bottom: 8px;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 3px;
+}
+
+.wbb-edit-slot-row > div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.wbb-edit-slot-row label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #646970;
+}
+
+.wbb-edit-slot-row input,
+.wbb-edit-slot-row select {
+  padding: 4px 7px;
+  border: 1px solid #8c8f94;
+  border-radius: 3px;
+  font-size: 13px;
+}
+
+.wbb-boats-booked-badge {
+  font-size: 11px;
+  color: #646970;
+  padding: 2px 6px;
+  background: #e5e7eb;
+  border-radius: 3px;
+  margin-top: auto;
+}
+
+.wbb-block-day-wrap {
+  margin-top: 12px;
+}
+
+/* ── Loading indicator ─────────────────────────────────────────────────── */
+.wbb-loading-msg {
+  color: #646970;
+  font-size: 13px;
+  padding: 20px 0;
+}
+
+/* ── Weekly schedule editor ────────────────────────────────────────────── */
+.wbb-schedule-editor {
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.wbb-schedule-day {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.wbb-schedule-day:last-child {
+  border-bottom: none;
+}
+
+.wbb-schedule-day__header {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  background: #f8f9fa;
+  border-bottom: 1px solid #f0f0f1;
+}
+
+.wbb-schedule-day__name {
+  font-size: 13px;
+  min-width: 100px;
+}
+
+.wbb-schedule-day__sessions {
+  padding: 8px 12px;
+}
+
+.wbb-schedule-session-row {
+  margin-bottom: 6px;
+}
+
+/* ── Boat Calendar Tabs ────────────────────────────────────────────────── */
+.wbb-boat-tabs-nav {
+  display: flex;
+  gap: 0;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #c3c4c7;
+  margin-bottom: 0;
+}
+
+.wbb-boat-tab {
+  padding: 8px 18px;
+  border: 1px solid transparent;
+  border-bottom: none;
+  border-radius: 4px 4px 0 0;
+  background: #f6f7f7;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: #3c434a;
+  margin-bottom: -1px;
+  position: relative;
+}
+
+.wbb-boat-tab:hover {
+  background: #fff;
+  border-color: #c3c4c7 #c3c4c7 transparent;
+}
+
+.wbb-boat-tab--active {
+  background: #fff;
+  border-color: #c3c4c7 #c3c4c7 #fff;
+  color: #0a3667;
+  font-weight: 600;
+}
+
+/* ── Boat Calendar Grid ────────────────────────────────────────────────── */
+#wbb-boat-cal-nav {
+  margin-top: 16px;
+  border-top: none;
+}
+
+.wbb-bcal {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+  margin-top: 12px;
+}
+
+.wbb-bcal-dow {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: #646970;
+  padding: 4px 2px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.wbb-bcal-cell {
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  min-height: 76px;
+  padding: 5px;
+  background: #fff;
+  vertical-align: top;
+  font-size: 12px;
+}
+
+.wbb-bcal-cell--empty {
+  border: none;
+  background: transparent;
+  min-height: 0;
+}
+
+.wbb-bcal-cell--off-season {
+  background: #f9fafb;
+}
+
+.wbb-bcal-cell--no-slots {
+  background: #fafafa;
+}
+
+.wbb-bcal-cell__day {
+  font-size: 12px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 5px;
+  line-height: 1;
+}
+
+.wbb-bcal-cell--off-season .wbb-bcal-cell__day {
+  color: #d1d5db;
+}
+
+/* ── Slot chips inside each day cell ──────────────────────────────────── */
+.wbb-bcal-slots {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.wbb-bcal-slot {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 3px 5px;
+  border-radius: 3px;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.wbb-bcal-slot--open {
+  background: #dcfce7;
+}
+
+.wbb-bcal-slot--blocked {
+  background: #fee2e2;
+}
+
+.wbb-bcal-slot__time {
+  font-weight: 600;
+  color: #111827;
+}
+
+.wbb-bcal-slot__status {
+  color: #6b7280;
+  font-size: 10px;
+}
+
+.wbb-bcal-slot a {
+  font-size: 10px;
+  color: #2563eb;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.wbb-bcal-slot a:hover {
+  text-decoration: underline;
+}

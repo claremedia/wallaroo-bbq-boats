@@ -1,0 +1,12 @@
+{
+  "name": "wallaroo-bbq-boats",
+  "version": "1.0.0",
+  "description": "Custom WordPress theme for Wallaroo BBQ Boats",
+  "scripts": {
+    "dev": "tailwindcss -i ./src/css/input.css -o ./assets/css/app.css --watch",
+    "build": "tailwindcss -i ./src/css/input.css -o ./assets/css/app.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.19"
+  }
+}
