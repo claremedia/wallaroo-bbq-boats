@@ -552,26 +552,45 @@ add_action( 'acf/init', function () {
     ] );
 
     // --------------------------------------------------------
-    // What's On Board — features list labels (icons hardcoded)
+    // What's On Board — Included / Not Included lists (editable rows)
+    // Up to 8 rows each; blank rows are skipped on the front end.
     // --------------------------------------------------------
-    $wob_feature_defaults = [
-        'Gas BBQ and all cooking gear',
-        'Plates and cutlery included',
-        'Cold drinks for sale on board',
-        'BYO your own food',
-        '4 to 16 people per boat',
-        'Life jackets provided',
-        'Safety briefing before you head out',
-        'Easy to drive — no licence needed',
+    $wob_included_defaults = [
+        'Use of your own BBQ Boat for 2 hours, self-driven.',
+        'Maximum capacity is 6 participants per boat. Bookings of 7 to 12 people will need to hire two BBQ Boats.',
+        'A Bluetooth speaker is available.',
+        'Esky and ice provided at no charge.',
+        'No BYO alcohol — feel free to bring your own soft drinks or water, or purchase them from us.',
+        'Cutlery, plates, cups, napkins etc. provided.',
+        'BBQ provided if requested, or keep it as a table for platters or other food.',
+    ];
+    $wob_notincluded_defaults = [
+        'We can provide platters if requested.',
+        'We prefer that you BYO your own meat for the BBQ. We have limited food options, but you can order these from us with plenty of notice from our price list.',
+        'Ask us about our Spencer Gulf King prawn and wine deal.',
+        'Drinks — BYO alcohol is not permitted. You may order drinks through the price list on our website; this is a liquor licensing obligation.',
+        'You are encouraged to pre-order your drinks from Wallaroo Marina BBQ Boats up to 48 hours before your trip. Please reach out if you have difficulty and we can help with the purchase — ordering on the day will reduce your cruise time.',
+        'We will assist you wherever we can to provide you with what you want for your own personalised trip.',
     ];
     $wob_feature_fields = [];
     for ( $i = 1; $i <= 8; $i++ ) {
         $wob_feature_fields[] = [
-            'key'           => 'field_wob_feature_' . $i,
-            'label'         => 'Feature ' . $i . ' Label',
-            'name'          => 'wob_feature_' . $i,
-            'type'          => 'text',
-            'default_value' => $wob_feature_defaults[ $i - 1 ],
+            'key'           => 'field_wob_included_' . $i,
+            'label'         => 'Included — Item ' . $i,
+            'name'          => 'wob_included_' . $i,
+            'type'          => 'textarea',
+            'rows'          => 2,
+            'default_value' => $wob_included_defaults[ $i - 1 ] ?? '',
+        ];
+    }
+    for ( $i = 1; $i <= 8; $i++ ) {
+        $wob_feature_fields[] = [
+            'key'           => 'field_wob_notincluded_' . $i,
+            'label'         => 'Not Included — Item ' . $i,
+            'name'          => 'wob_notincluded_' . $i,
+            'type'          => 'textarea',
+            'rows'          => 2,
+            'default_value' => $wob_notincluded_defaults[ $i - 1 ] ?? '',
         ];
     }
 
@@ -599,7 +618,7 @@ add_action( 'acf/init', function () {
 
     acf_add_local_field_group( [
         'key'        => 'group_wob_features',
-        'title'      => "What's On Board — Features & Stats",
+        'title'      => "What's On Board — Included / Not Included & Stats",
         'fields'     => $wob_feature_fields,
         'location'   => [ [ [ 'param' => 'page_template', 'operator' => '==', 'value' => 'page-whats-on-board.php' ] ] ],
         'menu_order' => 10,

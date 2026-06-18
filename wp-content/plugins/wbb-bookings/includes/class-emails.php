@@ -32,6 +32,11 @@ class WBB_Emails {
 			$inclusions_text = __( 'None', 'wbb-bookings' );
 		}
 
+		$currency        = function_exists( 'wbb_setting' ) ? wbb_setting( 'currency_symbol', '$' ) : '$';
+		$hire_total      = isset( $booking->hire_total ) ? (float) $booking->hire_total : 0.0;
+		$incl_total      = isset( $booking->inclusions_total ) ? (float) $booking->inclusions_total : 0.0;
+		$estimated_total = $hire_total + $incl_total;
+
 		$tags = array(
 			'{customer_name}'   => $booking->customer_name ?? '',
 			'{booking_ref}'     => $booking->booking_ref ?? '',
@@ -44,6 +49,8 @@ class WBB_Emails {
 			'{customer_phone}'  => $booking->customer_phone ?? '',
 			'{notes}'           => $booking->notes ?? '',
 			'{inclusions}'      => $inclusions_text,
+			'{hire_total}'      => $currency . number_format( $hire_total, 2 ),
+			'{estimated_price}' => $currency . number_format( $estimated_total, 2 ),
 			'{site_phone}'      => $site_phone,
 			'{site_email}'      => $site_email,
 		);

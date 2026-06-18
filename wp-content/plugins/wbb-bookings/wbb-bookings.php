@@ -76,6 +76,9 @@ WBB_Menu::register_ajax();
 // ── CSV export via admin-post ──────────────────────────────────────────────
 add_action( 'admin_post_wbb_export_bookings', array( 'WBB_Bookings', 'export_csv' ) );
 
+// ── Full booking edit save (admin) ─────────────────────────────────────────
+add_action( 'admin_post_wbb_admin_save_booking', array( 'WBB_Bookings', 'save_booking_full' ) );
+
 // ── "View Book Now Page" opens in new tab ─────────────────────────────────
 add_action( 'admin_footer', function () {
 	?>

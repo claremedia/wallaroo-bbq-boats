@@ -183,7 +183,7 @@ function wbb_render_bookings_page() {
 					</td>
 					<td><?php echo esc_html( date_i18n( 'd M Y', strtotime( $b->created_at ) ) ); ?></td>
 					<td class="wbb-row-actions">
-						<a href="#" class="wbb-view-btn" data-id="<?php echo esc_attr( $b->id ); ?>"><?php esc_html_e( 'View', 'wbb-bookings' ); ?></a>
+						<a href="<?php echo esc_url( admin_url( 'admin.php?page=wbb-bookings&action=edit&id=' . $b->id ) ); ?>"><?php esc_html_e( 'View / Edit', 'wbb-bookings' ); ?></a>
 						<?php if ( 'confirmed' !== $b->status && 'cancelled' !== $b->status ) : ?>
 						<span class="wbb-action-sep">|</span>
 						<a href="#" class="wbb-confirm-btn" data-id="<?php echo esc_attr( $b->id ); ?>"><?php esc_html_e( 'Confirm', 'wbb-bookings' ); ?></a>
@@ -192,14 +192,6 @@ function wbb_render_bookings_page() {
 						<span class="wbb-action-sep">|</span>
 						<a href="#" class="wbb-cancel-btn" data-id="<?php echo esc_attr( $b->id ); ?>"><?php esc_html_e( 'Cancel', 'wbb-bookings' ); ?></a>
 						<?php endif; ?>
-					</td>
-				</tr>
-				<!-- Inline detail panel row (hidden by default) -->
-				<tr class="wbb-detail-row wbb-hidden" id="wbb-detail-<?php echo esc_attr( $b->id ); ?>">
-					<td colspan="10">
-						<div class="wbb-detail-panel" data-id="<?php echo esc_attr( $b->id ); ?>">
-							<div class="wbb-detail-loading"><?php esc_html_e( 'Loading…', 'wbb-bookings' ); ?></div>
-						</div>
 					</td>
 				</tr>
 				<?php endforeach; ?>

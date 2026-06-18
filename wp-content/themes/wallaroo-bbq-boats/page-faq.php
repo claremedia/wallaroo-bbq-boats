@@ -40,16 +40,15 @@ if ( $faq_query->have_posts() ) {
     wp_reset_postdata();
 } else {
     $faqs = [
-        [ 'q' => 'Do I need a boat licence?',       'a' => 'No. Anyone 18 or over can take the wheel. We show you the basics before you head out and you will have it sorted in five minutes.' ],
-        [ 'q' => 'How many people can come?',       'a' => 'Between 2 and 6 people per boat. Got a bigger group? Book multiple boats and run them side by side. Get in touch and we will sort it out.' ],
-        [ 'q' => 'Can we book more than one boat?', 'a' => 'Yes. If your group is larger than 6 we can run multiple boats at the same time. Works brilliantly for workplace days, Christmas parties, and anything where you want to split into teams. Get in touch to check availability.' ],
-        [ 'q' => 'Can I bring my own food?',        'a' => 'Yes. BYO food is encouraged. Pack a cooler, bring the snags, sort yourselves out. We also have platter options available if you want us to handle the food. Ask when you book.' ],
-        [ 'q' => 'Can I bring my own drinks?',      'a' => 'No BYO alcohol. Cold drinks are available to purchase on board. Non-alcoholic drinks are fine to bring.' ],
-        [ 'q' => 'How long is a session?',          'a' => 'Session lengths and pricing are on the Book Now page. We recommend at least two hours for groups who want to make a proper afternoon of it.' ],
-        [ 'q' => 'Where exactly are you located?',  'a' => 'Copper Cove Marina, Wallaroo SA. If you are heading toward the Coopers Alehouse you will see us on the way down. Full directions and a map are on the Find Us page.' ],
-        [ 'q' => 'What if the weather is bad?',     'a' => 'Safety comes first. If conditions are not suitable we will contact you directly to reschedule or refund. We keep an eye on the forecast and will not send anyone out in unsafe conditions.' ],
-        [ 'q' => 'Is it suitable for kids?',        'a' => 'Yes. Life jackets are provided in all sizes. Kids need to be supervised by an adult on board at all times.' ],
-        [ 'q' => 'What should we bring?',           'a' => 'Food, sunscreen, and the crew. Everything else is on board.' ],
+        [ 'q' => 'Can we take a dip in the marina while we are hiring a BBQ boat?', 'a' => "No, that's not advisable. Many boats use the marina, so safety is paramount — and swimming will also bring water into the BBQ boat." ],
+        [ 'q' => 'Can we anchor in the marina?', 'a' => "No. The Copper Cove Marina authority doesn't allow anchoring or fishing from a vessel in the marina. Of course, if there is an emergency or you're having issues with a BBQ boat, there is an anchor on each vessel to deploy for safety reasons." ],
+        [ 'q' => 'Who can hire a BBQ boat?', 'a' => 'Anyone who holds a full car driver\'s licence and is at least 21 years of age. No boat licence is required.' ],
+        [ 'q' => 'Can the nominated operator drink alcohol while operating the boat?', 'a' => 'Yes, but remember — as for every person operating a boat — the limit is under 0.05. Police or Marine Safety may conduct tests if they choose to.' ],
+        [ 'q' => 'What about bad weather on the hiring day?', 'a' => 'If Wallaroo BBQ Boats management decides it is too windy, the temperature is over 40 degrees, or it may be unsafe to operate for any reason, the trip may be cancelled. Alternative hiring times or days can be rescheduled, or a refund of hiring costs made. We want you to have a great time, but your safety comes first.' ],
+        [ 'q' => 'Can we take the BBQ boats outside the marina entrance?', 'a' => 'No. That may be dangerous, and the BBQ boats are licensed to operate within the safe marina waterways only. Numerous other boats are coming and going through the entrance. See the map on board each vessel for exclusion zones.' ],
+        [ 'q' => 'Is there a toilet on board the BBQ boat?', 'a' => 'No. Please use the toilets adjacent to the commencement area before you begin your trip. Do not use the marina as a toilet.' ],
+        [ 'q' => "What if we need more drinks or assistance when we're on the water?", 'a' => 'Contact the operator on 0416 106 041 and every effort will be made, where possible, to meet your needs.' ],
+        [ 'q' => 'Do I need to wear a life jacket on board?', 'a' => 'No, unless you are under 12 years of age. A life jacket is stowed on board for every passenger if needed, and a life buoy is also fitted to each boat.' ],
     ];
 }
 ?>
@@ -100,7 +99,7 @@ if ( $faq_query->have_posts() ) {
         </dt>
         <dd
           id="<?php echo esc_attr( $faq_id ); ?>"
-          class="hidden px-6 pb-6 font-body text-gray-600 text-sm leading-relaxed"
+          class="hidden px-6 pt-2 pb-6 font-body text-gray-600 text-sm leading-relaxed"
           role="region"
           aria-labelledby="<?php echo esc_attr( $trigger_id ); ?>"
         >
@@ -117,13 +116,10 @@ if ( $faq_query->have_posts() ) {
 <section class="bg-brand-cream py-16 px-4 sm:px-6 lg:px-8" aria-label="Contact">
   <div class="max-w-2xl mx-auto text-center">
     <h2 class="font-heading text-brand-navy uppercase text-2xl lg:text-3xl mb-4">Still Got Questions?</h2>
-    <p class="font-body text-gray-600 text-base mb-6">We're pretty easy to reach. Give us a call or shoot us an email.</p>
-    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-      <a href="<?php echo esc_url( $tel_href ); ?>" class="btn-primary text-base px-8 py-4">
-        Call <?php echo esc_html( $phone ); ?>
-      </a>
-      <a href="mailto:<?php echo esc_attr( $email ); ?>" class="btn-outline-navy text-base px-8 py-4">
-        <?php echo esc_html( $email ); ?>
+    <p class="font-body text-gray-600 text-base mb-6">We're pretty easy to reach. Shoot us an email and we'll get back to you.</p>
+    <div class="flex justify-center">
+      <a href="<?php echo esc_url( home_url( '/find-us/' ) ); ?>" class="btn-primary text-base px-8 py-4">
+        Contact Us
       </a>
     </div>
   </div>

@@ -7,13 +7,14 @@
  * to wp_wbb_bookings.
  * DB_VERSION 2.1.0: adds wp_wbb_menu_items (Food & Drink); adds
  * inclusions + inclusions_total columns to wp_wbb_bookings.
+ * DB_VERSION 2.2.0: adds hire_total column to wp_wbb_bookings (tiered hire pricing).
  */
 
 defined( 'ABSPATH' ) || exit;
 
 class WBB_Database {
 
-	const DB_VERSION        = '2.1.0';
+	const DB_VERSION        = '2.2.0';
 	const DB_VERSION_OPTION = 'wbb_db_version';
 
 	// ── Activation: create / upgrade tables ────────────────────────────────
@@ -61,6 +62,7 @@ class WBB_Database {
 			staff_notes     text,
 			inclusions       longtext,
 			inclusions_total decimal(8,2)                          NOT NULL DEFAULT '0.00',
+			hire_total       decimal(8,2)                          NOT NULL DEFAULT '0.00',
 			status          enum('pending','confirmed','cancelled') NOT NULL DEFAULT 'pending',
 			created_at      datetime                               NOT NULL DEFAULT '0000-00-00 00:00:00',
 			updated_at      datetime                               NOT NULL DEFAULT '0000-00-00 00:00:00',

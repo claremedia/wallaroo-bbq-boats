@@ -80,6 +80,12 @@ class WBB_Admin {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
+		// Edit a single booking (post-editor style).
+		if ( isset( $_GET['action'], $_GET['id'] ) && 'edit' === $_GET['action'] ) {
+			require_once WBB_PLUGIN_DIR . 'admin/booking-edit.php';
+			wbb_render_booking_edit_page( absint( $_GET['id'] ) );
+			return;
+		}
 		require_once WBB_PLUGIN_DIR . 'admin/bookings-page.php';
 		wbb_render_bookings_page();
 	}

@@ -111,21 +111,28 @@ $how_steps = [
   </div>
 </section>
 
-<!-- ── Order contact card ───────────────────────────────────── -->
-<section class="bg-gray-50 py-16 px-4 sm:px-6 lg:px-8" aria-label="Order a voucher">
-  <div class="max-w-xl mx-auto text-center">
-    <div class="bg-white rounded-3xl shadow-card p-8">
-      <h2 class="font-heading text-brand-navy uppercase text-2xl mb-3">Order a Voucher</h2>
-      <p class="font-body text-gray-600 text-sm mb-6 leading-relaxed">
-        Call or email us to order. Tell us the amount and who it's for — we'll sort the rest.
-      </p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="<?php echo esc_url( $tel_href ); ?>" class="btn-primary text-base px-8 py-4">
-          Call <?php echo esc_html( $phone ); ?>
-        </a>
-        <a href="mailto:<?php echo esc_attr( $email ); ?>" class="btn-outline-navy text-base px-8 py-4">Email Us</a>
-      </div>
+<!-- ── Order a voucher ──────────────────────────────────────── -->
+<section class="bg-gray-50 py-16 px-4 sm:px-6 lg:px-8" aria-label="Order a voucher" id="order">
+  <div class="max-w-2xl mx-auto">
+    <div class="text-center mb-10">
+      <h2 class="section-heading text-3xl lg:text-4xl">Order a Voucher</h2>
     </div>
+
+    <?php if ( shortcode_exists( 'wbb_gift_voucher_form' ) ) : ?>
+      <?php echo do_shortcode( '[wbb_gift_voucher_form]' ); ?>
+    <?php else : ?>
+      <div class="bg-white rounded-3xl shadow-card p-8 text-center">
+        <p class="font-body text-gray-600 text-sm mb-6 leading-relaxed">
+          Call or email us to order. Tell us the amount and who it's for — we'll sort the rest.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="<?php echo esc_url( $tel_href ); ?>" class="btn-primary text-base px-8 py-4">
+            Call <?php echo esc_html( $phone ); ?>
+          </a>
+          <a href="mailto:<?php echo esc_attr( $email ); ?>" class="btn-outline-navy text-base px-8 py-4">Email Us</a>
+        </div>
+      </div>
+    <?php endif; ?>
   </div>
 </section>
 

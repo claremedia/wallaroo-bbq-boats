@@ -270,15 +270,23 @@ class WBB_Shortcode {
 		$step_details = $has_extras ? 5 : 4;
 		$step_review  = $has_extras ? 6 : 5;
 
+		// Per-boat hire price by occupancy (1..max), for live front-end pricing.
+		$max_per_boat = (int) wbb_setting( 'max_per_boat', 6 );
+		$boat_prices  = array();
+		for ( $p = 1; $p <= $max_per_boat; $p++ ) {
+			$boat_prices[ $p ] = function_exists( 'wbb_boat_price_for_people' ) ? wbb_boat_price_for_people( $p ) : 0;
+		}
+
 		wp_localize_script( 'wbb-booking-form', 'wbbData', array(
 			'ajaxUrl'      => admin_url( 'admin-ajax.php' ),
 			'nonce'        => wp_create_nonce( 'wbb_front_nonce' ),
 			'bookingNonce' => wp_create_nonce( 'wbb_booking_nonce' ),
 			'minGroup'     => (int) wbb_setting( 'min_group_size', 2 ),
-			'maxPerBoat'   => (int) wbb_setting( 'max_per_boat', 6 ),
+			'maxPerBoat'   => $max_per_boat,
 			'showPricing'  => (bool) wbb_setting( 'show_pricing', '1' ),
 			'currency'     => wbb_setting( 'currency_symbol', '$' ),
 			'priceLabel'   => wbb_setting( 'price_label', 'Estimated total' ),
+			'boatPrices'   => $boat_prices,
 			'hasExtras'    => $has_extras,
 			'stepDetails'  => $step_details,
 			'stepReview'   => $step_review,

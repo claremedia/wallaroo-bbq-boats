@@ -151,7 +151,8 @@ $tel_href = 'tel:' . preg_replace( '/\s+/', '', $phone );
         &copy; <?php echo esc_html( date( 'Y' ) ); ?> Wallaroo BBQ Boats. All rights reserved.
       </p>
       <p class="font-body text-xs text-blue-300">
-        <?php echo esc_html( $addr1 . ', ' . $addr2 ); ?>
+        Website built by
+        <a href="https://clare.media" target="_blank" rel="noopener noreferrer" class="text-white hover:text-brand-sky transition-colors underline-offset-2 hover:underline">Clare Media</a>
       </p>
     </div>
 

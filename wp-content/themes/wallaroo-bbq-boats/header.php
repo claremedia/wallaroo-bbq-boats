@@ -60,6 +60,7 @@ $booking_url = wallaroo_option( 'booking_url' ) ?: home_url( '/book-now/' );
             'items_wrap'     => '<ul class="list-none m-0 flex items-center gap-0.5 px-3 py-2 rounded-2xl border border-gray-200 bg-white" role="list">%3$s</ul>',
             'walker'         => new Wallaroo_Nav_Walker(),
             'link_class'     => 'nav-link',
+            'show_icons'     => true,
             'depth'          => 1,
             'fallback_cb'    => 'wallaroo_nav_fallback',
         ] ); ?>
@@ -106,7 +107,8 @@ $booking_url = wallaroo_option( 'booking_url' ) ?: home_url( '/book-now/' );
           'container'      => false,
           'items_wrap'     => '<ul class="flex flex-col gap-1 list-none m-0 p-0" role="list">%3$s</ul>',
           'walker'         => new Wallaroo_Nav_Walker(),
-          'link_class'     => 'block px-4 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-brand-navy transition-colors',
+          'link_class'     => 'flex items-center px-4 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-brand-cream hover:text-brand-navy transition-colors',
+          'show_icons'     => true,
           'depth'          => 1,
           'fallback_cb'    => 'wallaroo_nav_fallback',
       ] ); ?>

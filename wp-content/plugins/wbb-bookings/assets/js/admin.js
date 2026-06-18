@@ -676,6 +676,8 @@
 	function renderBookingDetail($panel, b) {
 		var extrasText = formatInclusions(b.inclusions);
 		var cur = (str.currency || '$');
+		var hire = parseFloat(b.hire_total || 0);
+		var extras = parseFloat(b.inclusions_total || 0);
 
 		var fields = [
 			['Booking ref',    b.booking_ref],
@@ -688,8 +690,10 @@
 			['Customer name',  b.customer_name],
 			['Email',          b.customer_email],
 			['Phone',          b.customer_phone],
+			['Boat hire',      cur + hire.toFixed(2)],
 			['Food & drink',   extrasText || '\u2014'],
-			['Extras total',   cur + parseFloat(b.inclusions_total || 0).toFixed(2)],
+			['Extras total',   cur + extras.toFixed(2)],
+			['Estimated total', cur + (hire + extras).toFixed(2)],
 			['Customer notes', b.notes || '\u2014'],
 			['Submitted',      b.created_at],
 		];

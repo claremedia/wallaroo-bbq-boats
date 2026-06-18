@@ -17,6 +17,8 @@
 	var hasExtras   = !!cfg.hasExtras;
 	var stepDetails = cfg.stepDetails  || 4;
 	var stepReview  = cfg.stepReview   || 5;
+	var boatPrices  = cfg.boatPrices   || {};   // { peopleOnBoat: price }
+	var showPricing = !!cfg.showPricing;
 
 	/* ── State ───────────────────────────────────────────────────────────── */
 	var state = {
@@ -34,6 +36,7 @@
 		customerNotes:   '',
 		inclusions:      [],   // [{id, title, qty, unit_price}]
 		inclusionsTotal: 0,
+		hireTotal:       0,
 	};
 
 	/* ── DOM refs ────────────────────────────────────────────────────────── */
@@ -354,6 +357,12 @@
 		if (neededEl) neededEl.textContent = boatsNeeded;
 		if (availEl)  availEl.textContent  = boatsAvail;
 
+		// Live hire price — recomputed as the group size changes.
+		state.hireTotal = calcHireTotal(groupSize);
+		var priceEl = qs('#wbb-est-price');
+		if (priceEl && showPricing) {
+			priceEl.textContent = fmtMoney(state.hireTotal);
+		}
 
 		var hasError = boatsNeeded > boatsAvail;
 		if (errEl) {
@@ -368,10 +377,27 @@
 		if (nextBtn) nextBtn.disabled = hasError || groupSize < minGroup;
 	}
 
-	/* ── Step 4: Extras (Food & Drink) ───────────────────────────────────── */
 	function fmtMoney(n) {
 		return currency + (Math.round(n * 100) / 100).toFixed(2);
 	}
+
+	/* Tiered hire price: fill each boat to capacity; each boat is priced by its
+	   own headcount, so an overflow boat re-prices from the 1–2 tier. */
+	function calcHireTotal(group) {
+		var g = parseInt(group, 10) || 0;
+		if (g < 0) g = 0;
+		var total = 0, remaining = g;
+		while (remaining > 0) {
+			var onBoat = Math.min(remaining, maxPerBoat);
+			var p = boatPrices[onBoat];
+			if (p == null) p = boatPrices[maxPerBoat] || 0;
+			total += parseFloat(p) || 0;
+			remaining -= onBoat;
+		}
+		return total;
+	}
+
+	/* ── Step 4: Extras (Food & Drink) ───────────────────────────────────── */
 
 	function updateExtras() {
 		var rows = document.querySelectorAll('.wbb-extra-row');
@@ -454,6 +480,10 @@
 			['Phone',      state.customerPhone],
 		];
 
+		if (showPricing) {
+			rows.push(['Boat hire', fmtMoney(state.hireTotal)]);
+		}
+
 		if (state.inclusions && state.inclusions.length) {
 			state.inclusions.forEach(function(it) {
 				rows.push([
@@ -462,6 +492,10 @@
 				]);
 			});
 			rows.push(['Extras total', fmtMoney(state.inclusionsTotal)]);
+		}
+
+		if (showPricing) {
+			rows.push(['Estimated total', fmtMoney((state.hireTotal || 0) + (state.inclusionsTotal || 0))]);
 		}
 
 		if (state.customerNotes) {

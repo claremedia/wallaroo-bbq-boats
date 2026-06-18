@@ -127,6 +127,11 @@ class WBB_Bookings {
 
 		$duration_hours = (float) $matching_slot['duration_hours'];
 
+		// Tiered hire price — computed server-side (never trust the client).
+		$hire_total = function_exists( 'wbb_calc_hire_total' )
+			? wbb_calc_hire_total( $group_size, (int) wbb_setting( 'max_per_boat', 6 ) )
+			: 0.0;
+
 		// Determine status.
 		$auto_confirm = wbb_setting( 'auto_confirm', '0' );
 		$status       = $auto_confirm ? 'confirmed' : 'pending';
@@ -155,11 +160,12 @@ class WBB_Bookings {
 				'notes'            => $notes,
 				'inclusions'       => $inclusions_json,
 				'inclusions_total' => $inclusions_total,
+				'hire_total'       => $hire_total,
 				'status'           => $status,
 				'created_at'       => $now,
 				'updated_at'       => $now,
 			),
-			array( '%s', '%d', '%d', '%s', '%s', '%f', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%f', '%s', '%s', '%s' )
+			array( '%s', '%d', '%d', '%s', '%s', '%f', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%f', '%f', '%s', '%s', '%s' )
 		);
 
 		if ( ! $inserted ) {
@@ -365,7 +371,7 @@ class WBB_Bookings {
 		$out = fopen( 'php://output', 'w' );
 		fputcsv( $out, array(
 			'Booking Ref', 'Status', 'Date', 'Time', 'Duration (hrs)', 'Group Size',
-			'Boats', 'Price/Boat', 'Customer Name', 'Email', 'Phone', 'Notes',
+			'Boats', 'Hire Total', 'Customer Name', 'Email', 'Phone', 'Notes',
 			'Inclusions', 'Inclusions Total', 'Staff Notes', 'Submitted',
 		) );
 
@@ -378,7 +384,7 @@ class WBB_Bookings {
 				$b['duration_hours'],
 				$b['group_size'],
 				$b['boats_requested'],
-				$b['price_per_boat'],
+				$b['hire_total'],
 				$b['customer_name'],
 				$b['customer_email'],
 				$b['customer_phone'],
@@ -391,6 +397,82 @@ class WBB_Bookings {
 		}
 
 		fclose( $out );
+		exit;
+	}
+
+	// ── Admin: full booking edit (from the edit screen) ─────────────────────
+	public static function save_booking_full() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'Unauthorised' );
+		}
+		check_admin_referer( 'wbb_save_booking' );
+
+		$id = absint( $_POST['booking_id'] ?? 0 );
+		if ( ! $id ) {
+			wp_die( 'Invalid booking.' );
+		}
+
+		global $wpdb;
+		$table = $wpdb->prefix . 'wbb_bookings';
+
+		$status = sanitize_text_field( $_POST['status'] ?? 'pending' );
+		if ( ! in_array( $status, array( 'pending', 'confirmed', 'cancelled' ), true ) ) {
+			$status = 'pending';
+		}
+
+		// Rebuild inclusions from the qty editor (server-side prices).
+		$inclusions = array();
+		$incl_total = 0.0;
+		$qtys = isset( $_POST['incl_qty'] ) && is_array( $_POST['incl_qty'] ) ? $_POST['incl_qty'] : array();
+		foreach ( $qtys as $iid => $q ) {
+			$iid = absint( $iid );
+			$q   = absint( $q );
+			if ( ! $iid || $q < 1 ) {
+				continue;
+			}
+			$title = '';
+			$price = 0.0;
+			$item  = class_exists( 'WBB_Menu' ) ? WBB_Menu::get_item( $iid ) : null;
+			if ( $item ) {
+				$title = $item->title;
+				$price = (float) $item->price;
+			} else {
+				// Item removed from the menu — keep what was on the booking.
+				$title = sanitize_text_field( wp_unslash( $_POST['incl_title'][ $iid ] ?? '' ) );
+				$price = round( (float) ( $_POST['incl_price'][ $iid ] ?? 0 ), 2 );
+			}
+			if ( '' === $title ) {
+				continue;
+			}
+			$inclusions[] = array( 'id' => $iid, 'title' => $title, 'qty' => $q, 'unit_price' => $price );
+			$incl_total  += $price * $q;
+		}
+
+		$data = array(
+			'booking_date'     => sanitize_text_field( $_POST['booking_date'] ?? '' ),
+			'time_slot'        => sanitize_text_field( $_POST['time_slot'] ?? '' ),
+			'duration_hours'   => (float) ( $_POST['duration_hours'] ?? 0 ),
+			'group_size'       => absint( $_POST['group_size'] ?? 0 ),
+			'boats_requested'  => absint( $_POST['boats_requested'] ?? 0 ),
+			'customer_name'    => sanitize_text_field( $_POST['customer_name'] ?? '' ),
+			'customer_email'   => sanitize_email( $_POST['customer_email'] ?? '' ),
+			'customer_phone'   => sanitize_text_field( $_POST['customer_phone'] ?? '' ),
+			'notes'            => sanitize_textarea_field( $_POST['notes'] ?? '' ),
+			'staff_notes'      => sanitize_textarea_field( $_POST['staff_notes'] ?? '' ),
+			'inclusions'       => $inclusions ? wp_json_encode( $inclusions ) : '',
+			'inclusions_total' => round( $incl_total, 2 ),
+			'hire_total'       => round( (float) ( $_POST['hire_total'] ?? 0 ), 2 ),
+			'status'           => $status,
+			'updated_at'       => current_time( 'mysql' ),
+		);
+		$formats = array( '%s', '%s', '%f', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%f', '%f', '%s', '%s' );
+
+		$wpdb->update( $table, $data, array( 'id' => $id ), $formats, array( '%d' ) );
+
+		wp_safe_redirect( add_query_arg(
+			array( 'page' => 'wbb-bookings', 'action' => 'edit', 'id' => $id, 'updated' => '1' ),
+			admin_url( 'admin.php' )
+		) );
 		exit;
 	}
 

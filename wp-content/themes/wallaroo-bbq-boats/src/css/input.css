@@ -90,6 +90,21 @@
     @apply inline-flex items-center justify-center px-6 py-3 border-2 border-brand-navy text-brand-navy font-body font-semibold rounded-2xl transition-all duration-200 hover:bg-brand-navy hover:text-white focus:outline-none focus:ring-2 focus:ring-brand-navy focus:ring-offset-2;
   }
 
+  /* Subtle floating effect on any button hover (matches the nav icons). */
+  .btn-primary:hover,
+  .btn-outline:hover,
+  .btn-outline-navy:hover {
+    animation: wbb-nav-float 2.4s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn-primary:hover,
+    .btn-outline:hover,
+    .btn-outline-navy:hover {
+      animation: none;
+    }
+  }
+
   /* Cards */
   .card {
     @apply bg-white rounded-3xl shadow-card p-6;

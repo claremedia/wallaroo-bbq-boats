@@ -128,9 +128,10 @@ class Wallaroo_Nav_Walker extends Walker_Nav_Menu {
         if ( $is_active ) {
             $link_class .= ' nav-link-active';
         }
-        // Per-item hover icon (only in the pill nav — i.e. when link uses .nav-link).
+        // Per-item icon — only when the menu opts in via 'show_icons' (primary nav,
+        // desktop + mobile). Footer menu leaves it off.
         $icon_html = '';
-        if ( false !== strpos( $link_class, 'nav-link' ) ) {
+        if ( $args && ! empty( $args->show_icons ) ) {
             $icon_key = get_post_meta( $item->ID, '_wbb_menu_icon', true );
             $icon_svg = $icon_key ? wallaroo_menu_icon_svg( $icon_key ) : '';
             if ( $icon_svg ) {
