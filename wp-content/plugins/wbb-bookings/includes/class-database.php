@@ -5,13 +5,16 @@
  * DB_VERSION 2.0.0: adds wp_wbb_boats, wp_wbb_boat_schedules,
  * wp_wbb_schedule_exceptions; adds boat_id + price_per_boat columns
  * to wp_wbb_bookings.
+ * DB_VERSION 2.1.0: adds wp_wbb_menu_items (Food & Drink); adds
+ * inclusions + inclusions_total columns to wp_wbb_bookings.
+ * DB_VERSION 2.2.0: adds hire_total column to wp_wbb_bookings (tiered hire pricing).
  */
 
 defined( 'ABSPATH' ) || exit;
 
 class WBB_Database {
 
-	const DB_VERSION        = '2.0.0';
+	const DB_VERSION        = '2.2.0';
 	const DB_VERSION_OPTION = 'wbb_db_version';
 
 	// ── Activation: create / upgrade tables ────────────────────────────────
@@ -57,6 +60,9 @@ class WBB_Database {
 			customer_phone  varchar(30)                            NOT NULL DEFAULT '',
 			notes           text,
 			staff_notes     text,
+			inclusions       longtext,
+			inclusions_total decimal(8,2)                          NOT NULL DEFAULT '0.00',
+			hire_total       decimal(8,2)                          NOT NULL DEFAULT '0.00',
 			status          enum('pending','confirmed','cancelled') NOT NULL DEFAULT 'pending',
 			created_at      datetime                               NOT NULL DEFAULT '0000-00-00 00:00:00',
 			updated_at      datetime                               NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -105,6 +111,22 @@ class WBB_Database {
 			KEY exception_date (exception_date)
 		) {$charset_collate};" );
 
+		// ── Food & Drink menu items ────────────────────────────────────────
+		$menu = $wpdb->prefix . 'wbb_menu_items';
+		dbDelta( "CREATE TABLE {$menu} (
+			id          int(11)       NOT NULL AUTO_INCREMENT,
+			category    varchar(20)   NOT NULL DEFAULT 'food',
+			title       varchar(150)  NOT NULL DEFAULT '',
+			description text,
+			price       decimal(8,2)  NOT NULL DEFAULT '0.00',
+			image_id    int(11)       NOT NULL DEFAULT '0',
+			active      tinyint(1)    NOT NULL DEFAULT '1',
+			sort_order  int(11)       NOT NULL DEFAULT '0',
+			created_at  datetime      NOT NULL DEFAULT '0000-00-00 00:00:00',
+			PRIMARY KEY  (id),
+			KEY category_sort (category, sort_order)
+		) {$charset_collate};" );
+
 		update_option( self::DB_VERSION_OPTION, self::DB_VERSION );
 	}
 
@@ -123,6 +145,7 @@ class WBB_Database {
 		global $wpdb;
 
 		// Drop in reverse FK order.
+		$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}wbb_menu_items" );           // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}wbb_schedule_exceptions" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}wbb_boat_schedules" );      // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}wbb_boats" );               // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared

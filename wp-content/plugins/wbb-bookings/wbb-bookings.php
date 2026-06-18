@@ -26,6 +26,7 @@ require_once WBB_PLUGIN_DIR . 'includes/class-emails.php';
 require_once WBB_PLUGIN_DIR . 'includes/class-schedule.php';
 require_once WBB_PLUGIN_DIR . 'includes/class-availability.php';
 require_once WBB_PLUGIN_DIR . 'includes/class-bookings.php';
+require_once WBB_PLUGIN_DIR . 'includes/class-menu.php';
 require_once WBB_PLUGIN_DIR . 'includes/class-shortcode.php';
 
 // ── Admin only ─────────────────────────────────────────────────────────────
@@ -38,6 +39,15 @@ if ( is_admin() ) {
 register_activation_hook(   __FILE__, array( 'WBB_Database', 'activate'   ) );
 register_deactivation_hook( __FILE__, array( 'WBB_Database', 'deactivate' ) );
 register_uninstall_hook(    __FILE__, array( 'WBB_Database', 'uninstall'  ) );
+
+// ── DB upgrade check ───────────────────────────────────────────────────────
+// Runs dbDelta when the stored schema version is behind the plugin. dbDelta is
+// safe to re-run: it adds the new table/columns without touching existing data.
+add_action( 'plugins_loaded', function () {
+	if ( get_option( WBB_Database::DB_VERSION_OPTION ) !== WBB_Database::DB_VERSION ) {
+		WBB_Database::activate();
+	}
+} );
 
 // ── Plugin row "Settings" link ─────────────────────────────────────────────
 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), function ( $links ) {
@@ -61,9 +71,13 @@ add_action( 'admin_init', function () {
 WBB_Schedule::register_ajax();
 WBB_Availability::register_ajax();
 WBB_Bookings::register_ajax();
+WBB_Menu::register_ajax();
 
 // ── CSV export via admin-post ──────────────────────────────────────────────
 add_action( 'admin_post_wbb_export_bookings', array( 'WBB_Bookings', 'export_csv' ) );
+
+// ── Full booking edit save (admin) ─────────────────────────────────────────
+add_action( 'admin_post_wbb_admin_save_booking', array( 'WBB_Bookings', 'save_booking_full' ) );
 
 // ── "View Book Now Page" opens in new tab ─────────────────────────────────
 add_action( 'admin_footer', function () {

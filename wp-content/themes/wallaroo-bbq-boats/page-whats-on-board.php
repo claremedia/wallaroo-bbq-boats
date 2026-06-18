@@ -25,15 +25,39 @@ $drinks_copy  = wbb_inner_field( 'wob_drinks_copy',     'Cold drinks available t
 $boat_img_url = ! empty( $boat_image['url'] ) ? $boat_image['url'] : 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80';
 $boat_img_alt = ! empty( $boat_image['alt'] ) ? $boat_image['alt'] : 'BBQ boat on the water';
 
-$features = [
-    [ 'type' => 'svg', 'icon' => '<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>',                                                       'label' => wbb_inner_field( 'wob_feature_1', 'Gas BBQ and all cooking gear' ) ],
-    [ 'type' => 'svg', 'icon' => '<path d="M3 2h18v4H3zM4 6l2 14h12l2-14"/><line x1="9" y1="11" x2="15" y2="11"/>',                                           'label' => wbb_inner_field( 'wob_feature_2', 'Plates and cutlery included' ) ],
-    [ 'type' => 'svg', 'icon' => '<path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/>',                          'label' => wbb_inner_field( 'wob_feature_3', 'Cold drinks for sale on board' ) ],
-    [ 'type' => 'svg', 'icon' => '<path d="M3 11l19-9-9 19-2-8-8-2z"/>',                                                                                       'label' => wbb_inner_field( 'wob_feature_4', 'BYO your own food' ) ],
-    [ 'type' => 'png', 'icon' => $icon_dir . 'round-sailboat.png',                                                                                              'label' => wbb_inner_field( 'wob_feature_5', '2 to 6 people per boat' ) ],
-    [ 'type' => 'png', 'icon' => $icon_dir . 'rescue-tube.png',                                                                                                 'label' => wbb_inner_field( 'wob_feature_6', 'Life jackets provided' ) ],
-    [ 'type' => 'svg', 'icon' => '<path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',                                    'label' => wbb_inner_field( 'wob_feature_7', 'Safety briefing before you head out' ) ],
+// Included / Not included — editable per-row in the page editor (ACF), with
+// the client-supplied copy as defaults. Up to 8 rows each; blank rows are skipped.
+$included_defaults = [
+    'Use of your own BBQ Boat for 2 hours, self-driven.',
+    'Maximum capacity is 6 participants per boat. Bookings of 7 to 12 people will need to hire two BBQ Boats.',
+    'A Bluetooth speaker is available.',
+    'Esky and ice provided at no charge.',
+    'No BYO alcohol — feel free to bring your own soft drinks or water, or purchase them from us.',
+    'Cutlery, plates, cups, napkins etc. provided.',
+    'BBQ provided if requested, or keep it as a table for platters or other food.',
 ];
+
+$not_included_defaults = [
+    'We can provide platters if requested.',
+    'We prefer that you BYO your own meat for the BBQ. We have limited food options, but you can order these from us with plenty of notice from our price list.',
+    'Ask us about our Spencer Gulf King prawn and wine deal.',
+    'Drinks — BYO alcohol is not permitted. You may order drinks through the price list on our website; this is a liquor licensing obligation.',
+    'You are encouraged to pre-order your drinks from Wallaroo Marina BBQ Boats up to 48 hours before your trip. Please reach out if you have difficulty and we can help with the purchase — ordering on the day will reduce your cruise time.',
+    'We will assist you wherever we can to provide you with what you want for your own personalised trip.',
+];
+
+$included = [];
+$not_included = [];
+for ( $i = 1; $i <= 8; $i++ ) {
+    $inc = wbb_inner_field( 'wob_included_' . $i, $included_defaults[ $i - 1 ] ?? '' );
+    if ( $inc !== '' ) {
+        $included[] = $inc;
+    }
+    $ninc = wbb_inner_field( 'wob_notincluded_' . $i, $not_included_defaults[ $i - 1 ] ?? '' );
+    if ( $ninc !== '' ) {
+        $not_included[] = $ninc;
+    }
+}
 ?>
 
 <!-- ── Hero ────────────────────────────────────────────────── -->
@@ -74,40 +98,38 @@ $features = [
 </section>
 <?php endif; ?>
 
-<!-- ── Features ─────────────────────────────────────────────── -->
-<section class="bg-white py-20 px-4 sm:px-6 lg:px-8" aria-labelledby="features-heading">
-  <div class="max-w-7xl mx-auto">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+<!-- ── Included / Not Included (two columns) ────────────────── -->
+<section class="bg-brand-cream py-20 px-4 sm:px-6 lg:px-8" aria-label="What's included">
+  <div class="max-w-6xl mx-auto">
 
-      <!-- Image -->
-      <div class="relative rounded-3xl overflow-hidden aspect-[4/3] shadow-card-hover">
-        <img
-          src="<?php echo esc_url( $boat_img_url ); ?>"
-          alt="<?php echo esc_attr( $boat_img_alt ); ?>"
-          width="800"
-          height="600"
-          loading="lazy"
-          decoding="async"
-          class="w-full h-full object-cover"
-        >
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start">
+
+      <!-- Included (left, and first on mobile) -->
+      <div class="bg-white rounded-3xl shadow-card p-8">
+        <h3 class="font-heading text-brand-navy uppercase text-xl lg:text-2xl mb-6">Included</h3>
+        <ul class="flex flex-col gap-4 list-none m-0 p-0" role="list">
+          <?php foreach ( $included as $item ) : ?>
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-brand-navy flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <span class="font-body text-gray-700 text-base leading-relaxed"><?php echo esc_html( $item ); ?></span>
+          </li>
+          <?php endforeach; ?>
+        </ul>
       </div>
 
-      <!-- Features list -->
-      <div>
-        <h2 id="features-heading" class="section-heading text-3xl lg:text-4xl mb-8">Everything Included</h2>
+      <!-- Not Included (right, second on mobile) -->
+      <div class="bg-white rounded-3xl shadow-card p-8">
+        <h3 class="font-heading text-brand-navy uppercase text-xl lg:text-2xl mb-6">Not Included</h3>
         <ul class="flex flex-col gap-4 list-none m-0 p-0" role="list">
-          <?php foreach ( $features as $feature ) : ?>
-          <li class="flex items-center gap-4">
-            <span class="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-brand-cream rounded-xl">
-              <?php if ( $feature['type'] === 'png' ) : ?>
-                <img src="<?php echo esc_url( $feature['icon'] ); ?>" alt="" width="24" height="24" class="w-6 h-6 object-contain" loading="lazy" aria-hidden="true">
-              <?php else : ?>
-                <svg class="w-5 h-5 text-brand-navy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <?php echo $feature['icon']; ?>
-                </svg>
-              <?php endif; ?>
-            </span>
-            <span class="font-body text-gray-700 text-base"><?php echo esc_html( $feature['label'] ); ?></span>
+          <?php foreach ( $not_included as $item ) : ?>
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-brand-navy flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+            <span class="font-body text-gray-700 text-base leading-relaxed"><?php echo esc_html( $item ); ?></span>
           </li>
           <?php endforeach; ?>
         </ul>
@@ -117,11 +139,22 @@ $features = [
   </div>
 </section>
 
-<!-- ── The Boats — stat tiles ───────────────────────────────── -->
-<section class="bg-brand-cream py-16 px-4 sm:px-6 lg:px-8" aria-labelledby="boats-heading">
-  <div class="max-w-4xl mx-auto">
-    <h2 id="boats-heading" class="section-heading text-center text-3xl lg:text-4xl mb-10">The Boats</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+<!-- ── The Boats — stats over the boat image (no overlay) ───── -->
+<section class="relative overflow-hidden bg-brand-navy px-4 sm:px-6 lg:px-8" aria-labelledby="boats-heading">
+
+  <?php if ( $boat_img_url ) : ?>
+  <img
+    src="<?php echo esc_url( $boat_img_url ); ?>"
+    alt="<?php echo esc_attr( $boat_img_alt ); ?>"
+    class="absolute inset-0 w-full h-full object-cover"
+    width="1400" height="600" loading="lazy" decoding="async"
+  >
+  <?php endif; ?>
+
+  <!-- Content aligned to the bottom of the image -->
+  <div class="relative z-10 max-w-4xl mx-auto flex flex-col justify-end min-h-[360px] lg:min-h-[520px] py-10 lg:py-12">
+    <h2 id="boats-heading" class="section-heading text-white text-shadow-hero text-center text-3xl lg:text-4xl mb-8">The Boats</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
 
       <?php
       $stats = [
@@ -130,9 +163,9 @@ $features = [
           [ 'number' => wbb_inner_field( 'wob_stat_3_number', '0' ),   'label' => wbb_inner_field( 'wob_stat_3_label', 'Licence required' ) ],
       ];
       foreach ( $stats as $stat ) : ?>
-      <div class="bg-white rounded-3xl shadow-card p-8 text-center">
-        <p class="font-heading text-brand-navy text-5xl lg:text-6xl uppercase mb-2"><?php echo esc_html( $stat['number'] ); ?></p>
-        <p class="font-body text-gray-600 text-sm"><?php echo esc_html( $stat['label'] ); ?></p>
+      <div class="bg-white rounded-3xl shadow-card p-6">
+        <p class="font-heading text-brand-navy text-5xl lg:text-6xl uppercase mb-1"><?php echo esc_html( $stat['number'] ); ?></p>
+        <p class="font-body text-gray-600 text-sm uppercase tracking-wide"><?php echo esc_html( $stat['label'] ); ?></p>
       </div>
       <?php endforeach; ?>
 
@@ -142,31 +175,14 @@ $features = [
 
 <!-- ── Food & Drinks ─────────────────────────────────────────── -->
 <section class="bg-white py-20 px-4 sm:px-6 lg:px-8" aria-labelledby="food-heading">
-  <div class="max-w-4xl mx-auto">
-    <h2 id="food-heading" class="section-heading text-center text-3xl lg:text-4xl mb-10">Food &amp; Drinks</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-
-      <!-- Food card -->
-      <div class="bg-brand-cream rounded-3xl p-8">
-        <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center mb-5 shadow-card">
-          <img src="<?php echo esc_url( $icon_dir ); ?>fish-facing-right.png" alt="" width="28" height="28" class="w-7 h-7 object-contain" loading="lazy" aria-hidden="true">
-        </div>
-        <h3 class="font-heading text-brand-navy uppercase text-xl mb-3">Bring Your Own Food</h3>
-        <p class="font-body text-gray-700 text-sm leading-relaxed"><?php echo esc_html( $food_copy ); ?></p>
-      </div>
-
-      <!-- Drinks card -->
-      <div class="bg-brand-cream rounded-3xl p-8">
-        <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center mb-5 shadow-card">
-          <svg class="w-6 h-6 text-brand-sky" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/>
-          </svg>
-        </div>
-        <h3 class="font-heading text-brand-navy uppercase text-xl mb-3">Drinks On Board</h3>
-        <p class="font-body text-gray-700 text-sm leading-relaxed"><?php echo esc_html( $drinks_copy ); ?></p>
-      </div>
-
-    </div>
+  <div class="max-w-2xl mx-auto text-center">
+    <h2 id="food-heading" class="section-heading text-3xl lg:text-4xl mb-4">Food &amp; Drinks</h2>
+    <p class="font-body text-gray-700 text-base lg:text-lg leading-relaxed mb-8">
+      BYO your food and fire up the BBQ, or add platters and food from our menu. No BYO alcohol — soft drinks and water are welcome, or pre-order drinks from us.
+    </p>
+    <a href="<?php echo esc_url( home_url( '/food-drink/' ) ); ?>" class="btn-outline-navy text-base px-8 py-4">
+      See the Food &amp; Drink Menu
+    </a>
   </div>
 </section>
 

@@ -19,9 +19,10 @@ wp-config.php
 # Breeze config - contains API tokens
 /wp-content/breeze-config/
 
-# Plugins - third-party managed separately; track only our custom plugin
+# Plugins - third-party managed separately; track only our custom plugins
 /wp-content/plugins/*
 !/wp-content/plugins/wbb-bookings/
+!/wp-content/plugins/wbb-gift-vouchers/
 
 # Cache and temp files
 /wp-content/cache/

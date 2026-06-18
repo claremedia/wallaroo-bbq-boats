@@ -1,0 +1,129 @@
+/* WBB Gift Vouchers — front-end form */
+.wbb-gv-wrap { max-width: 640px; margin: 0 auto; }
+
+.wbb-gv-intro { color: #4b5563; font-size: 1rem; margin: 0 0 1.25rem; }
+
+.wbb-gv-card {
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  padding: 1.75rem;
+}
+
+.wbb-gv-section { border: 0; margin: 0 0 1.5rem; padding: 0; }
+.wbb-gv-section:last-of-type { margin-bottom: 0.5rem; }
+.wbb-gv-section legend {
+  font-family: 'Anton', sans-serif;
+  text-transform: uppercase;
+  color: #0a2a5e;
+  font-size: 1.05rem;
+  letter-spacing: 0.03em;
+  padding: 0 0 0.5rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 2px solid #f2e8d5;
+  width: 100%;
+}
+
+.wbb-gv-field { margin-bottom: 0.9rem; }
+.wbb-gv-field:last-child { margin-bottom: 0; }
+
+.wbb-gv-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.35rem;
+}
+.wbb-gv-req { color: #d32027; }
+.wbb-gv-optional { color: #9ca3af; font-weight: 400; }
+
+.wbb-gv-input,
+.wbb-gv-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  font-size: 1rem;
+  color: #1f2937;
+  background: #fff;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.wbb-gv-input:focus,
+.wbb-gv-textarea:focus {
+  outline: none;
+  border-color: #3fa9dc;
+  box-shadow: 0 0 0 3px rgba(63,169,220,0.15);
+}
+.wbb-gv-textarea { resize: vertical; }
+
+.wbb-gv-amount-wrap { position: relative; display: flex; align-items: center; }
+.wbb-gv-currency {
+  position: absolute; left: 0.85rem;
+  font-size: 1.25rem; font-weight: 700; color: #0a2a5e;
+  pointer-events: none;
+}
+.wbb-gv-input--amount {
+  padding-left: 1.9rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  -moz-appearance: textfield;
+}
+.wbb-gv-input--amount::-webkit-outer-spin-button,
+.wbb-gv-input--amount::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+.wbb-gv-hint { font-size: 0.8rem; color: #6b7280; margin: 0.35rem 0 0; }
+
+.wbb-gv-error { display: block; color: #d32027; font-size: 0.8rem; margin-top: 0.3rem; min-height: 1em; }
+.wbb-gv-submit-error { text-align: center; margin: 0.5rem 0 0; }
+
+.wbb-gv-confirm { margin: 1.25rem 0 1rem; }
+.wbb-gv-confirm-label { display: flex; gap: 0.6rem; align-items: flex-start; font-size: 0.85rem; color: #4b5563; cursor: pointer; }
+.wbb-gv-checkbox { margin-top: 0.2rem; flex-shrink: 0; width: 1.05rem; height: 1.05rem; }
+
+.wbb-gv-submit {
+  width: 100%;
+  background: #d32027;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
+  border-radius: 16px;
+  padding: 0.9rem 1.5rem;
+  cursor: pointer;
+  transition: background 0.2s, opacity 0.2s;
+}
+.wbb-gv-submit:hover:not(:disabled) { background: #b91c1c; }
+.wbb-gv-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.wbb-gv-hidden { display: none; }
+
+/* Success panel */
+.wbb-gv-success {
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  padding: 2.5rem 1.75rem;
+  text-align: center;
+}
+.wbb-gv-success__icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 64px; height: 64px; border-radius: 9999px;
+  background: #f2e8d5; color: #0a2a5e; font-size: 2rem; margin-bottom: 1rem;
+}
+.wbb-gv-success h2 {
+  font-family: 'Anton', sans-serif; text-transform: uppercase;
+  color: #0a2a5e; font-size: 1.6rem; margin: 0 0 0.5rem;
+}
+.wbb-gv-success p { color: #4b5563; margin: 0 auto 1.25rem; max-width: 28rem; line-height: 1.6; }
+.wbb-gv-code {
+  display: inline-block; font-family: 'Anton', sans-serif; letter-spacing: 0.08em;
+  background: #0a2a5e; color: #fff; padding: 0.5rem 1.1rem; border-radius: 12px;
+  font-size: 1.1rem; margin-bottom: 1.25rem;
+}
+.wbb-gv-download {
+  display: inline-block; background: #d32027; color: #fff; font-weight: 600;
+  padding: 0.8rem 1.75rem; border-radius: 16px; text-decoration: none;
+  transition: background 0.2s;
+}
+.wbb-gv-download:hover { background: #b91c1c; }

@@ -22,7 +22,7 @@ $subheading     = wbb_inner_field( 'gv_hero_subheading',  'Gift vouchers for any
 $voucher_tagline = wbb_inner_field( 'gv_voucher_tagline', 'Available in any amount. Redeemable online.' );
 
 $logo = wallaroo_logo_html( [
-    'class' => 'h-16 w-auto brightness-0 invert mx-auto mb-6',
+    'class' => 'h-20 w-auto mx-auto mb-6',
     'alt'   => get_bloginfo( 'name' ),
 ] );
 
@@ -35,7 +35,10 @@ $how_steps = [
 
 <!-- ── Hero ────────────────────────────────────────────────── -->
 <section class="bg-brand-sky py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden" aria-label="Page hero">
-  <img src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/icons/message-in-a-bottle.png" alt="" width="220" height="220" class="absolute -bottom-4 -right-4 w-48 h-48 object-contain pointer-events-none select-none" style="opacity:0.07;filter:grayscale(1);" loading="lazy" aria-hidden="true">
+  <!-- Decorative gift (Lucide) -->
+  <svg class="absolute -bottom-4 -right-4 w-48 h-48 text-white pointer-events-none select-none" style="opacity:0.12;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/>
+  </svg>
   <div class="max-w-3xl mx-auto text-center">
     <p class="section-subheading text-white/80 mb-3">The Perfect Present</p>
     <h1 class="font-heading text-white uppercase text-4xl sm:text-5xl lg:text-6xl leading-tight mb-5">
@@ -108,27 +111,37 @@ $how_steps = [
   </div>
 </section>
 
-<!-- ── Order contact card ───────────────────────────────────── -->
-<section class="bg-gray-50 py-16 px-4 sm:px-6 lg:px-8" aria-label="Order a voucher">
-  <div class="max-w-xl mx-auto text-center">
-    <div class="bg-white rounded-3xl shadow-card p-8">
-      <h2 class="font-heading text-brand-navy uppercase text-2xl mb-3">Order a Voucher</h2>
-      <p class="font-body text-gray-600 text-sm mb-6 leading-relaxed">
-        Call or email us to order. Tell us the amount and who it's for — we'll sort the rest.
-      </p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="<?php echo esc_url( $tel_href ); ?>" class="btn-primary text-base px-8 py-4">
-          Call <?php echo esc_html( $phone ); ?>
-        </a>
-        <a href="mailto:<?php echo esc_attr( $email ); ?>" class="btn-outline-navy text-base px-8 py-4">Email Us</a>
-      </div>
+<!-- ── Order a voucher ──────────────────────────────────────── -->
+<section class="bg-gray-50 py-16 px-4 sm:px-6 lg:px-8" aria-label="Order a voucher" id="order">
+  <div class="max-w-2xl mx-auto">
+    <div class="text-center mb-10">
+      <h2 class="section-heading text-3xl lg:text-4xl">Order a Voucher</h2>
     </div>
+
+    <?php if ( shortcode_exists( 'wbb_gift_voucher_form' ) ) : ?>
+      <?php echo do_shortcode( '[wbb_gift_voucher_form]' ); ?>
+    <?php else : ?>
+      <div class="bg-white rounded-3xl shadow-card p-8 text-center">
+        <p class="font-body text-gray-600 text-sm mb-6 leading-relaxed">
+          Call or email us to order. Tell us the amount and who it's for — we'll sort the rest.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="<?php echo esc_url( $tel_href ); ?>" class="btn-primary text-base px-8 py-4">
+            Call <?php echo esc_html( $phone ); ?>
+          </a>
+          <a href="mailto:<?php echo esc_attr( $email ); ?>" class="btn-outline-navy text-base px-8 py-4">Email Us</a>
+        </div>
+      </div>
+    <?php endif; ?>
   </div>
 </section>
 
 <!-- ── CTA strip ─────────────────────────────────────────────── -->
 <section class="bg-brand-navy py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden" aria-label="Call to action">
-  <img src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/icons/treasure-map.png" alt="" width="200" height="200" class="absolute -bottom-4 -right-4 w-48 h-48 object-contain pointer-events-none select-none" style="opacity:0.06;filter:grayscale(1);" loading="lazy" aria-hidden="true">
+  <!-- Decorative voucher/ticket (Lucide) -->
+  <svg class="absolute -bottom-4 -right-4 w-48 h-48 text-white pointer-events-none select-none" style="opacity:0.08;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/>
+  </svg>
   <div class="max-w-3xl mx-auto text-center">
     <h2 class="font-heading text-white uppercase text-3xl lg:text-4xl mb-4">The Gift That Gets Them Off the Couch</h2>
     <p class="font-body text-blue-100 text-lg mb-8">Give them something worth doing.</p>

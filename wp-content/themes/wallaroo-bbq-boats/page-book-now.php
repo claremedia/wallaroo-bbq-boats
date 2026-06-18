@@ -19,7 +19,7 @@ $tel_href    = 'tel:' . preg_replace( '/\s+/', '', $phone );
 $booking_url = wallaroo_option( 'booking_url' ) ?: '#';
 
 $headline    = wbb_inner_field( 'bn_hero_headline',       'BOOK YOUR BOAT' );
-$subheading  = wbb_inner_field( 'bn_hero_subheading',     'Pick a date, grab your people, and head down the marina.' );
+$subheading  = wbb_inner_field( 'bn_hero_subheading',     'Pick a date, grab the crew, and head down the marina.' );
 $placeholder = wbb_inner_field( 'bn_placeholder_message', 'Online booking coming soon. Call us or email to check availability and lock in your date.' );
 ?>
 

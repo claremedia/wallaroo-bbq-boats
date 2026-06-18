@@ -14,6 +14,7 @@ function wbb_render_settings_page() {
 	$tabs = array(
 		'email'    => __( 'Email', 'wbb-bookings' ),
 		'rules'    => __( 'Booking Rules', 'wbb-bookings' ),
+		'pricing'  => __( 'Pricing', 'wbb-bookings' ),
 		'display'  => __( 'Display', 'wbb-bookings' ),
 		'business' => __( 'Business', 'wbb-bookings' ),
 	);
@@ -120,7 +121,7 @@ function wbb_render_settings_page() {
 			</div>
 
 			<?php
-			$merge_tags_note = '<code>{customer_name}</code> <code>{booking_ref}</code> <code>{date}</code> <code>{time}</code> <code>{duration}</code> <code>{group_size}</code> <code>{boats}</code> <code>{estimated_price}</code> <code>{customer_email}</code> <code>{customer_phone}</code> <code>{notes}</code> <code>{site_phone}</code> <code>{site_email}</code>';
+			$merge_tags_note = '<code>{customer_name}</code> <code>{booking_ref}</code> <code>{date}</code> <code>{time}</code> <code>{duration}</code> <code>{group_size}</code> <code>{boats}</code> <code>{hire_total}</code> <code>{inclusions}</code> <code>{estimated_price}</code> <code>{customer_email}</code> <code>{customer_phone}</code> <code>{notes}</code> <code>{site_phone}</code> <code>{site_email}</code>';
 
 			$templates = array(
 				'template_customer_request'   => __( 'Customer: request received', 'wbb-bookings' ),
@@ -185,6 +186,36 @@ function wbb_render_settings_page() {
 						</td>
 					</tr>
 				</table>
+			</div>
+
+			<?php elseif ( 'pricing' === $active_tab ) :
+				$cur = wbb_setting( 'currency_symbol', '$' );
+				$price_rows = array(
+					'hire_price_1_2' => array( __( '1–2 people', 'wbb-bookings' ), '220' ),
+					'hire_price_3'   => array( __( '3 people', 'wbb-bookings' ),   '250' ),
+					'hire_price_4'   => array( __( '4 people', 'wbb-bookings' ),   '280' ),
+					'hire_price_5'   => array( __( '5 people', 'wbb-bookings' ),   '300' ),
+					'hire_price_6'   => array( __( '6 people', 'wbb-bookings' ),   '320' ),
+				);
+			?>
+			<!-- ── Pricing Tab ───────────────────────────────────────────── -->
+			<div class="wbb-card">
+				<h2><?php esc_html_e( 'Hire Pricing (per boat)', 'wbb-bookings' ); ?></h2>
+				<p class="description" style="max-width:640px;margin-bottom:14px;">
+					<?php esc_html_e( 'The hire price for a single boat, based on how many people are on it. When a group needs more than one boat, each boat is priced by its own headcount — so an overflow boat re-prices from the 1–2 tier (e.g. 7 people = a 6-person boat + a 1-person boat).', 'wbb-bookings' ); ?>
+				</p>
+				<table class="form-table" role="presentation">
+					<?php foreach ( $price_rows as $key => $row ) : ?>
+					<tr>
+						<th><label for="wbb_<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $row[0] ); ?></label></th>
+						<td>
+							<span style="margin-right:2px;"><?php echo esc_html( $cur ); ?></span>
+							<input type="number" id="wbb_<?php echo esc_attr( $key ); ?>" name="wbb_settings[<?php echo esc_attr( $key ); ?>]" class="small-text" min="0" step="0.01" value="<?php echo esc_attr( wbb_setting( $key, $row[1] ) ); ?>">
+						</td>
+					</tr>
+					<?php endforeach; ?>
+				</table>
+				<p class="description"><?php esc_html_e( 'Prices are indicative and shown live on the booking form as the customer changes their group size.', 'wbb-bookings' ); ?></p>
 			</div>
 
 			<?php elseif ( 'display' === $active_tab ) : ?>

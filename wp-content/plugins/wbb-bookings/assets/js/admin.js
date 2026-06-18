@@ -662,7 +662,23 @@
 		});
 	}
 
+	function formatInclusions(json) {
+		if (!json) return '';
+		var items;
+		try { items = JSON.parse(json); } catch (e) { return ''; }
+		if (!items || !items.length) return '';
+		// Returned raw \u2014 renderBookingDetail escapes all values before output.
+		return items.map(function (it) {
+			return it.title + ' \u00d7' + (parseInt(it.qty, 10) || 0);
+		}).join(', ');
+	}
+
 	function renderBookingDetail($panel, b) {
+		var extrasText = formatInclusions(b.inclusions);
+		var cur = (str.currency || '$');
+		var hire = parseFloat(b.hire_total || 0);
+		var extras = parseFloat(b.inclusions_total || 0);
+
 		var fields = [
 			['Booking ref',    b.booking_ref],
 			['Status',         b.status ? b.status.charAt(0).toUpperCase() + b.status.slice(1) : ''],
@@ -674,6 +690,10 @@
 			['Customer name',  b.customer_name],
 			['Email',          b.customer_email],
 			['Phone',          b.customer_phone],
+			['Boat hire',      cur + hire.toFixed(2)],
+			['Food & drink',   extrasText || '\u2014'],
+			['Extras total',   cur + extras.toFixed(2)],
+			['Estimated total', cur + (hire + extras).toFixed(2)],
 			['Customer notes', b.notes || '\u2014'],
 			['Submitted',      b.created_at],
 		];
@@ -696,6 +716,230 @@
 			+ '</div>';
 
 		$panel.html(gridHtml + notesHtml);
+	}
+
+	/* ────────────────────────────────────────────────────────────────────────
+	 * FOOD & DRINK (MENU) PAGE
+	 * ──────────────────────────────────────────────────────────────────────── */
+
+	var menuItems       = [];          // all items (active + inactive)
+	var menuActiveCat   = 'food';      // currently shown tab
+	var menuMediaFrame;                // wp.media instance (lazy)
+
+	function initMenu() {
+		if (!$('.wbb-menu-wrap').length) return;
+
+		loadMenuItems();
+
+		// Tab switching
+		$('#wbb-menu-tabs').on('click', '.wbb-menu-tab', function () {
+			menuActiveCat = $(this).data('category');
+			$('.wbb-menu-tab').removeClass('wbb-menu-tab--active');
+			$(this).addClass('wbb-menu-tab--active');
+			hideItemForm();
+			renderMenuItems();
+		});
+
+		// Add / edit / cancel / save / delete
+		$('#wbb-add-item').on('click', function () { showItemForm(null); });
+		$('#wbb-cancel-item').on('click', hideItemForm);
+		$('#wbb-save-item').on('click', saveMenuItem);
+
+		$('#wbb-menu-items-wrap').on('click', '.wbb-item-edit', function (e) {
+			e.preventDefault();
+			var id = $(this).data('id');
+			var item = menuItems.filter(function (it) { return String(it.id) === String(id); })[0];
+			if (item) showItemForm(item);
+		});
+
+		$('#wbb-menu-items-wrap').on('click', '.wbb-item-delete', function (e) {
+			e.preventDefault();
+			var id = $(this).data('id');
+			if (!window.confirm(str.confirmDeleteItem || 'Delete this item?')) return;
+			deleteMenuItem(id);
+		});
+
+		// Image picker (WP media)
+		$('#wbb-item-image-select').on('click', function (e) {
+			e.preventDefault();
+			openMenuMedia();
+		});
+		$('#wbb-item-image-remove').on('click', function (e) {
+			e.preventDefault();
+			setItemImage(0, '');
+		});
+	}
+
+	function loadMenuItems() {
+		$('#wbb-menu-items-wrap').html('<p class="wbb-loading-msg">Loading items…</p>');
+		$.post(ajaxUrl, { action: 'wbb_menu_get_items', nonce: nonce }, function (res) {
+			if (!res.success) {
+				$('#wbb-menu-items-wrap').html('<p class="wbb-status-msg is-error">Failed to load items.</p>');
+				return;
+			}
+			menuItems = res.data.items || [];
+			renderMenuItems();
+		});
+	}
+
+	function renderMenuItems() {
+		var $wrap = $('#wbb-menu-items-wrap');
+		var items = menuItems.filter(function (it) { return it.category === menuActiveCat; });
+
+		if (!items.length) {
+			$wrap.html('<p style="color:#646970;font-size:13px;">No items in this category yet. Click "Add Item" below.</p>');
+			return;
+		}
+
+		var cur = str.currency || '$';
+		var html = '<ul class="wbb-menu-list" id="wbb-menu-sortable">';
+		items.forEach(function (it) {
+			var img = it.image_id && it.image_url
+				? '<img src="' + escHtml(it.image_url) + '" alt="" class="wbb-menu-list__thumb">'
+				: '<span class="wbb-menu-list__thumb wbb-menu-list__thumb--empty" aria-hidden="true"></span>';
+			var price = cur + parseFloat(it.price || 0).toFixed(2);
+			var inactive = it.active == 1 ? '' : ' <span class="wbb-menu-inactive">(hidden)</span>';
+			html += '<li class="wbb-menu-list__row" data-id="' + escHtml(String(it.id)) + '">'
+				+ '<span class="wbb-menu-list__handle dashicons dashicons-menu" title="Drag to reorder" aria-hidden="true"></span>'
+				+ img
+				+ '<span class="wbb-menu-list__body">'
+				+ '<strong>' + escHtml(it.title) + '</strong>' + inactive
+				+ (it.description ? '<span class="wbb-menu-list__desc">' + escHtml(it.description) + '</span>' : '')
+				+ '</span>'
+				+ '<span class="wbb-menu-list__price">' + escHtml(price) + '</span>'
+				+ '<span class="wbb-menu-list__actions">'
+				+ '<a href="#" class="wbb-item-edit" data-id="' + escHtml(String(it.id)) + '">Edit</a>'
+				+ ' <span class="wbb-action-sep">|</span> '
+				+ '<a href="#" class="wbb-item-delete" data-id="' + escHtml(String(it.id)) + '">Delete</a>'
+				+ '</span>'
+				+ '</li>';
+		});
+		html += '</ul>';
+		$wrap.html(html);
+
+		// Make sortable
+		if ($.fn.sortable) {
+			$('#wbb-menu-sortable').sortable({
+				handle: '.wbb-menu-list__handle',
+				axis: 'y',
+				update: function () {
+					var ids = $('#wbb-menu-sortable .wbb-menu-list__row').map(function () {
+						return $(this).data('id');
+					}).get();
+					$.post(ajaxUrl, {
+						action: 'wbb_menu_reorder',
+						nonce:  nonce,
+						ordered_ids: ids,
+					}, function (res) {
+						if (res.success) { menuItems = res.data.items || menuItems; }
+					});
+				},
+			});
+		}
+	}
+
+	function showItemForm(item) {
+		if (item) {
+			$('#wbb-item-form-title').text('Edit Item');
+			$('#wbb-item-id').val(item.id);
+			$('#wbb-item-category').val(item.category);
+			$('#wbb-item-title').val(item.title);
+			$('#wbb-item-description').val(item.description || '');
+			$('#wbb-item-price').val(parseFloat(item.price || 0).toFixed(2));
+			$('#wbb-item-active').prop('checked', item.active == 1);
+			setItemImage(item.image_id || 0, item.image_url || '');
+		} else {
+			$('#wbb-item-form-title').text('Add Item');
+			$('#wbb-item-id').val(0);
+			$('#wbb-item-category').val(menuActiveCat);
+			$('#wbb-item-title').val('');
+			$('#wbb-item-description').val('');
+			$('#wbb-item-price').val('0');
+			$('#wbb-item-active').prop('checked', true);
+			setItemImage(0, '');
+		}
+		$('#wbb-item-status').text('').removeClass('is-error');
+		$('#wbb-item-form-wrap').removeClass('wbb-hidden');
+		$('#wbb-item-title').focus();
+	}
+
+	function hideItemForm() {
+		$('#wbb-item-form-wrap').addClass('wbb-hidden');
+	}
+
+	function setItemImage(id, url) {
+		$('#wbb-item-image-id').val(id || 0);
+		var $preview = $('#wbb-item-image-preview');
+		if (id && url) {
+			$preview.find('img').attr('src', url);
+			$preview.show();
+			$('#wbb-item-image-remove').show();
+		} else {
+			$preview.hide();
+			$('#wbb-item-image-remove').hide();
+		}
+	}
+
+	function openMenuMedia() {
+		if (menuMediaFrame) {
+			menuMediaFrame.open();
+			return;
+		}
+		menuMediaFrame = wp.media({
+			title: str.selectImage || 'Select image',
+			button: { text: str.useImage || 'Use this image' },
+			multiple: false,
+		});
+		menuMediaFrame.on('select', function () {
+			var att = menuMediaFrame.state().get('selection').first().toJSON();
+			var url = (att.sizes && att.sizes.medium) ? att.sizes.medium.url : att.url;
+			setItemImage(att.id, url);
+		});
+		menuMediaFrame.open();
+	}
+
+	function saveMenuItem() {
+		var title = $('#wbb-item-title').val().trim();
+		if (!title) { alert('Please enter a title.'); return; }
+
+		var $btn    = $('#wbb-save-item').prop('disabled', true).text(str.saving || 'Saving…');
+		var $status = $('#wbb-item-status').text('').removeClass('is-error');
+
+		$.post(ajaxUrl, {
+			action:      'wbb_menu_save_item',
+			nonce:       nonce,
+			item_id:     $('#wbb-item-id').val(),
+			category:    $('#wbb-item-category').val(),
+			title:       title,
+			description: $('#wbb-item-description').val(),
+			price:       $('#wbb-item-price').val(),
+			image_id:    $('#wbb-item-image-id').val(),
+			active:      $('#wbb-item-active').is(':checked') ? 1 : 0,
+		}, function (res) {
+			$btn.prop('disabled', false).text('Save Item');
+			if (res.success) {
+				menuItems = res.data.items || [];
+				hideItemForm();
+				renderMenuItems();
+			} else {
+				$status.addClass('is-error').text(res.data && res.data.message ? res.data.message : str.errorGeneric);
+			}
+		});
+	}
+
+	function deleteMenuItem(id) {
+		$.post(ajaxUrl, {
+			action:  'wbb_menu_delete_item',
+			nonce:   nonce,
+			item_id: id,
+		}, function (res) {
+			if (res.success) {
+				menuItems = res.data.items || [];
+				renderMenuItems();
+			} else {
+				alert(res.data && res.data.message ? res.data.message : str.errorGeneric);
+			}
+		});
 	}
 
 	/* ────────────────────────────────────────────────────────────────────────
@@ -757,6 +1001,7 @@
 		initSettings();
 		initAvailability();
 		initBookings();
+		initMenu();
 	});
 
 }(jQuery));
