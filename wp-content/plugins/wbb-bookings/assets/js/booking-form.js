@@ -13,6 +13,10 @@
 	var minGroup    = cfg.minGroup     || 2;
 	var maxPerBoat  = cfg.maxPerBoat   || 6;
 	var strings     = cfg.strings      || {};
+	var currency    = cfg.currency     || '$';
+	var hasExtras   = !!cfg.hasExtras;
+	var stepDetails = cfg.stepDetails  || 4;
+	var stepReview  = cfg.stepReview   || 5;
 
 	/* ── State ───────────────────────────────────────────────────────────── */
 	var state = {
@@ -28,6 +32,8 @@
 		customerEmail:   '',
 		customerPhone:   '',
 		customerNotes:   '',
+		inclusions:      [],   // [{id, title, qty, unit_price}]
+		inclusionsTotal: 0,
 	};
 
 	/* ── DOM refs ────────────────────────────────────────────────────────── */
@@ -362,6 +368,37 @@
 		if (nextBtn) nextBtn.disabled = hasError || groupSize < minGroup;
 	}
 
+	/* ── Step 4: Extras (Food & Drink) ───────────────────────────────────── */
+	function fmtMoney(n) {
+		return currency + (Math.round(n * 100) / 100).toFixed(2);
+	}
+
+	function updateExtras() {
+		var rows = document.querySelectorAll('.wbb-extra-row');
+		var total = 0;
+		var chosen = [];
+		rows.forEach(function (row) {
+			var qtyInput = qs('.wbb-extra-qty', row);
+			var qty = parseInt(qtyInput && qtyInput.value, 10) || 0;
+			if (qty < 0) { qty = 0; if (qtyInput) qtyInput.value = 0; }
+			var price = parseFloat(row.getAttribute('data-price')) || 0;
+			if (qty > 0) {
+				total += qty * price;
+				chosen.push({
+					id:         parseInt(row.getAttribute('data-id'), 10),
+					title:      row.getAttribute('data-title') || '',
+					qty:        qty,
+					unit_price: price,
+				});
+			}
+		});
+		state.inclusions = chosen;
+		state.inclusionsTotal = total;
+
+		var totalEl = qs('#wbb-extras-total');
+		if (totalEl) totalEl.textContent = fmtMoney(total);
+	}
+
 	/* ── Step 4: Validation ──────────────────────────────────────────────── */
 	function validateField(inputEl, errorEl, rules) {
 		var val = inputEl.value.trim();
@@ -417,6 +454,16 @@
 			['Phone',      state.customerPhone],
 		];
 
+		if (state.inclusions && state.inclusions.length) {
+			state.inclusions.forEach(function(it) {
+				rows.push([
+					it.title + ' × ' + it.qty,
+					fmtMoney(it.qty * it.unit_price),
+				]);
+			});
+			rows.push(['Extras total', fmtMoney(state.inclusionsTotal)]);
+		}
+
 		if (state.customerNotes) {
 			rows.push(['Notes', state.customerNotes]);
 		}
@@ -459,6 +506,8 @@
 		params.append('customer_email',   state.customerEmail);
 		params.append('customer_phone',   state.customerPhone);
 		params.append('notes',            state.customerNotes);
+		params.append('inclusions',       JSON.stringify(state.inclusions || []));
+		params.append('inclusions_total', state.inclusionsTotal || 0);
 
 		fetch(ajaxUrl, {
 			method: 'POST',
@@ -501,7 +550,7 @@
 		// Hide the form panels & step indicator
 		var stepNav = formWrap ? formWrap.querySelector('.wbb-steps-nav') : null;
 		if (stepNav) hide(stepNav);
-		for (var i = 1; i <= 5; i++) {
+		for (var i = 1; i <= 6; i++) {
 			var p = qs('#wbb-panel-' + i);
 			if (p) hide(p);
 		}
@@ -555,7 +604,33 @@
 			groupInput.value = v + 1; updateBoatCalc();
 		});
 		if (nextBtn3) nextBtn3.addEventListener('click', function() {
-			goToStep(4);
+			goToStep(4); // step 4 is Extras when present, otherwise Details
+		});
+
+		// Step 4: Extras — quantity steppers + Next
+		var extrasContainer = qs('#wbb-panel-4');
+		if (extrasContainer && hasExtras) {
+			extrasContainer.addEventListener('click', function(e) {
+				var row = e.target.closest ? e.target.closest('.wbb-extra-row') : null;
+				if (!row) return;
+				var input = qs('.wbb-extra-qty', row);
+				if (!input) return;
+				if (e.target.classList.contains('wbb-extra-plus')) {
+					input.value = (parseInt(input.value, 10) || 0) + 1;
+					updateExtras();
+				} else if (e.target.classList.contains('wbb-extra-minus')) {
+					input.value = Math.max(0, (parseInt(input.value, 10) || 0) - 1);
+					updateExtras();
+				}
+			});
+			extrasContainer.addEventListener('input', function(e) {
+				if (e.target.classList.contains('wbb-extra-qty')) updateExtras();
+			});
+		}
+		var nextExtras = qs('#wbb-next-extras');
+		if (nextExtras) nextExtras.addEventListener('click', function() {
+			updateExtras();
+			goToStep(stepDetails);
 		});
 
 		// Step 4: blur validation
@@ -570,11 +645,11 @@
 			if (el) el.addEventListener('blur', function() { validateField(el, err, f.rules); });
 		});
 
-		var nextBtn4 = qs('#wbb-next-4');
-		if (nextBtn4) nextBtn4.addEventListener('click', function() {
+		var nextBtnDetails = qs('#wbb-next-details');
+		if (nextBtnDetails) nextBtnDetails.addEventListener('click', function() {
 			if (validateStep4()) {
 				renderSummary();
-				goToStep(5);
+				goToStep(stepReview);
 			}
 		});
 

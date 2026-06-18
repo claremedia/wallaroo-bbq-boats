@@ -25,6 +25,13 @@ class WBB_Emails {
 			: '';
 		$duration_display = (float) $booking->duration_hours;
 
+		$inclusions_text = ( isset( $booking->inclusions ) && class_exists( 'WBB_Bookings' ) )
+			? WBB_Bookings::format_inclusions_text( $booking->inclusions )
+			: '';
+		if ( '' === $inclusions_text ) {
+			$inclusions_text = __( 'None', 'wbb-bookings' );
+		}
+
 		$tags = array(
 			'{customer_name}'   => $booking->customer_name ?? '',
 			'{booking_ref}'     => $booking->booking_ref ?? '',
@@ -36,6 +43,7 @@ class WBB_Emails {
 			'{customer_email}'  => $booking->customer_email ?? '',
 			'{customer_phone}'  => $booking->customer_phone ?? '',
 			'{notes}'           => $booking->notes ?? '',
+			'{inclusions}'      => $inclusions_text,
 			'{site_phone}'      => $site_phone,
 			'{site_email}'      => $site_email,
 		);

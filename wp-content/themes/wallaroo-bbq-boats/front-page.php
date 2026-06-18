@@ -22,7 +22,7 @@ $booking_url = wallaroo_option( 'booking_url' ) ?: home_url( '/book-now/' );
 
 // --- Hero ---
 $hero_headline   = wbb_field( 'hero_headline',   'SELF-DRIVE BBQ BOATS. WALLAROO MARINA.' );
-$hero_subheading = wbb_field( 'hero_subheading', 'Bring your people. We\'ll sort the rest.' );
+$hero_subheading = wbb_field( 'hero_subheading', 'Hire a boat, fire up the BBQ, and spend the day on the water.' );
 $hero_image      = wbb_field( 'hero_image',      [] );
 $hero_image_url  = ! empty( $hero_image['url'] ) ? $hero_image['url'] : 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1600&q=80';
 $hero_image_alt  = ! empty( $hero_image['alt'] ) ? $hero_image['alt'] : 'Two friends relaxing on a boat on calm blue water at Wallaroo Marina';
@@ -35,12 +35,13 @@ $who_image_alt = ! empty( $who_image['alt'] ) ? $who_image['alt'] : 'Calm coasta
 // --- Icon directory ---
 $icon_dir = get_template_directory_uri() . '/assets/icons/';
 
-// --- Trust strip (nautical PNG icons, labels editable via ACF) ---
+// --- Trust strip (Lucide inline SVG icons, labels editable via ACF) ---
 $trust_items = [
-    [ 'icon' => $icon_dir . 'boat-rudder.png',        'label' => wbb_field( 'trust_label_1', 'No licence needed' ) ],
-    [ 'icon' => $icon_dir . 'round-sailboat.png',    'label' => wbb_field( 'trust_label_2', '2 to 6 people per boat' ) ],
-    [ 'icon' => $icon_dir . 'fish-facing-right.png', 'label' => wbb_field( 'trust_label_3', 'BYO food welcome' ) ],
-    [ 'icon' => $icon_dir . 'sailboat-anchor.png',   'label' => wbb_field( 'trust_label_4', 'Copper Cove Marina, Wallaroo' ) ],
+    [ 'svg' => '<circle cx="12" cy="12" r="8"/><path d="M12 2v7.5"/><path d="m19 5-5.23 5.23"/><path d="M22 12h-7.5"/><path d="m19 19-5.23-5.23"/><path d="M12 14.5V22"/><path d="M10.23 13.77 5 19"/><path d="M9.5 12H2"/><path d="M10.23 10.23 5 5"/><circle cx="12" cy="12" r="2.5"/>', 'label' => wbb_field( 'trust_label_1', 'No licence needed' ) ],
+    [ 'svg' => '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>', 'label' => wbb_field( 'trust_label_2', '2 to 6 people per boat' ) ],
+    [ 'svg' => '<path d="M3 2v7c0 1.1.9 2 2 2h0a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/>', 'label' => wbb_field( 'trust_label_3', 'BYO food welcome' ) ],
+    [ 'svg' => '<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>', 'label' => wbb_field( 'trust_label_4', 'Copper Cove Marina, Wallaroo' ) ],
+    [ 'svg' => '<path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/>', 'label' => wbb_field( 'trust_label_5', '100% locally owned & operated' ) ],
 ];
 
 // --- How It Works ---
@@ -150,8 +151,8 @@ if ( $review_query->have_posts() ) {
 
     <!-- Mobile booking CTA (shows on small screens) -->
     <div class="md:hidden mt-4">
-      <a href="<?php echo esc_attr( $tel_href ); ?>" class="btn-primary w-full justify-center text-base py-4">
-        Call to Book — <?php echo esc_html( $phone ); ?>
+      <a href="<?php echo esc_url( $booking_url ); ?>" class="btn-primary w-full justify-center text-base py-4">
+        Book Now
       </a>
     </div>
 
@@ -173,8 +174,8 @@ if ( $review_query->have_posts() ) {
     >
       <?php foreach ( $trust_items as $item ) : ?>
       <li class="flex items-center gap-3">
-        <span class="w-8 h-8 flex-shrink-0" aria-hidden="true">
-          <img src="<?php echo esc_url( $item['icon'] ); ?>" alt="" width="32" height="32" class="w-8 h-8 object-contain" loading="lazy">
+        <span class="w-8 h-8 flex-shrink-0 text-brand-navy" aria-hidden="true">
+          <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><?php echo $item['svg']; ?></svg>
         </span>
         <span class="font-body font-semibold text-brand-navy text-sm lg:text-base">
           <?php echo esc_html( $item['label'] ); ?>
@@ -193,13 +194,11 @@ if ( $review_query->have_posts() ) {
   class="bg-white py-20 px-4 sm:px-6 lg:px-8 bg-wave-navy relative overflow-hidden"
   aria-labelledby="how-it-works-heading"
 >
+  <!-- Decorative anchor (Lucide) -->
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="absolute -top-4 -right-8 w-64 h-64 text-brand-navy pointer-events-none select-none" style="opacity:0.08;" aria-hidden="true">
-    <circle cx="12" cy="12" r="10"/>
-    <circle cx="12" cy="12" r="4"/>
-    <line x1="12" y1="2" x2="12" y2="8"/>
-    <line x1="12" y1="16" x2="12" y2="22"/>
-    <line x1="2" y1="12" x2="8" y2="12"/>
-    <line x1="16" y1="12" x2="22" y2="12"/>
+    <path d="M12 22V8"/>
+    <path d="M5 12H2a10 10 0 0 0 20 0h-3"/>
+    <circle cx="12" cy="5" r="3"/>
   </svg>
   <div class="max-w-7xl mx-auto">
 
@@ -249,7 +248,7 @@ if ( $review_query->have_posts() ) {
     <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 list-none m-0 p-0" role="list">
 
       <!-- Workmates -->
-      <li class="bg-white rounded-3xl shadow-card p-8 flex flex-col items-start transition-all duration-200 hover:-translate-y-1 hover:shadow-card-hover">
+      <li class="bg-white rounded-3xl shadow-card p-8 flex flex-col items-start">
         <div>
           <h3 class="font-heading text-brand-navy uppercase text-xl tracking-wide mb-2">Workmates</h3>
           <p class="font-body text-gray-600 text-sm leading-relaxed">The team day that actually gets people off their phones. Book one boat or several. Get out on the water and actually relax together.</p>
@@ -257,7 +256,7 @@ if ( $review_query->have_posts() ) {
       </li>
 
       <!-- Mates -->
-      <li class="bg-white rounded-3xl shadow-card p-8 flex flex-col items-start transition-all duration-200 hover:-translate-y-1 hover:shadow-card-hover">
+      <li class="bg-white rounded-3xl shadow-card p-8 flex flex-col items-start">
         <div>
           <h3 class="font-heading text-brand-navy uppercase text-xl tracking-wide mb-2">Mates</h3>
           <p class="font-body text-gray-600 text-sm leading-relaxed">Birthdays, bucks, hens, or just a Saturday that is not the pub. Bring the crew and book as many boats as you need.</p>
@@ -265,7 +264,7 @@ if ( $review_query->have_posts() ) {
       </li>
 
       <!-- Family -->
-      <li class="bg-white rounded-3xl shadow-card p-8 flex flex-col items-start transition-all duration-200 hover:-translate-y-1 hover:shadow-card-hover">
+      <li class="bg-white rounded-3xl shadow-card p-8 flex flex-col items-start">
         <div>
           <h3 class="font-heading text-brand-navy uppercase text-xl tracking-wide mb-2">Family</h3>
           <p class="font-body text-gray-600 text-sm leading-relaxed">Kids love it. So does everyone else. Easy to drive and genuinely good fun for a mixed group.</p>
@@ -273,7 +272,7 @@ if ( $review_query->have_posts() ) {
       </li>
 
       <!-- Visitors -->
-      <li class="bg-white rounded-3xl shadow-card p-8 flex flex-col items-start transition-all duration-200 hover:-translate-y-1 hover:shadow-card-hover">
+      <li class="bg-white rounded-3xl shadow-card p-8 flex flex-col items-start">
         <div>
           <h3 class="font-heading text-brand-navy uppercase text-xl tracking-wide mb-2">Visitors</h3>
           <p class="font-body text-gray-600 text-sm leading-relaxed">Coming through the Copper Coast? This is the thing to do. You will go home talking about it.</p>
@@ -336,6 +335,12 @@ if ( $review_query->have_posts() ) {
           <?php endforeach; ?>
 
         </ul>
+
+        <div class="mt-10">
+          <a href="<?php echo esc_url( home_url( '/whats-on-board/' ) ); ?>" class="btn-outline-navy text-base px-8 py-4">
+            See What's On Board
+          </a>
+        </div>
       </div>
 
       <!-- Visual side — decorative card stack -->
@@ -442,86 +447,30 @@ if ( $review_query->have_posts() ) {
     <svg class="absolute bottom-0 left-0 right-0 w-full text-white opacity-5" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true">
       <path d="M0,40 C360,80 720,0 1080,40 C1260,60 1380,20 1440,40 L1440,80 L0,80 Z" fill="currentColor"/>
     </svg>
-    <img src="<?php echo esc_url( $icon_dir ); ?>round-sailboat.png" alt="" width="320" height="320" class="absolute -bottom-8 -right-8 w-72 h-72 object-contain pointer-events-none select-none" style="opacity:0.06;filter:grayscale(1);" loading="lazy" aria-hidden="true">
+    <!-- Life buoy (inline SVG, faint white) -->
+    <svg class="absolute -bottom-8 -right-8 w-72 h-72 text-white pointer-events-none select-none" style="opacity:0.07;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="10"/>
+      <path d="m4.93 4.93 4.24 4.24"/>
+      <path d="m14.83 9.17 4.24-4.24"/>
+      <path d="m14.83 14.83 4.24 4.24"/>
+      <path d="m9.17 14.83-4.24 4.24"/>
+      <circle cx="12" cy="12" r="4"/>
+    </svg>
     <img src="<?php echo esc_url( $icon_dir ); ?>old-lighthouse.png" alt="" width="180" height="180" class="absolute top-6 left-10 w-36 h-36 object-contain pointer-events-none select-none" style="opacity:0.05;filter:grayscale(1);" loading="lazy" aria-hidden="true">
   </div>
 
   <div class="max-w-4xl mx-auto text-center relative z-10">
     <h2 id="cta-heading" class="font-heading text-white uppercase text-4xl sm:text-5xl lg:text-6xl leading-tight mb-6">
-      READY TO BRING YOUR PEOPLE?
+      READY TO GET ON THE WATER?
     </h2>
     <p class="font-body text-blue-200 text-lg lg:text-xl mb-10 max-w-2xl mx-auto leading-relaxed">
-      Book your BBQ boat session at Wallaroo Marina. One boat or several. Just a good time on the water with the people you want to be with.
+      Book your BBQ boat session at Wallaroo Marina. One boat or several. Locally owned and operated, right here on the Copper Coast.
     </p>
     <div class="flex flex-wrap items-center justify-center gap-4">
       <a href="<?php echo esc_url( $booking_url ); ?>" class="btn-primary text-base px-10 py-4">
         Book Now
       </a>
-      <a href="<?php echo esc_attr( $tel_href ); ?>" class="btn-outline text-base px-10 py-4">
-        Call <?php echo esc_html( $phone ); ?>
-      </a>
     </div>
-  </div>
-</section>
-
-<!-- =====================================================
-     SECTION: FAQ (anchor only, placeholder)
-     ===================================================== -->
-<section
-  class="bg-white py-20 px-4 sm:px-6 lg:px-8"
-  aria-labelledby="faq-heading"
-  id="faq"
->
-  <div class="max-w-3xl mx-auto">
-
-    <div class="text-center mb-14">
-      <p class="section-subheading mb-3">Got questions?</p>
-      <h2 id="faq-heading" class="section-heading text-4xl lg:text-5xl">FAQ</h2>
-    </div>
-
-    <?php
-    $faqs = [
-      [ 'q' => 'Do I need a boat licence?',        'a' => 'No. Anyone 18 or over can take the wheel. We show you the basics before you head out and you will have it sorted in five minutes.' ],
-      [ 'q' => 'How many people can come?',        'a' => 'Between 2 and 6 people per boat. Got a bigger group? Book multiple boats and run them side by side. Get in touch and we will sort it out.' ],
-      [ 'q' => 'Can we book more than one boat?',  'a' => 'Yes. If your group is larger than 6 we can run multiple boats at the same time. Works brilliantly for workplace days, Christmas parties, and anything where you want to split into teams. Get in touch to check availability.' ],
-      [ 'q' => 'Can I bring my own food?',         'a' => 'Yes. BYO food is encouraged. Pack a cooler, bring the snags, sort yourselves out. We also have platter options available if you want us to handle the food. Ask when you book.' ],
-      [ 'q' => 'Can I bring my own drinks?',       'a' => 'No BYO alcohol. Cold drinks are available to purchase on board. Non-alcoholic drinks are fine to bring.' ],
-      [ 'q' => 'How long is a session?',           'a' => 'Session lengths and pricing are on the Book Now page. We recommend at least two hours for groups who want to make a proper afternoon of it.' ],
-      [ 'q' => 'Where exactly are you located?',   'a' => 'Copper Cove Marina, Wallaroo SA. If you are heading toward the Coopers Alehouse you will see us on the way down. Full directions and a map are on the Find Us page.' ],
-      [ 'q' => 'What if the weather is bad?',      'a' => 'Safety comes first. If conditions are not suitable we will contact you directly to reschedule or refund. We keep an eye on the forecast and will not send anyone out in unsafe conditions.' ],
-      [ 'q' => 'Is it suitable for kids?',         'a' => 'Yes. Life jackets are provided in all sizes. Kids need to be supervised by an adult on board at all times.' ],
-      [ 'q' => 'What should we bring?',            'a' => 'Food, sunscreen, and your people. Everything else is on board.' ],
-    ];
-    ?>
-
-    <dl class="flex flex-col gap-4">
-      <?php foreach ( $faqs as $i => $faq ) : ?>
-      <div class="card">
-        <dt>
-          <button
-            class="w-full flex items-center justify-between text-left gap-4 font-heading text-brand-navy uppercase text-base tracking-wide"
-            aria-expanded="false"
-            aria-controls="faq-answer-<?php echo esc_attr( $i ); ?>"
-            data-faq-toggle
-          >
-            <span><?php echo esc_html( $faq['q'] ); ?></span>
-            <span class="flex-shrink-0 w-5 h-5 text-brand-sky transition-transform duration-200" data-faq-icon aria-hidden="true">
-              <svg viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
-              </svg>
-            </span>
-          </button>
-        </dt>
-        <dd
-          id="faq-answer-<?php echo esc_attr( $i ); ?>"
-          class="hidden pt-4 font-body text-gray-600 text-sm leading-relaxed border-t border-gray-100 mt-4"
-        >
-          <?php echo esc_html( $faq['a'] ); ?>
-        </dd>
-      </div>
-      <?php endforeach; ?>
-    </dl>
-
   </div>
 </section>
 

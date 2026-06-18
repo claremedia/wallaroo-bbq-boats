@@ -18,7 +18,7 @@ $tel_href    = 'tel:' . preg_replace( '/\s+/', '', $phone );
 $booking_url = wallaroo_option( 'booking_url' ) ?: home_url( '/book-now/' );
 $icon_dir    = get_template_directory_uri() . '/assets/icons/';
 
-$headline      = wbb_inner_field( 'grp_hero_headline',   'BRING YOUR PEOPLE' );
+$headline      = wbb_inner_field( 'grp_hero_headline',   'BOOK THE WHOLE FLEET' );
 $subheading    = wbb_inner_field( 'grp_hero_subheading', 'Got a big group? Book multiple boats and make a proper day of it. 2 to 6 people per boat.' );
 $hire_headline = wbb_inner_field( 'grp_hire_headline',   'THE MORE BOATS THE BETTER' );
 $hire_body     = wbb_inner_field( 'grp_hire_body',       'Got more than 6? Book multiple boats and run them side by side. Works brilliantly for workplace days, Christmas parties, birthdays, and anything where you want to split into teams and have a crack at something together. Get in touch and we will sort the logistics.' );
@@ -31,22 +31,26 @@ $hire_img_alt  = ! empty( $hire_image['alt'] ) ? $hire_image['alt'] : '';
 
 $occasions = [
     [
-        'icon'  => $icon_dir . 'big-compass.png',
+        // Lucide: briefcase
+        'svg'   => '<rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',
         'label' => wbb_inner_field( 'grp_occasion_1_heading', 'Workmates' ),
-        'body'  => wbb_inner_field( 'grp_occasion_1_body',    'The team day that actually works. Book one boat or several, split into groups and see who can cook the best snag. No agenda, no conference room, just your people on the water.' ),
+        'body'  => wbb_inner_field( 'grp_occasion_1_body',    'The team day that actually works. Book one boat or several, split into groups and see who can cook the best snag. No agenda, no conference room, just the crew on the water.' ),
     ],
     [
-        'icon'  => $icon_dir . 'big-flag-waving.png',
+        // Lucide: beer
+        'svg'   => '<path d="M17 11h1a3 3 0 0 1 0 6h-1"/><path d="M9 12v6"/><path d="M13 12v6"/><path d="M14 7.5c-1 0-1.44.5-3 .5s-2-.5-3-.5-1.72.5-2.5.5a2.5 2.5 0 0 1 0-5c.78 0 1.57.5 2.5.5S9.44 3 11 3s2 .5 3 .5 1.72-.5 2.5-.5a2.5 2.5 0 0 1 0 5c-.78 0-1.5-.5-2.5-.5Z"/><path d="M5 8v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-2"/>',
         'label' => wbb_inner_field( 'grp_occasion_2_heading', 'Mates' ),
         'body'  => wbb_inner_field( 'grp_occasion_2_body',    'Birthdays, bucks, hens, or just a big Saturday. Book as many boats as your group needs and make a proper day of it.' ),
     ],
     [
-        'icon'  => $icon_dir . 'little-submarine.png',
+        // Lucide: users
+        'svg'   => '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
         'label' => wbb_inner_field( 'grp_occasion_3_heading', 'Family' ),
         'body'  => wbb_inner_field( 'grp_occasion_3_body',    'Kids love it, adults love it more. Easy to drive, stable on the water, and genuinely fun for a mixed group of any age.' ),
     ],
     [
-        'icon'  => $icon_dir . 'big-binoculars.png',
+        // Lucide: compass
+        'svg'   => '<path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"/><circle cx="12" cy="12" r="10"/>',
         'label' => wbb_inner_field( 'grp_occasion_4_heading', 'Visitors' ),
         'body'  => wbb_inner_field( 'grp_occasion_4_body',    'If you are passing through the Copper Coast this is the thing to do. Wallaroo on the water. You will not forget it.' ),
     ],
@@ -112,9 +116,9 @@ $inclusions = [
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
       <?php foreach ( $occasions as $occasion ) : ?>
-      <div class="bg-gray-50 rounded-3xl p-7 flex flex-col gap-4 hover:shadow-card-hover transition-shadow duration-200">
-        <div class="w-12 h-12 bg-brand-navy rounded-2xl flex items-center justify-center flex-shrink-0">
-          <img src="<?php echo esc_url( $occasion['icon'] ); ?>" alt="" width="28" height="28" class="w-7 h-7 object-contain brightness-0 invert" loading="lazy" aria-hidden="true">
+      <div class="bg-gray-50 rounded-3xl p-7 flex flex-col gap-4">
+        <div class="w-12 h-12 bg-brand-navy rounded-2xl flex items-center justify-center flex-shrink-0 text-white">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><?php echo $occasion['svg']; ?></svg>
         </div>
         <h3 class="font-heading text-brand-navy uppercase text-xl"><?php echo esc_html( $occasion['label'] ); ?></h3>
         <p class="font-body text-gray-600 text-sm leading-relaxed"><?php echo esc_html( $occasion['body'] ); ?></p>
@@ -201,22 +205,6 @@ $inclusions = [
     </div>
     <?php endif; ?>
 
-  </div>
-</section>
-
-<!-- ── Pricing placeholder ──────────────────────────────────── -->
-<section class="bg-white py-16 px-4 sm:px-6 lg:px-8" aria-label="Pricing">
-  <div class="max-w-2xl mx-auto text-center">
-    <div class="bg-gray-50 rounded-3xl p-8 shadow-card">
-      <h2 class="font-heading text-brand-navy uppercase text-2xl mb-3">Group Pricing</h2>
-      <p class="font-body text-gray-600 text-base mb-6">Group pricing for multiple boats available on request. Call us on <?php echo esc_html( $phone ); ?> or send us a message.</p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="tel:<?php echo esc_attr( preg_replace( '/\s+/', '', $phone ) ); ?>" class="btn-primary text-base px-8 py-4">
-          Call <?php echo esc_html( $phone ); ?>
-        </a>
-        <a href="mailto:<?php echo esc_attr( $email ); ?>" class="btn-outline-navy text-base px-8 py-4">Email Us</a>
-      </div>
-    </div>
   </div>
 </section>
 

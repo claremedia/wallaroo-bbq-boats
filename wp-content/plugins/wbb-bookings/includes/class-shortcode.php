@@ -18,7 +18,36 @@ class WBB_Shortcode {
 		$min_group   = (int) wbb_setting( 'min_group_size', 2 );
 		$max_per_boat = (int) wbb_setting( 'max_per_boat', 6 );
 		$show_pricing = wbb_setting( 'show_pricing', '1' );
+		$currency     = wbb_setting( 'currency_symbol', '$' );
 		$phone = function_exists( 'wallaroo_option' ) ? wallaroo_option( 'phone' ) : get_bloginfo( 'admin_email' );
+
+		// ── Extras (Food & Drink) ─────────────────────────────────────────
+		// Group active menu items by category. When there are none, the Extras
+		// step is omitted entirely and the remaining steps shift down.
+		$menu_by_cat = array();
+		if ( class_exists( 'WBB_Menu' ) ) {
+			foreach ( WBB_Menu::get_items( null, true ) as $mi ) {
+				$menu_by_cat[ $mi->category ][] = $mi;
+			}
+		}
+		$has_extras = ! empty( $menu_by_cat );
+
+		// Step numbering adapts to whether the Extras step is shown.
+		$step_extras  = 4;
+		$step_details = $has_extras ? 5 : 4;
+		$step_review  = $has_extras ? 6 : 5;
+		$total_steps  = $step_review;
+
+		$step_labels = array(
+			1 => __( 'Date', 'wbb-bookings' ),
+			2 => __( 'Time', 'wbb-bookings' ),
+			3 => __( 'Group', 'wbb-bookings' ),
+		);
+		if ( $has_extras ) {
+			$step_labels[ $step_extras ] = __( 'Extras', 'wbb-bookings' );
+		}
+		$step_labels[ $step_details ] = __( 'Details', 'wbb-bookings' );
+		$step_labels[ $step_review ]  = __( 'Review', 'wbb-bookings' );
 
 		ob_start();
 		?>
@@ -28,20 +57,15 @@ class WBB_Shortcode {
 			<nav class="wbb-steps-nav" aria-label="<?php esc_attr_e( 'Booking steps', 'wbb-bookings' ); ?>">
 				<ol class="wbb-steps" role="list">
 					<?php
-					$step_labels = array(
-						1 => 'Date',
-						2 => 'Time',
-						3 => 'Group',
-						4 => 'Details',
-						5 => 'Review',
-					);
+					$display_num = 0;
 					foreach ( $step_labels as $num => $label ) :
+						$display_num++;
 					?>
 					<li class="wbb-step <?php echo 1 === $num ? 'wbb-step--active' : 'wbb-step--upcoming'; ?>" data-step="<?php echo esc_attr( $num ); ?>" aria-current="<?php echo 1 === $num ? 'step' : 'false'; ?>">
-						<div class="wbb-step__circle"><span><?php echo esc_html( $num ); ?></span></div>
+						<div class="wbb-step__circle"><span><?php echo esc_html( $display_num ); ?></span></div>
 						<span class="wbb-step__label"><?php echo esc_html( $label ); ?></span>
 					</li>
-					<?php if ( $num < 5 ) : ?>
+					<?php if ( $num < $total_steps ) : ?>
 					<li class="wbb-step__connector" aria-hidden="true"></li>
 					<?php endif; ?>
 					<?php endforeach; ?>
@@ -110,8 +134,52 @@ class WBB_Shortcode {
 				</div>
 			</section>
 
+			<?php if ( $has_extras ) : ?>
+			<!-- ── Step 4: Extras (Food & Drink) ─────────────────────────── -->
+			<section class="wbb-panel wbb-hidden" id="wbb-panel-<?php echo esc_attr( $step_extras ); ?>" data-step="<?php echo esc_attr( $step_extras ); ?>">
+				<h2 class="wbb-panel__heading"><?php esc_html_e( 'Add food &amp; drinks', 'wbb-bookings' ); ?></h2>
+				<p class="wbb-panel__intro"><?php esc_html_e( 'Optional. Add platters, food and drinks to your booking and we\'ll have it ready when you arrive.', 'wbb-bookings' ); ?></p>
+
+				<?php foreach ( WBB_Menu::CATEGORIES as $cat ) :
+					if ( empty( $menu_by_cat[ $cat ] ) ) {
+						continue;
+					}
+				?>
+				<div class="wbb-extras-cat">
+					<h3 class="wbb-extras-cat__title"><?php echo esc_html( WBB_Menu::category_label( $cat ) ); ?></h3>
+					<?php foreach ( $menu_by_cat[ $cat ] as $mi ) : ?>
+					<div class="wbb-extra-row" data-id="<?php echo esc_attr( $mi->id ); ?>" data-price="<?php echo esc_attr( $mi->price ); ?>" data-title="<?php echo esc_attr( $mi->title ); ?>">
+						<div class="wbb-extra-row__info">
+							<span class="wbb-extra-row__title"><?php echo esc_html( $mi->title ); ?></span>
+							<?php if ( ! empty( $mi->description ) ) : ?>
+							<span class="wbb-extra-row__desc"><?php echo esc_html( $mi->description ); ?></span>
+							<?php endif; ?>
+						</div>
+						<span class="wbb-extra-row__price"><?php echo esc_html( $currency . number_format( (float) $mi->price, 2 ) ); ?></span>
+						<div class="wbb-number-wrap wbb-number-wrap--sm">
+							<button type="button" class="wbb-num-btn wbb-extra-minus" aria-label="<?php esc_attr_e( 'Decrease quantity', 'wbb-bookings' ); ?>">&#8722;</button>
+							<input type="number" class="wbb-input wbb-input--number wbb-extra-qty" value="0" min="0" step="1" aria-label="<?php echo esc_attr( sprintf( __( 'Quantity of %s', 'wbb-bookings' ), $mi->title ) ); ?>">
+							<button type="button" class="wbb-num-btn wbb-extra-plus" aria-label="<?php esc_attr_e( 'Increase quantity', 'wbb-bookings' ); ?>">&#43;</button>
+						</div>
+					</div>
+					<?php endforeach; ?>
+				</div>
+				<?php endforeach; ?>
+
+				<div class="wbb-extras-subtotal">
+					<span><?php esc_html_e( 'Extras total', 'wbb-bookings' ); ?>:</span>
+					<strong id="wbb-extras-total"><?php echo esc_html( $currency . '0.00' ); ?></strong>
+				</div>
+
+				<div class="wbb-actions">
+					<button type="button" class="wbb-btn-ghost wbb-back-btn" data-go-to="3"><?php esc_html_e( 'Back', 'wbb-bookings' ); ?></button>
+					<button type="button" class="wbb-btn-primary" id="wbb-next-extras"><?php esc_html_e( 'Next', 'wbb-bookings' ); ?></button>
+				</div>
+			</section>
+			<?php endif; ?>
+
 			<!-- ── Step 4: Your details ──────────────────────────────────── -->
-			<section class="wbb-panel wbb-hidden" id="wbb-panel-4" data-step="4">
+			<section class="wbb-panel wbb-hidden" id="wbb-panel-<?php echo esc_attr( $step_details ); ?>" data-step="<?php echo esc_attr( $step_details ); ?>">
 				<h2 class="wbb-panel__heading"><?php esc_html_e( 'Your details', 'wbb-bookings' ); ?></h2>
 
 				<div class="wbb-form-group">
@@ -143,13 +211,13 @@ class WBB_Shortcode {
 				</div>
 
 				<div class="wbb-actions">
-					<button type="button" class="wbb-btn-ghost wbb-back-btn" data-go-to="3"><?php esc_html_e( 'Back', 'wbb-bookings' ); ?></button>
-					<button type="button" class="wbb-btn-primary" id="wbb-next-4"><?php esc_html_e( 'Next', 'wbb-bookings' ); ?></button>
+					<button type="button" class="wbb-btn-ghost wbb-back-btn" data-go-to="<?php echo esc_attr( $has_extras ? $step_extras : 3 ); ?>"><?php esc_html_e( 'Back', 'wbb-bookings' ); ?></button>
+					<button type="button" class="wbb-btn-primary" id="wbb-next-details"><?php esc_html_e( 'Next', 'wbb-bookings' ); ?></button>
 				</div>
 			</section>
 
 			<!-- ── Step 5: Review & submit ───────────────────────────────── -->
-			<section class="wbb-panel wbb-hidden" id="wbb-panel-5" data-step="5">
+			<section class="wbb-panel wbb-hidden" id="wbb-panel-<?php echo esc_attr( $step_review ); ?>" data-step="<?php echo esc_attr( $step_review ); ?>">
 				<h2 class="wbb-panel__heading"><?php esc_html_e( 'Review your request', 'wbb-bookings' ); ?></h2>
 				<div id="wbb-summary-card" class="wbb-summary-card" role="region" aria-label="<?php esc_attr_e( 'Booking summary', 'wbb-bookings' ); ?>"></div>
 				<div class="wbb-confirm-wrap">
@@ -160,7 +228,7 @@ class WBB_Shortcode {
 				</div>
 				<p class="wbb-error wbb-hidden" id="wbb-submit-error" role="alert"></p>
 				<div class="wbb-actions">
-					<button type="button" class="wbb-btn-ghost wbb-back-btn" data-go-to="4"><?php esc_html_e( 'Back', 'wbb-bookings' ); ?></button>
+					<button type="button" class="wbb-btn-ghost wbb-back-btn" data-go-to="<?php echo esc_attr( $step_details ); ?>"><?php esc_html_e( 'Back', 'wbb-bookings' ); ?></button>
 					<button type="button" class="wbb-btn-submit" id="wbb-submit-btn" disabled>
 						<?php esc_html_e( 'Send Booking Request', 'wbb-bookings' ); ?>
 					</button>
@@ -197,6 +265,11 @@ class WBB_Shortcode {
 
 		$phone = function_exists( 'wallaroo_option' ) ? wallaroo_option( 'phone' ) : get_bloginfo( 'admin_email' );
 
+		// Recompute whether the Extras step is present so the JS knows the step map.
+		$has_extras   = class_exists( 'WBB_Menu' ) && ! empty( WBB_Menu::get_items( null, true ) );
+		$step_details = $has_extras ? 5 : 4;
+		$step_review  = $has_extras ? 6 : 5;
+
 		wp_localize_script( 'wbb-booking-form', 'wbbData', array(
 			'ajaxUrl'      => admin_url( 'admin-ajax.php' ),
 			'nonce'        => wp_create_nonce( 'wbb_front_nonce' ),
@@ -206,6 +279,9 @@ class WBB_Shortcode {
 			'showPricing'  => (bool) wbb_setting( 'show_pricing', '1' ),
 			'currency'     => wbb_setting( 'currency_symbol', '$' ),
 			'priceLabel'   => wbb_setting( 'price_label', 'Estimated total' ),
+			'hasExtras'    => $has_extras,
+			'stepDetails'  => $step_details,
+			'stepReview'   => $step_review,
 			'sitePhone'    => $phone,
 			'strings'      => array(
 				'loadingDates'   => __( 'Loading available dates…', 'wbb-bookings' ),

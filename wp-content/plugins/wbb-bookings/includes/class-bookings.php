@@ -50,6 +50,41 @@ class WBB_Bookings {
 		$customer_phone  = sanitize_text_field( $_POST['customer_phone']  ?? '' );
 		$notes           = sanitize_textarea_field( $_POST['notes']    ?? '' );
 
+		// Inclusions (Food & Drink extras): validate every line against the menu
+		// table and recompute the total server-side — never trust posted prices.
+		$inclusions_json  = '';
+		$inclusions_total = 0.0;
+		$posted_inclusions = isset( $_POST['inclusions'] ) ? wp_unslash( $_POST['inclusions'] ) : '';
+		if ( $posted_inclusions && class_exists( 'WBB_Menu' ) ) {
+			$decoded = json_decode( $posted_inclusions, true );
+			if ( is_array( $decoded ) ) {
+				$clean = array();
+				foreach ( $decoded as $line ) {
+					$id  = isset( $line['id'] )  ? absint( $line['id'] )  : 0;
+					$qty = isset( $line['qty'] ) ? absint( $line['qty'] ) : 0;
+					if ( ! $id || $qty < 1 ) {
+						continue;
+					}
+					$item = WBB_Menu::get_item( $id );
+					if ( ! $item || (int) $item->active !== 1 ) {
+						continue;
+					}
+					$unit               = (float) $item->price;
+					$inclusions_total  += $unit * $qty;
+					$clean[]            = array(
+						'id'         => $id,
+						'title'      => $item->title,
+						'qty'        => $qty,
+						'unit_price' => $unit,
+					);
+				}
+				if ( ! empty( $clean ) ) {
+					$inclusions_json = wp_json_encode( $clean );
+				}
+			}
+		}
+		$inclusions_total = round( $inclusions_total, 2 );
+
 		// Validate required fields.
 		if ( ! $booking_date || ! preg_match( '/^\d{4}-\d{2}-\d{2}$/', $booking_date ) ||
 			 ! $time_slot || ! $group_size || ! $boats_requested ||
@@ -116,13 +151,15 @@ class WBB_Bookings {
 				'group_size'      => $group_size,
 				'customer_name'   => $customer_name,
 				'customer_email'  => $customer_email,
-				'customer_phone'  => $customer_phone,
-				'notes'           => $notes,
-				'status'          => $status,
-				'created_at'      => $now,
-				'updated_at'      => $now,
+				'customer_phone'   => $customer_phone,
+				'notes'            => $notes,
+				'inclusions'       => $inclusions_json,
+				'inclusions_total' => $inclusions_total,
+				'status'           => $status,
+				'created_at'       => $now,
+				'updated_at'       => $now,
 			),
-			array( '%s', '%d', '%d', '%s', '%s', '%f', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s' )
+			array( '%s', '%d', '%d', '%s', '%s', '%f', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%f', '%s', '%s', '%s' )
 		);
 
 		if ( ! $inserted ) {
@@ -328,7 +365,8 @@ class WBB_Bookings {
 		$out = fopen( 'php://output', 'w' );
 		fputcsv( $out, array(
 			'Booking Ref', 'Status', 'Date', 'Time', 'Duration (hrs)', 'Group Size',
-			'Boats', 'Price/Boat', 'Customer Name', 'Email', 'Phone', 'Notes', 'Staff Notes', 'Submitted',
+			'Boats', 'Price/Boat', 'Customer Name', 'Email', 'Phone', 'Notes',
+			'Inclusions', 'Inclusions Total', 'Staff Notes', 'Submitted',
 		) );
 
 		foreach ( $bookings as $b ) {
@@ -345,6 +383,8 @@ class WBB_Bookings {
 				$b['customer_email'],
 				$b['customer_phone'],
 				$b['notes'],
+				self::format_inclusions_text( $b['inclusions'] ?? '' ),
+				$b['inclusions_total'] ?? '0.00',
 				$b['staff_notes'],
 				$b['created_at'],
 			) );
@@ -352,6 +392,28 @@ class WBB_Bookings {
 
 		fclose( $out );
 		exit;
+	}
+
+	// ── Format an inclusions JSON blob as readable plain text ───────────────
+	// e.g. "Grazing platter ×2, Soft drinks ×6". Returns '' when none.
+	public static function format_inclusions_text( $json ) {
+		if ( empty( $json ) ) {
+			return '';
+		}
+		$items = json_decode( $json, true );
+		if ( ! is_array( $items ) || empty( $items ) ) {
+			return '';
+		}
+		$parts = array();
+		foreach ( $items as $line ) {
+			$title = isset( $line['title'] ) ? $line['title'] : '';
+			$qty   = isset( $line['qty'] )   ? (int) $line['qty'] : 0;
+			if ( '' === $title || $qty < 1 ) {
+				continue;
+			}
+			$parts[] = $title . ' x' . $qty;
+		}
+		return implode( ', ', $parts );
 	}
 
 	// ── Booking reference generator ────────────────────────────────────────

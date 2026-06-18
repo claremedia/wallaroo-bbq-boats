@@ -25,14 +25,16 @@ $drinks_copy  = wbb_inner_field( 'wob_drinks_copy',     'Cold drinks available t
 $boat_img_url = ! empty( $boat_image['url'] ) ? $boat_image['url'] : 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80';
 $boat_img_alt = ! empty( $boat_image['alt'] ) ? $boat_image['alt'] : 'BBQ boat on the water';
 
+// All icons are inline Lucide (https://lucide.dev) line SVGs so they share one
+// colour (navy) via currentColor. No external icon library/webfont required.
 $features = [
-    [ 'type' => 'svg', 'icon' => '<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>',                                                       'label' => wbb_inner_field( 'wob_feature_1', 'Gas BBQ and all cooking gear' ) ],
-    [ 'type' => 'svg', 'icon' => '<path d="M3 2h18v4H3zM4 6l2 14h12l2-14"/><line x1="9" y1="11" x2="15" y2="11"/>',                                           'label' => wbb_inner_field( 'wob_feature_2', 'Plates and cutlery included' ) ],
-    [ 'type' => 'svg', 'icon' => '<path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/>',                          'label' => wbb_inner_field( 'wob_feature_3', 'Cold drinks for sale on board' ) ],
-    [ 'type' => 'svg', 'icon' => '<path d="M3 11l19-9-9 19-2-8-8-2z"/>',                                                                                       'label' => wbb_inner_field( 'wob_feature_4', 'BYO your own food' ) ],
-    [ 'type' => 'png', 'icon' => $icon_dir . 'round-sailboat.png',                                                                                              'label' => wbb_inner_field( 'wob_feature_5', '2 to 6 people per boat' ) ],
-    [ 'type' => 'png', 'icon' => $icon_dir . 'rescue-tube.png',                                                                                                 'label' => wbb_inner_field( 'wob_feature_6', 'Life jackets provided' ) ],
-    [ 'type' => 'svg', 'icon' => '<path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',                                    'label' => wbb_inner_field( 'wob_feature_7', 'Safety briefing before you head out' ) ],
+    [ 'icon' => '<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>',                                          'label' => wbb_inner_field( 'wob_feature_1', 'Gas BBQ and all cooking gear' ) ],
+    [ 'icon' => '<path d="M3 2h18v4H3zM4 6l2 14h12l2-14"/><line x1="9" y1="11" x2="15" y2="11"/>',                                                                                                                                          'label' => wbb_inner_field( 'wob_feature_2', 'Plates and cutlery included' ) ],
+    [ 'icon' => '<path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/>',                                                                                                                            'label' => wbb_inner_field( 'wob_feature_3', 'Cold drinks for sale on board' ) ],
+    [ 'icon' => '<path d="M3 2v7c0 1.1.9 2 2 2h0a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/>',                                                                                          'label' => wbb_inner_field( 'wob_feature_4', 'BYO your own food' ) ],
+    [ 'icon' => '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',                                                              'label' => wbb_inner_field( 'wob_feature_5', '2 to 6 people per boat' ) ],
+    [ 'icon' => '<circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/><circle cx="12" cy="12" r="4"/>',                          'label' => wbb_inner_field( 'wob_feature_6', 'Life jackets provided' ) ],
+    [ 'icon' => '<path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',                                                                                                                                   'label' => wbb_inner_field( 'wob_feature_7', 'Safety briefing before you head out' ) ],
 ];
 ?>
 
@@ -99,13 +101,9 @@ $features = [
           <?php foreach ( $features as $feature ) : ?>
           <li class="flex items-center gap-4">
             <span class="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-brand-cream rounded-xl">
-              <?php if ( $feature['type'] === 'png' ) : ?>
-                <img src="<?php echo esc_url( $feature['icon'] ); ?>" alt="" width="24" height="24" class="w-6 h-6 object-contain" loading="lazy" aria-hidden="true">
-              <?php else : ?>
-                <svg class="w-5 h-5 text-brand-navy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <?php echo $feature['icon']; ?>
-                </svg>
-              <?php endif; ?>
+              <svg class="w-5 h-5 text-brand-navy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <?php echo $feature['icon']; ?>
+              </svg>
             </span>
             <span class="font-body text-gray-700 text-base"><?php echo esc_html( $feature['label'] ); ?></span>
           </li>
@@ -149,7 +147,9 @@ $features = [
       <!-- Food card -->
       <div class="bg-brand-cream rounded-3xl p-8">
         <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center mb-5 shadow-card">
-          <img src="<?php echo esc_url( $icon_dir ); ?>fish-facing-right.png" alt="" width="28" height="28" class="w-7 h-7 object-contain" loading="lazy" aria-hidden="true">
+          <svg class="w-6 h-6 text-brand-navy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 2v7c0 1.1.9 2 2 2h0a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/>
+          </svg>
         </div>
         <h3 class="font-heading text-brand-navy uppercase text-xl mb-3">Bring Your Own Food</h3>
         <p class="font-body text-gray-700 text-sm leading-relaxed"><?php echo esc_html( $food_copy ); ?></p>
@@ -158,7 +158,7 @@ $features = [
       <!-- Drinks card -->
       <div class="bg-brand-cream rounded-3xl p-8">
         <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center mb-5 shadow-card">
-          <svg class="w-6 h-6 text-brand-sky" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <svg class="w-6 h-6 text-brand-navy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/>
           </svg>
         </div>

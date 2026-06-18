@@ -101,11 +101,38 @@
   }
 
   .nav-link {
-    @apply px-4 py-2 text-sm font-body font-medium text-gray-700 rounded-xl transition-colors duration-150 hover:text-brand-navy hover:bg-gray-50;
+    @apply inline-flex items-center px-4 py-2 text-sm font-body font-medium text-gray-700 rounded-xl transition-colors duration-150 hover:text-brand-navy hover:bg-brand-cream;
+  }
+
+  .nav-link:hover {
+    @apply shadow-sm;
   }
 
   .nav-link-active {
-    @apply text-brand-navy font-semibold;
+    @apply text-brand-navy font-semibold bg-brand-cream;
+  }
+
+  /* Per-item icon — always shown, sits before the label. */
+  .nav-link__icon {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 0.375rem;
+  }
+
+  .nav-link__icon svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  /* The whole pill (background, icon, text) gently floats on hover. */
+  .nav-link:hover {
+    animation: wbb-nav-float 2.4s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav-link:hover {
+      animation: none;
+    }
   }
 
   /* Section headings */
@@ -127,6 +154,14 @@
   .star-rating {
     @apply flex gap-0.5;
   }
+}
+
+/* --- Keyframes --------------------------------------------- */
+/* Gentle bob + subtle sway, like the whole pill floating on water. */
+@keyframes wbb-nav-float {
+  0%   { transform: translateY(0)    rotate(-1deg); }
+  50%  { transform: translateY(-3px) rotate(1deg);  }
+  100% { transform: translateY(0)    rotate(-1deg); }
 }
 
 /* --- Utility overrides ------------------------------------- */

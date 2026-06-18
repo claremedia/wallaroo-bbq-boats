@@ -49,7 +49,7 @@ if ( $faq_query->have_posts() ) {
         [ 'q' => 'Where exactly are you located?',  'a' => 'Copper Cove Marina, Wallaroo SA. If you are heading toward the Coopers Alehouse you will see us on the way down. Full directions and a map are on the Find Us page.' ],
         [ 'q' => 'What if the weather is bad?',     'a' => 'Safety comes first. If conditions are not suitable we will contact you directly to reschedule or refund. We keep an eye on the forecast and will not send anyone out in unsafe conditions.' ],
         [ 'q' => 'Is it suitable for kids?',        'a' => 'Yes. Life jackets are provided in all sizes. Kids need to be supervised by an adult on board at all times.' ],
-        [ 'q' => 'What should we bring?',           'a' => 'Food, sunscreen, and your people. Everything else is on board.' ],
+        [ 'q' => 'What should we bring?',           'a' => 'Food, sunscreen, and the crew. Everything else is on board.' ],
     ];
 }
 ?>

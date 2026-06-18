@@ -42,7 +42,7 @@ add_action( 'acf/init', function () {
                 'label'         => 'Subheading',
                 'name'          => 'hero_subheading',
                 'type'          => 'text',
-                'default_value' => 'Bring your people. We\'ll sort the rest.',
+                'default_value' => 'Hire a boat, fire up the BBQ, and spend the day on the water.',
             ],
         ],
         'location'   => [ [ [ 'param' => 'page_type', 'operator' => '==', 'value' => 'front_page' ] ] ],
@@ -147,6 +147,13 @@ add_action( 'acf/init', function () {
                 'name'          => 'trust_label_4',
                 'type'          => 'text',
                 'default_value' => 'Down at the marina',
+            ],
+            [
+                'key'           => 'field_trust_label_5',
+                'label'         => 'Item 5 Label',
+                'name'          => 'trust_label_5',
+                'type'          => 'text',
+                'default_value' => '100% locally owned & operated',
             ],
         ],
         'location'   => [ [ [ 'param' => 'page_type', 'operator' => '==', 'value' => 'front_page' ] ] ],
@@ -278,7 +285,7 @@ add_action( 'acf/init', function () {
                 'label'         => 'Hero Subheading',
                 'name'          => 'bn_hero_subheading',
                 'type'          => 'text',
-                'default_value' => 'Pick a date, grab your people, and head down the marina.',
+                'default_value' => 'Pick a date, grab the crew, and head down the marina.',
             ],
             [
                 'key'           => 'field_bn_placeholder_message',
@@ -368,7 +375,7 @@ add_action( 'acf/init', function () {
                 'label'         => 'Hero Headline',
                 'name'          => 'grp_hero_headline',
                 'type'          => 'text',
-                'default_value' => 'BRING YOUR PEOPLE',
+                'default_value' => 'BOOK THE WHOLE FLEET',
             ],
             [
                 'key'           => 'field_grp_hero_subheading',
@@ -687,6 +694,42 @@ add_action( 'acf/init', function () {
         'fields'     => $gv_step_fields,
         'location'   => [ [ [ 'param' => 'page_template', 'operator' => '==', 'value' => 'page-gift-vouchers.php' ] ] ],
         'menu_order' => 10,
+        'active'     => true,
+    ] );
+
+    // --------------------------------------------------------
+    // Page: Food & Drink
+    // --------------------------------------------------------
+    acf_add_local_field_group( [
+        'key'    => 'group_page_food_drink',
+        'title'  => 'Food & Drink — Content',
+        'fields' => [
+            [
+                'key'           => 'field_fd_hero_headline',
+                'label'         => 'Hero Headline',
+                'name'          => 'fd_hero_headline',
+                'type'          => 'text',
+                'default_value' => 'FOOD & DRINK',
+            ],
+            [
+                'key'           => 'field_fd_hero_subheading',
+                'label'         => 'Hero Subheading',
+                'name'          => 'fd_hero_subheading',
+                'type'          => 'text',
+                'default_value' => 'Sort the food before you get on the water. Add it to your booking or grab it on the day.',
+            ],
+            [
+                'key'           => 'field_fd_hero_image',
+                'label'         => 'Hero Background Image',
+                'name'          => 'fd_hero_image',
+                'type'          => 'image',
+                'return_format' => 'array',
+                'preview_size'  => 'medium',
+                'instructions'  => 'Full-bleed hero image. Landscape, at least 1400×600px. Leave blank for a plain colour hero.',
+            ],
+        ],
+        'location'   => [ [ [ 'param' => 'page_template', 'operator' => '==', 'value' => 'page-food-drink.php' ] ] ],
+        'menu_order' => 0,
         'active'     => true,
     ] );
 

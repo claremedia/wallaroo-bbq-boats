@@ -28,6 +28,8 @@ define( 'WALLAROO_DEFAULTS', [
     'address_line2'    => 'Wallaroo, South Australia',
     'footer_tagline'   => 'Self-drive BBQ boat hire at Copper Cove Marina, Wallaroo, South Australia. Launching September 2026.',
     'booking_url'      => '',
+    'facebook_url'     => '',
+    'instagram_url'    => '',
     'logo_id'          => 0,
     'meta_description' => 'Self-drive BBQ boat hire at Copper Cove Marina, Wallaroo SA. 2 to 6 people per boat. No licence needed. Book your session online.',
 ] );
@@ -113,6 +115,8 @@ add_action( 'admin_init', function () {
     register_setting( 'wallaroo_options_group', 'wallaroo_address_line2',  $text );
     register_setting( 'wallaroo_options_group', 'wallaroo_footer_tagline',   $area );
     register_setting( 'wallaroo_options_group', 'wallaroo_booking_url',     $url  );
+    register_setting( 'wallaroo_options_group', 'wallaroo_facebook_url',    $url  );
+    register_setting( 'wallaroo_options_group', 'wallaroo_instagram_url',   $url  );
     register_setting( 'wallaroo_options_group', 'wallaroo_meta_description', $area );
 } );
 
@@ -361,6 +365,50 @@ function wallaroo_render_settings_page(): void {
                                 placeholder="https://book.wallaroobbqboats.com.au"
                             >
                             <p class="description">Leave blank to send "Book Now" buttons to the Book Now page. Enter an external URL (e.g. Rezdy, FareHarbor) to override.</p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- ── SOCIAL ────────────────────────────────────── -->
+            <div style="background:#fff;border:1px solid #c3c4c7;border-radius:4px;padding:24px;margin-bottom:20px;max-width:760px;">
+                <h2 style="margin-top:0;padding-bottom:12px;border-bottom:1px solid #f0f0f1;font-size:1rem;">
+                    Social Media
+                </h2>
+                <p style="color:#646970;font-size:13px;margin-top:0;">
+                    Paste the full URL to each profile. Icons appear in the footer automatically — only the ones you fill in are shown.
+                </p>
+
+                <table class="form-table" role="presentation" style="margin-top:0;">
+                    <tr>
+                        <th scope="row" style="width:200px;">
+                            <label for="wallaroo_facebook_url">Facebook URL</label>
+                        </th>
+                        <td>
+                            <input
+                                type="url"
+                                name="wallaroo_facebook_url"
+                                id="wallaroo_facebook_url"
+                                value="<?php echo esc_url( wallaroo_option( 'facebook_url' ) ); ?>"
+                                class="large-text"
+                                placeholder="https://www.facebook.com/wallaroobbqboats"
+                            >
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="wallaroo_instagram_url">Instagram URL</label>
+                        </th>
+                        <td>
+                            <input
+                                type="url"
+                                name="wallaroo_instagram_url"
+                                id="wallaroo_instagram_url"
+                                value="<?php echo esc_url( wallaroo_option( 'instagram_url' ) ); ?>"
+                                class="large-text"
+                                placeholder="https://www.instagram.com/wallaroobbqboats"
+                            >
+                            <p class="description">Optional — leave blank for now if there's no Instagram account yet.</p>
                         </td>
                     </tr>
                 </table>
