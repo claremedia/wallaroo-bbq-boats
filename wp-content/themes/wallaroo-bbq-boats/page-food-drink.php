@@ -145,7 +145,6 @@ $cat_subtitles = [
     <p class="font-body text-blue-100 text-base mb-6">Pick your extras when you book — it'll be ready when you arrive.</p>
     <div class="flex flex-wrap items-center justify-center gap-4">
       <a href="<?php echo esc_url( $booking_url ); ?>" class="btn-primary text-base px-8 py-3">Book Now</a>
-      <a href="<?php echo esc_attr( $tel_href ); ?>" class="btn-outline text-base px-8 py-3">Call <?php echo esc_html( $phone ); ?></a>
     </div>
   </div>
 </section>

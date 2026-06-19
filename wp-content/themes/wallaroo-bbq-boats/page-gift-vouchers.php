@@ -143,8 +143,8 @@ $how_steps = [
     <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/>
   </svg>
   <div class="max-w-3xl mx-auto text-center">
-    <h2 class="font-heading text-white uppercase text-3xl lg:text-4xl mb-4">The Gift That Gets Them Off the Couch</h2>
-    <p class="font-body text-blue-100 text-lg mb-8">Give them something worth doing.</p>
+    <h2 class="font-heading text-white uppercase text-3xl lg:text-4xl mb-4"><?php echo esc_html( wbb_inner_field( 'gv_cta_heading', 'Give the Gift of a Day on the Water' ) ); ?></h2>
+    <p class="font-body text-blue-100 text-lg mb-8"><?php echo esc_html( wbb_inner_field( 'gv_cta_subtext', 'Sunshine, good food, and time out on the water.' ) ); ?></p>
     <a href="<?php echo esc_url( $booking_url ); ?>" class="btn-primary text-base px-10 py-4">Book Now</a>
   </div>
 </section>
