@@ -36,6 +36,13 @@ add_action( 'init', function () {
         'supports'            => [ 'title', 'editor', 'page-attributes' ],
         'rewrite'             => false,
         'has_archive'         => false,
+        // Custom capabilities so Reviews access can be granted to the Business
+        // Manager role without exposing the core "Posts" editor. map_meta_cap
+        // maps the per-post meta caps (edit_post, delete_post…) onto these
+        // primitives, which are assigned to roles in
+        // mu-plugins/wbb-business-manager.php.
+        'capability_type'     => [ 'wbb_review', 'wbb_reviews' ],
+        'map_meta_cap'        => true,
     ] );
 
 } );

@@ -18,7 +18,7 @@ class WBB_Admin {
 		add_menu_page(
 			__( 'BBQ Bookings', 'wbb-bookings' ),
 			__( 'BBQ Bookings', 'wbb-bookings' ),
-			'manage_options',
+			'wbb_manage',
 			'wbb-bookings',
 			array( __CLASS__, 'page_bookings' ),
 			'dashicons-calendar-alt',
@@ -30,7 +30,7 @@ class WBB_Admin {
 			'wbb-bookings',
 			__( 'Bookings', 'wbb-bookings' ),
 			__( 'Bookings', 'wbb-bookings' ),
-			'manage_options',
+			'wbb_manage',
 			'wbb-bookings',
 			array( __CLASS__, 'page_bookings' )
 		);
@@ -40,7 +40,7 @@ class WBB_Admin {
 			'wbb-bookings',
 			__( 'Availability', 'wbb-bookings' ),
 			__( 'Availability', 'wbb-bookings' ),
-			'manage_options',
+			'wbb_manage',
 			'wbb-availability',
 			array( __CLASS__, 'page_availability' )
 		);
@@ -50,7 +50,7 @@ class WBB_Admin {
 			'wbb-bookings',
 			__( 'Food & Drink', 'wbb-bookings' ),
 			__( 'Food & Drink', 'wbb-bookings' ),
-			'manage_options',
+			'wbb_manage',
 			'wbb-menu',
 			array( __CLASS__, 'page_menu' )
 		);
@@ -60,7 +60,7 @@ class WBB_Admin {
 			'wbb-bookings',
 			__( 'Booking Settings', 'wbb-bookings' ),
 			__( 'Settings', 'wbb-bookings' ),
-			'manage_options',
+			'wbb_manage',
 			'wbb-settings',
 			array( __CLASS__, 'page_settings' )
 		);
@@ -69,7 +69,7 @@ class WBB_Admin {
 		global $submenu;
 		$submenu['wbb-bookings'][] = array(
 			__( 'View Book Now Page', 'wbb-bookings' ),
-			'manage_options',
+			'wbb_manage',
 			home_url( '/book-now/' ),
 			__( 'View Book Now Page', 'wbb-bookings' ),
 		);
@@ -77,7 +77,7 @@ class WBB_Admin {
 
 	// ── Page callbacks ─────────────────────────────────────────────────────
 	public static function page_bookings() {
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! current_user_can( 'wbb_manage' ) ) {
 			return;
 		}
 		// Edit a single booking (post-editor style).
@@ -91,7 +91,7 @@ class WBB_Admin {
 	}
 
 	public static function page_availability() {
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! current_user_can( 'wbb_manage' ) ) {
 			return;
 		}
 		require_once WBB_PLUGIN_DIR . 'admin/availability-page.php';
@@ -99,7 +99,7 @@ class WBB_Admin {
 	}
 
 	public static function page_settings() {
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! current_user_can( 'wbb_manage' ) ) {
 			return;
 		}
 		require_once WBB_PLUGIN_DIR . 'admin/settings-page.php';
@@ -107,7 +107,7 @@ class WBB_Admin {
 	}
 
 	public static function page_menu() {
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! current_user_can( 'wbb_manage' ) ) {
 			return;
 		}
 		require_once WBB_PLUGIN_DIR . 'admin/menu-page.php';

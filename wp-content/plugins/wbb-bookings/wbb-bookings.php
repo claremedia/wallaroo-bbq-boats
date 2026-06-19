@@ -27,6 +27,7 @@ require_once WBB_PLUGIN_DIR . 'includes/class-schedule.php';
 require_once WBB_PLUGIN_DIR . 'includes/class-availability.php';
 require_once WBB_PLUGIN_DIR . 'includes/class-bookings.php';
 require_once WBB_PLUGIN_DIR . 'includes/class-menu.php';
+require_once WBB_PLUGIN_DIR . 'includes/class-manifest.php';
 require_once WBB_PLUGIN_DIR . 'includes/class-shortcode.php';
 
 // ── Admin only ─────────────────────────────────────────────────────────────
@@ -75,6 +76,9 @@ WBB_Menu::register_ajax();
 
 // ── CSV export via admin-post ──────────────────────────────────────────────
 add_action( 'admin_post_wbb_export_bookings', array( 'WBB_Bookings', 'export_csv' ) );
+
+// ── Printable manifests (daily run sheet + food & drink) via admin-post ─────
+WBB_Manifest::register();
 
 // ── Full booking edit save (admin) ─────────────────────────────────────────
 add_action( 'admin_post_wbb_admin_save_booking', array( 'WBB_Bookings', 'save_booking_full' ) );

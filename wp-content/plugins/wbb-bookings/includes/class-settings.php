@@ -88,6 +88,13 @@ class WBB_Settings {
 				'sanitize_callback' => array( __CLASS__, 'sanitize' ),
 			)
 		);
+
+		// The settings form posts to options.php, which defaults to requiring
+		// manage_options. Allow saving with the custom wbb_manage capability so
+		// the Business Manager role can save (administrators have it too).
+		add_filter( 'option_page_capability_wbb_settings_group', function () {
+			return 'wbb_manage';
+		} );
 	}
 
 	// ── Sanitise before saving ─────────────────────────────────────────────

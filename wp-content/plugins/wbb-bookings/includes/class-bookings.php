@@ -204,7 +204,7 @@ class WBB_Bookings {
 	// ── Admin: update booking status ───────────────────────────────────────
 	public static function ajax_update_booking_status() {
 		check_ajax_referer( 'wbb_admin_nonce', 'nonce' );
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! current_user_can( 'wbb_manage' ) ) {
 			wp_send_json_error( array( 'message' => 'Unauthorised.' ) );
 		}
 
@@ -256,7 +256,7 @@ class WBB_Bookings {
 	// ── Admin: save staff notes ────────────────────────────────────────────
 	public static function ajax_save_booking_notes() {
 		check_ajax_referer( 'wbb_admin_nonce', 'nonce' );
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! current_user_can( 'wbb_manage' ) ) {
 			wp_send_json_error( array( 'message' => 'Unauthorised.' ) );
 		}
 
@@ -282,7 +282,7 @@ class WBB_Bookings {
 	// ── Admin: get single booking (for inline view) ────────────────────────
 	public static function ajax_get_booking() {
 		check_ajax_referer( 'wbb_admin_nonce', 'nonce' );
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! current_user_can( 'wbb_manage' ) ) {
 			wp_send_json_error( array( 'message' => 'Unauthorised.' ) );
 		}
 
@@ -307,7 +307,7 @@ class WBB_Bookings {
 	// ── Admin: reset settings to defaults ─────────────────────────────────
 	public static function ajax_reset_settings() {
 		check_ajax_referer( 'wbb_admin_nonce', 'nonce' );
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! current_user_can( 'wbb_manage' ) ) {
 			wp_send_json_error( array( 'message' => 'Unauthorised.' ) );
 		}
 		update_option( 'wbb_settings', WBB_Settings::get_defaults() );
@@ -316,7 +316,7 @@ class WBB_Bookings {
 
 	// ── CSV export ─────────────────────────────────────────────────────────
 	public static function export_csv() {
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! current_user_can( 'wbb_manage' ) ) {
 			wp_die( 'Unauthorised' );
 		}
 		check_admin_referer( 'wbb_export_bookings' );
@@ -402,7 +402,7 @@ class WBB_Bookings {
 
 	// ── Admin: full booking edit (from the edit screen) ─────────────────────
 	public static function save_booking_full() {
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! current_user_can( 'wbb_manage' ) ) {
 			wp_die( 'Unauthorised' );
 		}
 		check_admin_referer( 'wbb_save_booking' );

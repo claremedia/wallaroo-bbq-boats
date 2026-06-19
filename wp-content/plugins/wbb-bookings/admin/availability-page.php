@@ -12,7 +12,7 @@
 defined( 'ABSPATH' ) || exit;
 
 function wbb_render_availability_page() {
-	if ( ! current_user_can( 'manage_options' ) ) {
+	if ( ! current_user_can( 'wbb_manage' ) ) {
 		return;
 	}
 	?>

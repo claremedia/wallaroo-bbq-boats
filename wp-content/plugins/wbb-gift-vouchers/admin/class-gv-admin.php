@@ -16,18 +16,18 @@ class WBB_GV_Admin {
 		add_menu_page(
 			__( 'Gift Vouchers', 'wbb-gift-vouchers' ),
 			__( 'Gift Vouchers', 'wbb-gift-vouchers' ),
-			'manage_options',
+			'wbb_manage',
 			'wbb-gv-vouchers',
 			array( __CLASS__, 'page_vouchers' ),
 			'dashicons-tickets-alt',
 			2
 		);
-		add_submenu_page( 'wbb-gv-vouchers', __( 'Vouchers', 'wbb-gift-vouchers' ), __( 'Vouchers', 'wbb-gift-vouchers' ), 'manage_options', 'wbb-gv-vouchers', array( __CLASS__, 'page_vouchers' ) );
-		add_submenu_page( 'wbb-gv-vouchers', __( 'Gift Voucher Settings', 'wbb-gift-vouchers' ), __( 'Settings', 'wbb-gift-vouchers' ), 'manage_options', 'wbb-gv-settings', array( __CLASS__, 'page_settings' ) );
+		add_submenu_page( 'wbb-gv-vouchers', __( 'Vouchers', 'wbb-gift-vouchers' ), __( 'Vouchers', 'wbb-gift-vouchers' ), 'wbb_manage', 'wbb-gv-vouchers', array( __CLASS__, 'page_vouchers' ) );
+		add_submenu_page( 'wbb-gv-vouchers', __( 'Gift Voucher Settings', 'wbb-gift-vouchers' ), __( 'Settings', 'wbb-gift-vouchers' ), 'wbb_manage', 'wbb-gv-settings', array( __CLASS__, 'page_settings' ) );
 	}
 
 	public static function page_vouchers() {
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! current_user_can( 'wbb_manage' ) ) {
 			return;
 		}
 		require_once WBB_GV_DIR . 'admin/vouchers-page.php';
@@ -35,7 +35,7 @@ class WBB_GV_Admin {
 	}
 
 	public static function page_settings() {
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! current_user_can( 'wbb_manage' ) ) {
 			return;
 		}
 		require_once WBB_GV_DIR . 'admin/settings-page.php';

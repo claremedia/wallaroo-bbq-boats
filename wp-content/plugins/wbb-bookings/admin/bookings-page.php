@@ -9,7 +9,7 @@
 defined( 'ABSPATH' ) || exit;
 
 function wbb_render_bookings_page() {
-	if ( ! current_user_can( 'manage_options' ) ) {
+	if ( ! current_user_can( 'wbb_manage' ) ) {
 		return;
 	}
 
@@ -122,6 +122,33 @@ function wbb_render_bookings_page() {
 				</a>
 			</div>
 		</form>
+
+		<!-- ── Manifests ──────────────────────────────────────────────── -->
+		<?php
+		$today          = current_time( 'Y-m-d' );
+		$manifest_date  = ( $filter_date_from && preg_match( '/^\d{4}-\d{2}-\d{2}$/', $filter_date_from ) ) ? $filter_date_from : $today;
+		$food_from      = $manifest_date;
+		$food_to        = ( $filter_date_to && preg_match( '/^\d{4}-\d{2}-\d{2}$/', $filter_date_to ) ) ? $filter_date_to : $manifest_date;
+		?>
+		<div class="wbb-manifest-bar">
+			<form method="get" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" target="_blank" class="wbb-manifest-form">
+				<input type="hidden" name="action" value="wbb_export_manifest">
+				<?php wp_nonce_field( 'wbb_export_manifest' ); ?>
+				<label for="wbb-manifest-date"><?php esc_html_e( 'Daily run sheet:', 'wbb-bookings' ); ?></label>
+				<input type="date" id="wbb-manifest-date" name="manifest_date" value="<?php echo esc_attr( $manifest_date ); ?>" required>
+				<button type="submit" class="button button-primary">&#128196; <?php esc_html_e( 'Download Day Manifest', 'wbb-bookings' ); ?></button>
+			</form>
+
+			<form method="get" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" target="_blank" class="wbb-manifest-form">
+				<input type="hidden" name="action" value="wbb_export_food_manifest">
+				<?php wp_nonce_field( 'wbb_export_food_manifest' ); ?>
+				<label for="wbb-food-from"><?php esc_html_e( 'Food &amp; Drink:', 'wbb-bookings' ); ?></label>
+				<input type="date" id="wbb-food-from" name="date_from" value="<?php echo esc_attr( $food_from ); ?>" required>
+				<span class="wbb-manifest-sep"><?php esc_html_e( 'to', 'wbb-bookings' ); ?></span>
+				<input type="date" id="wbb-food-to" name="date_to" value="<?php echo esc_attr( $food_to ); ?>" required>
+				<button type="submit" class="button">&#127869; <?php esc_html_e( 'Download Food &amp; Drink Manifest', 'wbb-bookings' ); ?></button>
+			</form>
+		</div>
 
 		<!-- ── Results info ───────────────────────────────────────────── -->
 		<p class="wbb-results-info">

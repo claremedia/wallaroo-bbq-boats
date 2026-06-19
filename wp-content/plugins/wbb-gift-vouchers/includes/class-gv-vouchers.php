@@ -127,7 +127,7 @@ class WBB_GV_Vouchers {
 
 	// ── Admin PDF (capability-gated) ───────────────────────────────────────
 	public static function admin_pdf() {
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! current_user_can( 'wbb_manage' ) ) {
 			wp_die( 'Unauthorised' );
 		}
 		check_admin_referer( 'wbb_gv_admin_pdf' );
@@ -143,7 +143,7 @@ class WBB_GV_Vouchers {
 	// ── Admin: update status ───────────────────────────────────────────────
 	public static function ajax_update_status() {
 		check_ajax_referer( 'wbb_gv_admin_nonce', 'nonce' );
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! current_user_can( 'wbb_manage' ) ) {
 			wp_send_json_error( array( 'message' => 'Unauthorised.' ) );
 		}
 		$id     = absint( $_POST['voucher_id'] ?? 0 );
@@ -159,7 +159,7 @@ class WBB_GV_Vouchers {
 	// ── Admin: save staff notes ────────────────────────────────────────────
 	public static function ajax_save_notes() {
 		check_ajax_referer( 'wbb_gv_admin_nonce', 'nonce' );
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! current_user_can( 'wbb_manage' ) ) {
 			wp_send_json_error( array( 'message' => 'Unauthorised.' ) );
 		}
 		$id    = absint( $_POST['voucher_id'] ?? 0 );
@@ -175,7 +175,7 @@ class WBB_GV_Vouchers {
 	// ── Admin: get single voucher ──────────────────────────────────────────
 	public static function ajax_get_voucher() {
 		check_ajax_referer( 'wbb_gv_admin_nonce', 'nonce' );
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! current_user_can( 'wbb_manage' ) ) {
 			wp_send_json_error( array( 'message' => 'Unauthorised.' ) );
 		}
 		$id = absint( $_POST['voucher_id'] ?? 0 );
@@ -202,7 +202,7 @@ class WBB_GV_Vouchers {
 
 	// ── CSV export ─────────────────────────────────────────────────────────
 	public static function export_csv() {
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! current_user_can( 'wbb_manage' ) ) {
 			wp_die( 'Unauthorised' );
 		}
 		check_admin_referer( 'wbb_gv_export' );

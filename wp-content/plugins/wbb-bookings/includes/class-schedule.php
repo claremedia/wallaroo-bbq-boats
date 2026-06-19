@@ -438,7 +438,7 @@ class WBB_Schedule {
 
 	private static function require_admin() {
 		check_ajax_referer( 'wbb_admin_nonce', 'nonce' );
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! current_user_can( 'wbb_manage' ) ) {
 			wp_send_json_error( array( 'message' => 'Unauthorised.' ) );
 		}
 	}

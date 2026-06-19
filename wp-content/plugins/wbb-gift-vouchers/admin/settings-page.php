@@ -6,7 +6,7 @@
 defined( 'ABSPATH' ) || exit;
 
 function wbb_gv_render_settings_page() {
-	if ( ! current_user_can( 'manage_options' ) ) {
+	if ( ! current_user_can( 'wbb_manage' ) ) {
 		return;
 	}
 	$s = wp_parse_args( get_option( 'wbb_gv_settings', array() ), WBB_GV_Settings::get_defaults() );

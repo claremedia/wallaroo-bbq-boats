@@ -45,6 +45,13 @@ class WBB_GV_Settings {
 		register_setting( 'wbb_gv_settings_group', 'wbb_gv_settings', array(
 			'sanitize_callback' => array( __CLASS__, 'sanitize' ),
 		) );
+
+		// Allow saving via options.php with the custom wbb_manage capability
+		// (instead of the default manage_options) so the Business Manager role
+		// can save. Administrators have wbb_manage too.
+		add_filter( 'option_page_capability_wbb_gv_settings_group', function () {
+			return 'wbb_manage';
+		} );
 	}
 
 	public static function sanitize( $input ) {

@@ -225,6 +225,40 @@
   font-size: 13px;
 }
 
+/* ── Manifests ────────────────────────────────────────────────────────── */
+.wbb-manifest-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  align-items: center;
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  background: #f6f7f7;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+}
+
+.wbb-manifest-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.wbb-manifest-form label {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.wbb-manifest-form input[type="date"] {
+  font-size: 13px;
+}
+
+.wbb-manifest-sep {
+  color: #646970;
+  font-size: 13px;
+}
+
 /* ── Results info / empty ─────────────────────────────────────────────── */
 .wbb-results-info {
   color: #646970;

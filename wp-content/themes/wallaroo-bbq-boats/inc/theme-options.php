@@ -89,12 +89,19 @@ add_action( 'admin_menu', function () {
     add_menu_page(
         'Wallaroo BBQ Boats — Site Settings',
         'Site Settings',
-        'manage_options',
+        'wbb_manage',
         'wallaroo-settings',
         'wallaroo_render_settings_page',
         'data:image/svg+xml;base64,' . base64_encode( '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#a7aaad" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>' ),
         1 // First in menu, above Dashboard
     );
+} );
+
+// Allow saving the Site Settings form (which posts to options.php) with the
+// custom wbb_manage capability instead of the default manage_options, so the
+// Business Manager role can save. Administrators have wbb_manage too.
+add_filter( 'option_page_capability_wallaroo_options_group', function () {
+    return 'wbb_manage';
 } );
 
 // ============================================================

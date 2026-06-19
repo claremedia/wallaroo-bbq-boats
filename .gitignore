@@ -75,4 +75,7 @@ extract-docx*.ps1
 
 # Object cache
 /wp-content/object-cache.php
-/wp-content/mu-plugins/
+
+# Must-use plugins - third-party managed separately; track only our custom one
+/wp-content/mu-plugins/*
+!/wp-content/mu-plugins/wbb-business-manager.php

@@ -51,7 +51,24 @@
       "Bash(__NEW_LINE_cf151380a3d46491__ echo \"\")",
       "Bash(\"$MYSQL\" -h 127.0.0.1 -P 10108 -u root -proot local -e \"SHOW COLUMNS FROM \\\\`wp_wbb_boat_schedules\\\\`;\")",
       "Bash(\"$MYSQL\" -h 127.0.0.1 -P 10108 -u root -proot local -e \"SHOW COLUMNS FROM \\\\`wp_wbb_schedule_exceptions\\\\`;\")",
-      "Bash(\"$MYSQL\" -h 127.0.0.1 -P 10108 -u root -proot local -e \"SELECT option_value FROM \\\\`wp_options\\\\` WHERE option_name = ''wbb_db_version'';\")"
+      "Bash(\"$MYSQL\" -h 127.0.0.1 -P 10108 -u root -proot local -e \"SELECT option_value FROM \\\\`wp_options\\\\` WHERE option_name = ''wbb_db_version'';\")",
+      "WebFetch(domain:www.bbqbuoys.com.au)",
+      "Bash(perl -0777 -pi -e 's/\\\\$step_labels = array\\\\\\(.*?\\\\\\);\\\\s*?\\\\n\\\\s*foreach \\\\\\( \\\\$step_labels as \\\\$num => \\\\$label \\\\\\) :/\\\\/\\\\/ \\\\$step_labels and \\\\$total_steps are built above \\(adapt to Extras step\\).\\\\n\\\\t\\\\t\\\\t\\\\t\\\\t\\\\$display_num = 0;\\\\n\\\\t\\\\t\\\\t\\\\t\\\\tforeach \\( \\\\$step_labels as \\\\$num => \\\\$label \\) :\\\\n\\\\t\\\\t\\\\t\\\\t\\\\t\\\\t\\\\$display_num++;/s' includes/class-shortcode.php)",
+      "Bash(perl -pi -e 's/\\(wbb-step__circle\"><span><\\\\?php echo esc_html\\\\\\( \\)\\\\$num\\( \\\\\\); \\\\?><\\\\/span>\\)/${1}\\\\$display_num${2}/' includes/class-shortcode.php)",
+      "Bash(perl -pi -e 's/<\\\\?php if \\\\\\( \\\\$num < 5 \\\\\\) : \\\\?>/<?php if \\( \\\\$num < \\\\$total_steps \\) : ?>/' includes/class-shortcode.php)",
+      "Bash(perl -pi -e 's/id=\"wbb-panel-4\" data-step=\"4\"/id=\"wbb-panel-<?php echo esc_attr\\( \\\\$step_details \\); ?>\" data-step=\"<?php echo esc_attr\\( \\\\$step_details \\); ?>\"/' includes/class-shortcode.php)",
+      "Bash(perl -pi -e 's/id=\"wbb-panel-5\" data-step=\"5\"/id=\"wbb-panel-<?php echo esc_attr\\( \\\\$step_review \\); ?>\" data-step=\"<?php echo esc_attr\\( \\\\$step_review \\); ?>\"/' includes/class-shortcode.php)",
+      "Bash(perl -pi -e 's/id=\"wbb-next-4\"/id=\"wbb-next-details\"/' includes/class-shortcode.php)",
+      "Bash(perl -pi -e 's/data-go-to=\"3\"/data-go-to=\"<?php echo esc_attr\\( \\\\$has_extras ? \\\\$step_extras : 3 \\); ?>\"/' includes/class-shortcode.php)",
+      "Bash(perl -pi -e 's/data-go-to=\"4\"/data-go-to=\"<?php echo esc_attr\\( \\\\$step_details \\); ?>\"/' includes/class-shortcode.php)",
+      "Bash(ls /c/Users/timda/AppData/Local/Programs/Local/resources/extraResources/lightning-services/php-*/bin/win64/php.exe 2>/dev/null; ls \"/c/Program Files/Local/resources\"/**/php.exe 2>/dev/null; find /c/Users/timda -maxdepth 6 -name 'php.exe' -path '*lightning*' 2>/dev/null | head -3)",
+      "Read(//c/Program Files/Local/**)",
+      "PowerShell($p = Get-ChildItem -Path \"$env:LOCALAPPDATA\\\\Local\\\\lightning-services\",\"$env:LOCALAPPDATA\\\\Programs\\\\Local\" -Recurse -Filter php.exe -ErrorAction SilentlyContinue | Select-Object -First 3 -ExpandProperty FullName; if \\($p\\) { $p } else { \"none found\" })",
+      "PowerShell($roots = @\\(\"$env:LOCALAPPDATA\",\"C:\\\\Program Files\",\"C:\\\\Program Files \\(x86\\)\"\\) ; foreach \\($r in $roots\\) { Get-ChildItem -Path $r -Recurse -Filter php.exe -ErrorAction SilentlyContinue | Select-Object -First 2 -ExpandProperty FullName } 2>$null)",
+      "Bash(\"/c/Program Files \\(x86\\)/Local/resources/extraResources/lightning-services/php-8.2.29+0/bin/win64/php.exe\" -d mysqli.default_socket= /c/tmp/wbb_test_boot.php)",
+      "Bash(\"/c/Program Files \\(x86\\)/Local/resources/extraResources/lightning-services/php-8.2.29+0/bin/win64/php.exe\" \"C:\\\\tmp\\\\wbb_test_boot.php\")",
+      "PowerShell(& \"C:\\\\Program Files \\(x86\\)\\\\Local\\\\resources\\\\extraResources\\\\lightning-services\\\\php-8.2.29+0\\\\bin\\\\win64\\\\php.exe\" -l \"C:\\\\Users\\\\timda\\\\Local Sites\\\\wallaroo-bbq-boats\\\\app\\\\public\\\\wp-content\\\\themes\\\\wallaroo-bbq-boats\\\\page-whats-on-board.php\")",
+      "PowerShell(& \"C:\\\\Program Files \\(x86\\)\\\\Local\\\\resources\\\\extraResources\\\\lightning-services\\\\php-8.2.29+0\\\\bin\\\\win64\\\\php.exe\" -l \"C:\\\\Users\\\\timda\\\\Local Sites\\\\wallaroo-bbq-boats\\\\app\\\\public\\\\wp-content\\\\themes\\\\wallaroo-bbq-boats\\\\front-page.php\")"
     ]
   }
 }
