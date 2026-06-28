@@ -4,6 +4,8 @@
   <meta charset="<?php bloginfo( 'charset' ); ?>">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="profile" href="https://gmpg.org/xfn/11">
+  <?php // Flag JS early so scroll-reveal elements only start hidden when JS can reveal them (no FOUC, graceful no-JS fallback). ?>
+  <script>document.documentElement.classList.add('js-reveal');</script>
   <?php wp_head(); ?>
 </head>
 <body <?php body_class( 'bg-white text-gray-800 font-body' ); ?>>
