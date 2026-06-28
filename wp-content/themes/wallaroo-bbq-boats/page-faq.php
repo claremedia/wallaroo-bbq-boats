@@ -57,10 +57,10 @@ if ( $faq_query->have_posts() ) {
 <section class="bg-brand-cream py-20 px-4 sm:px-6 lg:px-8" aria-label="Page hero">
   <div class="max-w-3xl mx-auto text-center">
     <p class="section-subheading mb-3">Got a question?</p>
-    <h1 class="font-heading text-brand-navy uppercase text-4xl sm:text-5xl lg:text-6xl leading-tight mb-5">
+    <h1 class="wbb-hero__title font-heading text-brand-navy uppercase text-4xl sm:text-5xl lg:text-6xl leading-tight mb-5">
       <?php echo esc_html( $headline ); ?>
     </h1>
-    <p class="font-body text-gray-600 text-lg sm:text-xl leading-relaxed">
+    <p class="wbb-hero__sub font-body text-gray-600 text-lg sm:text-xl leading-relaxed">
       <?php echo esc_html( $subheading ); ?>
     </p>
   </div>
@@ -78,7 +78,7 @@ if ( $faq_query->have_posts() ) {
         $trigger_id = 'faq-trigger-' . $i;
       ?>
       <div
-        class="border border-gray-200 rounded-2xl overflow-hidden"
+        class="wbb-card border border-gray-200 rounded-2xl overflow-hidden"
         data-faq-item
       >
         <dt>
@@ -115,10 +115,10 @@ if ( $faq_query->have_posts() ) {
 <!-- ── Still got questions? ─────────────────────────────────── -->
 <section class="bg-brand-cream py-16 px-4 sm:px-6 lg:px-8" aria-label="Contact">
   <div class="max-w-2xl mx-auto text-center">
-    <h2 class="font-heading text-brand-navy uppercase text-2xl lg:text-3xl mb-4">Still Got Questions?</h2>
+    <h2 class="wbb-section-title font-heading text-brand-navy uppercase text-2xl lg:text-3xl mb-4">Still Got Questions?</h2>
     <p class="font-body text-gray-600 text-base mb-6">We're pretty easy to reach. Shoot us an email and we'll get back to you.</p>
     <div class="flex justify-center">
-      <a href="<?php echo esc_url( home_url( '/find-us/' ) ); ?>" class="btn-primary text-base px-8 py-4">
+      <a href="<?php echo esc_url( home_url( '/find-us/' ) ); ?>" class="wbb-booking-cta btn-primary text-base px-8 py-4">
         Contact Us
       </a>
     </div>

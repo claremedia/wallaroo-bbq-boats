@@ -27,10 +27,10 @@ $placeholder = wbb_inner_field( 'bn_placeholder_message', 'Online booking coming
 <section class="bg-brand-navy py-20 px-4 sm:px-6 lg:px-8" aria-label="Page hero">
   <div class="max-w-3xl mx-auto text-center">
     <p class="section-subheading text-brand-sky mb-3">Wallaroo BBQ Boats</p>
-    <h1 class="font-heading text-white uppercase text-4xl sm:text-5xl lg:text-6xl leading-tight mb-5">
+    <h1 class="wbb-hero__title font-heading text-white uppercase text-4xl sm:text-5xl lg:text-6xl leading-tight mb-5">
       <?php echo esc_html( $headline ); ?>
     </h1>
-    <p class="font-body text-blue-100 text-lg sm:text-xl leading-relaxed">
+    <p class="wbb-hero__sub font-body text-blue-100 text-lg sm:text-xl leading-relaxed">
       <?php echo esc_html( $subheading ); ?>
     </p>
   </div>
@@ -86,7 +86,7 @@ $placeholder = wbb_inner_field( 'bn_placeholder_message', 'Online booking coming
 <section class="bg-white py-16 px-4 sm:px-6 lg:px-8 border-t border-gray-100" aria-labelledby="how-it-works-heading">
   <div class="max-w-4xl mx-auto">
 
-    <h2 id="how-it-works-heading" class="font-heading text-brand-navy uppercase text-center text-2xl lg:text-3xl mb-10">How It Works</h2>
+    <h2 id="how-it-works-heading" class="wbb-section-title font-heading text-brand-navy uppercase text-center text-2xl lg:text-3xl mb-10">How It Works</h2>
 
     <ol class="grid grid-cols-1 sm:grid-cols-3 gap-8 list-none m-0 p-0" role="list">
 
@@ -97,7 +97,7 @@ $placeholder = wbb_inner_field( 'bn_placeholder_message', 'Online booking coming
           [ 'number' => '03', 'heading' => 'We hand you the keys — sort yourselves out', 'body' => 'Head out onto Spencer Gulf, fire up the BBQ, and enjoy your session on the water.' ],
       ];
       foreach ( $steps as $step ) : ?>
-      <li class="flex flex-col items-center text-center gap-3">
+      <li class="wbb-card flex flex-col items-center text-center gap-3">
         <span class="font-heading text-brand-red text-5xl leading-none"><?php echo esc_html( $step['number'] ); ?></span>
         <h3 class="font-heading text-brand-navy uppercase text-base"><?php echo esc_html( $step['heading'] ); ?></h3>
         <p class="font-body text-gray-600 text-sm leading-relaxed"><?php echo esc_html( $step['body'] ); ?></p>

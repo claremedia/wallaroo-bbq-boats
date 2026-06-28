@@ -74,10 +74,10 @@ for ( $i = 1; $i <= 8; $i++ ) {
   <div class="relative z-10 py-24 px-4 sm:px-6 lg:px-8">
     <div class="max-w-3xl mx-auto text-center">
       <p class="section-subheading text-white/80 mb-3">Wallaroo BBQ Boats</p>
-      <h1 class="font-heading text-white uppercase text-4xl sm:text-5xl lg:text-6xl leading-tight mb-5">
+      <h1 class="wbb-hero__title font-heading text-white uppercase text-4xl sm:text-5xl lg:text-6xl leading-tight mb-5">
         <?php echo esc_html( $headline ); ?>
       </h1>
-      <p class="font-body text-white/90 text-lg sm:text-xl leading-relaxed">
+      <p class="wbb-hero__sub font-body text-white/90 text-lg sm:text-xl leading-relaxed">
         <?php echo esc_html( $subheading ); ?>
       </p>
     </div>
@@ -88,10 +88,10 @@ for ( $i = 1; $i <= 8; $i++ ) {
   <img src="<?php echo esc_url( $icon_dir ); ?>boat-porthole.png" alt="" width="260" height="260" class="absolute -bottom-6 -right-6 w-56 h-56 object-contain pointer-events-none select-none" style="opacity:0.07;filter:grayscale(1);" loading="lazy" aria-hidden="true">
   <div class="max-w-3xl mx-auto text-center">
     <p class="section-subheading text-white/80 mb-3">Wallaroo BBQ Boats</p>
-    <h1 class="font-heading text-white uppercase text-4xl sm:text-5xl lg:text-6xl leading-tight mb-5">
+    <h1 class="wbb-hero__title font-heading text-white uppercase text-4xl sm:text-5xl lg:text-6xl leading-tight mb-5">
       <?php echo esc_html( $headline ); ?>
     </h1>
-    <p class="font-body text-white/90 text-lg sm:text-xl leading-relaxed">
+    <p class="wbb-hero__sub font-body text-white/90 text-lg sm:text-xl leading-relaxed">
       <?php echo esc_html( $subheading ); ?>
     </p>
   </div>
@@ -105,7 +105,7 @@ for ( $i = 1; $i <= 8; $i++ ) {
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start">
 
       <!-- Included (left, and first on mobile) -->
-      <div class="bg-white rounded-3xl shadow-card p-8">
+      <div class="wbb-card bg-white rounded-3xl shadow-card p-8">
         <h3 class="font-heading text-brand-navy uppercase text-xl lg:text-2xl mb-6">Included</h3>
         <ul class="flex flex-col gap-4 list-none m-0 p-0" role="list">
           <?php foreach ( $included as $item ) : ?>
@@ -120,7 +120,7 @@ for ( $i = 1; $i <= 8; $i++ ) {
       </div>
 
       <!-- Not Included (right, second on mobile) -->
-      <div class="bg-white rounded-3xl shadow-card p-8">
+      <div class="wbb-card bg-white rounded-3xl shadow-card p-8">
         <h3 class="font-heading text-brand-navy uppercase text-xl lg:text-2xl mb-6">Not Included</h3>
         <ul class="flex flex-col gap-4 list-none m-0 p-0" role="list">
           <?php foreach ( $not_included as $item ) : ?>
@@ -153,7 +153,7 @@ for ( $i = 1; $i <= 8; $i++ ) {
 
   <!-- Content aligned to the bottom of the image -->
   <div class="relative z-10 max-w-4xl mx-auto flex flex-col justify-end min-h-[360px] lg:min-h-[520px] py-10 lg:py-12">
-    <h2 id="boats-heading" class="section-heading text-white text-shadow-hero text-center text-3xl lg:text-4xl mb-8">The Boats</h2>
+    <h2 id="boats-heading" class="wbb-section-title section-heading text-white text-shadow-hero text-center text-3xl lg:text-4xl mb-8">The Boats</h2>
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
 
       <?php
@@ -163,7 +163,7 @@ for ( $i = 1; $i <= 8; $i++ ) {
           [ 'number' => wbb_inner_field( 'wob_stat_3_number', '0' ),   'label' => wbb_inner_field( 'wob_stat_3_label', 'Licence required' ) ],
       ];
       foreach ( $stats as $stat ) : ?>
-      <div class="bg-white rounded-3xl shadow-card p-6">
+      <div class="wbb-card bg-white rounded-3xl shadow-card p-6">
         <p class="font-heading text-brand-navy text-5xl lg:text-6xl uppercase mb-1"><?php echo esc_html( $stat['number'] ); ?></p>
         <p class="font-body text-gray-600 text-sm uppercase tracking-wide"><?php echo esc_html( $stat['label'] ); ?></p>
       </div>
@@ -176,7 +176,7 @@ for ( $i = 1; $i <= 8; $i++ ) {
 <!-- ── Food & Drinks ─────────────────────────────────────────── -->
 <section class="bg-white py-20 px-4 sm:px-6 lg:px-8" aria-labelledby="food-heading">
   <div class="max-w-2xl mx-auto text-center">
-    <h2 id="food-heading" class="section-heading text-3xl lg:text-4xl mb-4">Food &amp; Drinks</h2>
+    <h2 id="food-heading" class="wbb-section-title section-heading text-3xl lg:text-4xl mb-4">Food &amp; Drinks</h2>
     <p class="font-body text-gray-700 text-base lg:text-lg leading-relaxed mb-8">
       BYO your food and fire up the BBQ, or add platters and food from our menu. No BYO alcohol — soft drinks and water are welcome, or pre-order drinks from us.
     </p>
@@ -190,9 +190,9 @@ for ( $i = 1; $i <= 8; $i++ ) {
 <section class="bg-brand-navy py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden" aria-label="Call to action">
   <img src="<?php echo esc_url( $icon_dir ); ?>big-starfish.png" alt="" width="200" height="200" class="absolute -bottom-4 -right-4 w-48 h-48 object-contain pointer-events-none select-none" style="opacity:0.06;filter:grayscale(1);" loading="lazy" aria-hidden="true">
   <div class="max-w-3xl mx-auto text-center">
-    <h2 class="font-heading text-white uppercase text-3xl lg:text-4xl mb-4">Ready to Get Out on the Water?</h2>
+    <h2 class="wbb-section-title font-heading text-white uppercase text-3xl lg:text-4xl mb-4">Ready to Get Out on the Water?</h2>
     <p class="font-body text-blue-100 text-lg mb-8">Book a session and we'll take care of the rest.</p>
-    <a href="<?php echo esc_url( $booking_url ); ?>" class="btn-primary text-base px-10 py-4">Book Now</a>
+    <a href="<?php echo esc_url( $booking_url ); ?>" class="wbb-booking-cta btn-primary text-base px-10 py-4">Book Now</a>
   </div>
 </section>
 

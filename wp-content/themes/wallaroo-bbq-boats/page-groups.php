@@ -80,10 +80,10 @@ $inclusions = [
   <div class="relative z-10 py-24 px-4 sm:px-6 lg:px-8">
     <div class="max-w-3xl mx-auto text-center">
       <p class="section-subheading text-brand-sky mb-3">Private Hire</p>
-      <h1 class="font-heading text-white uppercase text-4xl sm:text-5xl lg:text-6xl leading-tight mb-5">
+      <h1 class="wbb-hero__title font-heading text-white uppercase text-4xl sm:text-5xl lg:text-6xl leading-tight mb-5">
         <?php echo esc_html( $headline ); ?>
       </h1>
-      <p class="font-body text-blue-100 text-lg sm:text-xl leading-relaxed">
+      <p class="wbb-hero__sub font-body text-blue-100 text-lg sm:text-xl leading-relaxed">
         <?php echo esc_html( $subheading ); ?>
       </p>
     </div>
@@ -95,10 +95,10 @@ $inclusions = [
   <img src="<?php echo esc_url( $icon_dir ); ?>sailboat-anchor.png" alt="" width="160" height="160" class="absolute top-6 left-8 w-32 h-32 object-contain pointer-events-none select-none" style="opacity:0.05;filter:grayscale(1);" loading="lazy" aria-hidden="true">
   <div class="max-w-3xl mx-auto text-center">
     <p class="section-subheading text-brand-sky mb-3">Private Hire</p>
-    <h1 class="font-heading text-white uppercase text-4xl sm:text-5xl lg:text-6xl leading-tight mb-5">
+    <h1 class="wbb-hero__title font-heading text-white uppercase text-4xl sm:text-5xl lg:text-6xl leading-tight mb-5">
       <?php echo esc_html( $headline ); ?>
     </h1>
-    <p class="font-body text-blue-100 text-lg sm:text-xl leading-relaxed">
+    <p class="wbb-hero__sub font-body text-blue-100 text-lg sm:text-xl leading-relaxed">
       <?php echo esc_html( $subheading ); ?>
     </p>
   </div>
@@ -111,12 +111,12 @@ $inclusions = [
 
     <div class="text-center mb-12">
       <p class="section-subheading mb-3">Who comes aboard</p>
-      <h2 id="occasions-heading" class="section-heading text-3xl lg:text-4xl">Perfect For Every Occasion</h2>
+      <h2 id="occasions-heading" class="wbb-section-title section-heading text-3xl lg:text-4xl">Perfect For Every Occasion</h2>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
       <?php foreach ( $occasions as $occasion ) : ?>
-      <div class="bg-gray-50 rounded-3xl p-7 flex flex-col gap-4">
+      <div class="wbb-card bg-gray-50 rounded-3xl p-7 flex flex-col gap-4">
         <div class="w-12 h-12 bg-brand-navy rounded-2xl flex items-center justify-center flex-shrink-0 text-white">
           <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><?php echo $occasion['svg']; ?></svg>
         </div>
@@ -150,14 +150,14 @@ $inclusions = [
       <!-- Copy + inclusions stacked -->
       <div class="flex flex-col gap-8">
         <div>
-          <h2 id="hire-heading" class="section-heading text-3xl lg:text-4xl mb-6">
+          <h2 id="hire-heading" class="wbb-section-title section-heading text-3xl lg:text-4xl mb-6">
             <?php echo esc_html( $hire_headline ); ?>
           </h2>
           <p class="font-body text-gray-700 text-base lg:text-lg leading-relaxed">
             <?php echo esc_html( $hire_body ); ?>
           </p>
         </div>
-        <div class="bg-white rounded-3xl p-8 shadow-card">
+        <div class="wbb-card bg-white rounded-3xl p-8 shadow-card">
           <h3 class="font-heading text-brand-navy uppercase text-lg mb-6">What's Included</h3>
           <ul class="flex flex-col gap-3 list-none m-0 p-0" role="list">
             <?php foreach ( $inclusions as $item ) : ?>
@@ -179,7 +179,7 @@ $inclusions = [
 
       <!-- Left: copy -->
       <div>
-        <h2 id="hire-heading" class="section-heading text-3xl lg:text-4xl mb-6">
+        <h2 id="hire-heading" class="wbb-section-title section-heading text-3xl lg:text-4xl mb-6">
           <?php echo esc_html( $hire_headline ); ?>
         </h2>
         <p class="font-body text-gray-700 text-base lg:text-lg leading-relaxed">
@@ -188,7 +188,7 @@ $inclusions = [
       </div>
 
       <!-- Right: inclusions -->
-      <div class="bg-white rounded-3xl p-8 shadow-card">
+      <div class="wbb-card bg-white rounded-3xl p-8 shadow-card">
         <h3 class="font-heading text-brand-navy uppercase text-lg mb-6">What's Included</h3>
         <ul class="flex flex-col gap-3 list-none m-0 p-0" role="list">
           <?php foreach ( $inclusions as $item ) : ?>
@@ -212,9 +212,9 @@ $inclusions = [
 <section class="bg-brand-navy py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden" aria-label="Call to action">
   <img src="<?php echo esc_url( $icon_dir ); ?>cargo-ship-front-view.png" alt="" width="200" height="200" class="absolute -bottom-4 -right-4 w-48 h-48 object-contain pointer-events-none select-none" style="opacity:0.06;filter:grayscale(1);" loading="lazy" aria-hidden="true">
   <div class="max-w-3xl mx-auto text-center">
-    <h2 class="font-heading text-white uppercase text-3xl lg:text-4xl mb-4">Lock In Your Date</h2>
+    <h2 class="wbb-section-title font-heading text-white uppercase text-3xl lg:text-4xl mb-4">Lock In Your Date</h2>
     <p class="font-body text-blue-100 text-lg mb-8">Private hire — no strangers, no surprises.</p>
-    <a href="<?php echo esc_url( $booking_url ); ?>" class="btn-primary text-base px-10 py-4">Book Now</a>
+    <a href="<?php echo esc_url( $booking_url ); ?>" class="wbb-booking-cta btn-primary text-base px-10 py-4">Book Now</a>
   </div>
 </section>
 

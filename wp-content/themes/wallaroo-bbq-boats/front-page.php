@@ -103,7 +103,7 @@ if ( $review_query->have_posts() ) {
   <div class="max-w-7xl mx-auto relative">
 
     <!-- Hero image container — rounded corners, contains everything -->
-    <div class="relative rounded-3xl overflow-hidden bg-brand-navy" style="height:calc(100vh - 180px);min-height:520px;margin-bottom:20px;">
+    <div class="wbb-hero__tilt relative rounded-3xl overflow-hidden bg-brand-navy" style="height:calc(100vh - 180px);min-height:520px;margin-bottom:20px;">
 
       <!-- Hero image (LCP — eager + high priority) -->
       <picture>

@@ -6,8 +6,8 @@
  * so motion is genuinely tied to the scrollbar and reverses on the
  * way back up. No timeline guesswork.
  *
- *   • Hero: entrance fade on load (Motion One), then a cinematic
- *     scroll exit — background zooms while the content lifts + fades.
+ *   • Hero: entrance fade on load (GSAP), then a cinematic scroll
+ *     exit — background zooms while the content lifts + fades.
  *   • Sections / cards / testimonials: scrub up into place as they
  *     travel through the viewport, each by its own position → an
  *     organic cascade, not a fixed stagger.
@@ -28,15 +28,13 @@
     return;
   }
 
-  // Motion One is used only for the hero entrance fade; the scroll
-  // engine below is self-contained, so we proceed either way.
-  var M = window.Motion;
-  var hasMotion = M && typeof M.animate === 'function';
+  // GSAP powers the hero entrance fade; the scroll engine below is
+  // self-contained vanilla JS and needs no library.
+  var gsap = window.gsap;
+  var hasGsap = gsap && typeof gsap.fromTo === 'function';
 
   window.__wbbMotionReady = true;
   root.classList.add( 'wbb-motion-ready' );
-
-  var EASE_IN = [ 0.22, 1, 0.36, 1 ];
 
   var canParallax =
     ! window.matchMedia( '(pointer: coarse)' ).matches &&
@@ -50,10 +48,10 @@
   var heroTitle = document.querySelector( '.wbb-hero__title' );
   var heroSub   = document.querySelector( '.wbb-hero__sub' );
   var heroCta   = document.querySelector( '.wbb-hero__cta' );
-  if ( hasMotion ) {
-    if ( heroTitle ) { M.animate( heroTitle, { opacity: [ 0, 1 ], y: [ 28, 0 ] }, { duration: 0.9, easing: EASE_IN } ); }
-    if ( heroSub )   { M.animate( heroSub,   { opacity: [ 0, 1 ], y: [ 22, 0 ] }, { duration: 0.9, delay: 0.12, easing: EASE_IN } ); }
-    if ( heroCta )   { M.animate( heroCta,   { opacity: [ 0, 1 ], y: [ 18, 0 ] }, { duration: 0.8, delay: 0.24, easing: EASE_IN } ); }
+  if ( hasGsap ) {
+    if ( heroTitle ) { gsap.fromTo( heroTitle, { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' } ); }
+    if ( heroSub )   { gsap.fromTo( heroSub,   { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.9, delay: 0.12, ease: 'power3.out' } ); }
+    if ( heroCta )   { gsap.fromTo( heroCta,   { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.8, delay: 0.24, ease: 'power3.out' } ); }
   } else {
     [ heroTitle, heroSub, heroCta ].forEach( function ( el ) { if ( el ) { el.style.opacity = '1'; } } );
   }

@@ -50,10 +50,10 @@ $cat_subtitles = [
   <div class="relative z-10 py-16 px-4 sm:px-6 lg:px-8">
     <div class="max-w-3xl mx-auto text-center">
       <p class="section-subheading text-white/80 mb-2">Wallaroo BBQ Boats</p>
-      <h1 class="font-heading text-white uppercase text-4xl sm:text-5xl leading-tight mb-3">
+      <h1 class="wbb-hero__title font-heading text-white uppercase text-4xl sm:text-5xl leading-tight mb-3">
         <?php echo wp_kses_post( $headline ); ?>
       </h1>
-      <p class="font-body text-white/90 text-base sm:text-lg leading-relaxed">
+      <p class="wbb-hero__sub font-body text-white/90 text-base sm:text-lg leading-relaxed">
         <?php echo esc_html( $subheading ); ?>
       </p>
     </div>
@@ -64,10 +64,10 @@ $cat_subtitles = [
   <img src="<?php echo esc_url( $icon_dir ); ?>fish-facing-right.png" alt="" width="200" height="200" class="absolute -bottom-6 -right-6 w-44 h-44 object-contain pointer-events-none select-none" style="opacity:0.07;filter:grayscale(1);" loading="lazy" aria-hidden="true">
   <div class="max-w-3xl mx-auto text-center">
     <p class="section-subheading text-white/80 mb-2">Wallaroo BBQ Boats</p>
-    <h1 class="font-heading text-white uppercase text-4xl sm:text-5xl leading-tight mb-3">
+    <h1 class="wbb-hero__title font-heading text-white uppercase text-4xl sm:text-5xl leading-tight mb-3">
       <?php echo wp_kses_post( $headline ); ?>
     </h1>
-    <p class="font-body text-white/90 text-base sm:text-lg leading-relaxed">
+    <p class="wbb-hero__sub font-body text-white/90 text-base sm:text-lg leading-relaxed">
       <?php echo esc_html( $subheading ); ?>
     </p>
   </div>
@@ -92,7 +92,7 @@ $cat_subtitles = [
     <div class="mb-10 last:mb-0">
 
       <div class="flex items-baseline justify-between gap-4 border-b-2 border-brand-cream pb-2 mb-3">
-        <h2 id="cat-<?php echo esc_attr( $cat ); ?>-heading" class="section-heading text-2xl lg:text-3xl"><?php echo esc_html( $cat_label ); ?></h2>
+        <h2 id="cat-<?php echo esc_attr( $cat ); ?>-heading" class="wbb-section-title section-heading text-2xl lg:text-3xl"><?php echo esc_html( $cat_label ); ?></h2>
         <?php if ( $cat_subtitle ) : ?>
         <span class="font-body text-sm text-gray-500"><?php echo esc_html( $cat_subtitle ); ?></span>
         <?php endif; ?>
@@ -141,10 +141,10 @@ $cat_subtitles = [
 <section class="bg-brand-navy py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden" aria-label="Call to action">
   <img src="<?php echo esc_url( $icon_dir ); ?>round-sailboat.png" alt="" width="180" height="180" class="absolute -bottom-4 -right-4 w-40 h-40 object-contain pointer-events-none select-none" style="opacity:0.06;filter:grayscale(1);" loading="lazy" aria-hidden="true">
   <div class="max-w-3xl mx-auto text-center">
-    <h2 class="font-heading text-white uppercase text-2xl lg:text-3xl mb-3">Add It To Your Booking</h2>
+    <h2 class="wbb-section-title font-heading text-white uppercase text-2xl lg:text-3xl mb-3">Add It To Your Booking</h2>
     <p class="font-body text-blue-100 text-base mb-6">Pick your extras when you book — it'll be ready when you arrive.</p>
     <div class="flex flex-wrap items-center justify-center gap-4">
-      <a href="<?php echo esc_url( $booking_url ); ?>" class="btn-primary text-base px-8 py-3">Book Now</a>
+      <a href="<?php echo esc_url( $booking_url ); ?>" class="wbb-booking-cta btn-primary text-base px-8 py-3">Book Now</a>
     </div>
   </div>
 </section>

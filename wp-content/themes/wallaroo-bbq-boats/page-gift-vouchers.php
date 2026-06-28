@@ -41,10 +41,10 @@ $how_steps = [
   </svg>
   <div class="max-w-3xl mx-auto text-center">
     <p class="section-subheading text-white/80 mb-3">The Perfect Present</p>
-    <h1 class="font-heading text-white uppercase text-4xl sm:text-5xl lg:text-6xl leading-tight mb-5">
+    <h1 class="wbb-hero__title font-heading text-white uppercase text-4xl sm:text-5xl lg:text-6xl leading-tight mb-5">
       <?php echo esc_html( $headline ); ?>
     </h1>
-    <p class="font-body text-white/90 text-lg sm:text-xl leading-relaxed">
+    <p class="wbb-hero__sub font-body text-white/90 text-lg sm:text-xl leading-relaxed">
       <?php echo esc_html( $subheading ); ?>
     </p>
   </div>
@@ -55,7 +55,7 @@ $how_steps = [
   <div class="max-w-2xl mx-auto">
 
     <!-- Gift card -->
-    <div class="relative bg-brand-navy rounded-3xl overflow-hidden shadow-card-hover p-10 text-center">
+    <div class="wbb-card relative bg-brand-navy rounded-3xl overflow-hidden shadow-card-hover p-10 text-center">
 
       <!-- Decorative wave top-right -->
       <div class="absolute -top-8 -right-8 w-48 h-48 opacity-10" aria-hidden="true">
@@ -98,10 +98,10 @@ $how_steps = [
 <!-- ── How to order ─────────────────────────────────────────── -->
 <section class="bg-white py-16 px-4 sm:px-6 lg:px-8 border-t border-gray-100" aria-labelledby="how-order-heading">
   <div class="max-w-4xl mx-auto">
-    <h2 id="how-order-heading" class="section-heading text-center text-2xl lg:text-3xl mb-10">How to Order</h2>
+    <h2 id="how-order-heading" class="wbb-section-title section-heading text-center text-2xl lg:text-3xl mb-10">How to Order</h2>
     <ol class="grid grid-cols-1 sm:grid-cols-3 gap-8 list-none m-0 p-0" role="list">
       <?php foreach ( $how_steps as $step ) : ?>
-      <li class="flex flex-col items-center text-center gap-3">
+      <li class="wbb-card flex flex-col items-center text-center gap-3">
         <span class="font-heading text-brand-red text-5xl leading-none"><?php echo esc_html( $step['number'] ); ?></span>
         <h3 class="font-heading text-brand-navy uppercase text-base"><?php echo esc_html( $step['heading'] ); ?></h3>
         <p class="font-body text-gray-600 text-sm leading-relaxed"><?php echo esc_html( $step['body'] ); ?></p>
@@ -115,7 +115,7 @@ $how_steps = [
 <section class="bg-gray-50 py-16 px-4 sm:px-6 lg:px-8" aria-label="Order a voucher" id="order">
   <div class="max-w-2xl mx-auto">
     <div class="text-center mb-10">
-      <h2 class="section-heading text-3xl lg:text-4xl">Order a Voucher</h2>
+      <h2 class="wbb-section-title section-heading text-3xl lg:text-4xl">Order a Voucher</h2>
     </div>
 
     <?php if ( shortcode_exists( 'wbb_gift_voucher_form' ) ) : ?>
@@ -143,9 +143,9 @@ $how_steps = [
     <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/>
   </svg>
   <div class="max-w-3xl mx-auto text-center">
-    <h2 class="font-heading text-white uppercase text-3xl lg:text-4xl mb-4"><?php echo esc_html( wbb_inner_field( 'gv_cta_heading', 'Give the Gift of a Day on the Water' ) ); ?></h2>
+    <h2 class="wbb-section-title font-heading text-white uppercase text-3xl lg:text-4xl mb-4"><?php echo esc_html( wbb_inner_field( 'gv_cta_heading', 'Give the Gift of a Day on the Water' ) ); ?></h2>
     <p class="font-body text-blue-100 text-lg mb-8"><?php echo esc_html( wbb_inner_field( 'gv_cta_subtext', 'Sunshine, good food, and time out on the water.' ) ); ?></p>
-    <a href="<?php echo esc_url( $booking_url ); ?>" class="btn-primary text-base px-10 py-4">Book Now</a>
+    <a href="<?php echo esc_url( $booking_url ); ?>" class="wbb-booking-cta btn-primary text-base px-10 py-4">Book Now</a>
   </div>
 </section>
 

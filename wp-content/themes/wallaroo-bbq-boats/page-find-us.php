@@ -37,10 +37,10 @@ $directions = [
 <section class="bg-brand-navy py-20 px-4 sm:px-6 lg:px-8" aria-label="Page hero">
   <div class="max-w-3xl mx-auto text-center">
     <p class="section-subheading text-brand-sky mb-3">Wallaroo SA</p>
-    <h1 class="font-heading text-white uppercase text-4xl sm:text-5xl lg:text-6xl leading-tight mb-5">
+    <h1 class="wbb-hero__title font-heading text-white uppercase text-4xl sm:text-5xl lg:text-6xl leading-tight mb-5">
       <?php echo esc_html( $headline ); ?>
     </h1>
-    <p class="font-body text-blue-100 text-lg sm:text-xl leading-relaxed">
+    <p class="wbb-hero__sub font-body text-blue-100 text-lg sm:text-xl leading-relaxed">
       <?php echo esc_html( $subheading ); ?>
     </p>
   </div>
@@ -53,7 +53,7 @@ $directions = [
 
       <!-- Left: contact details -->
       <div>
-        <h2 id="location-heading" class="section-heading text-3xl lg:text-4xl mb-8">Where to Find Us</h2>
+        <h2 id="location-heading" class="wbb-section-title section-heading text-3xl lg:text-4xl mb-8">Where to Find Us</h2>
 
         <ul class="flex flex-col gap-6 list-none m-0 p-0 mb-8" role="list">
 
@@ -127,10 +127,10 @@ $directions = [
 <!-- ── Directions ────────────────────────────────────────────── -->
 <section class="bg-gray-50 py-16 px-4 sm:px-6 lg:px-8" aria-labelledby="directions-heading">
   <div class="max-w-7xl mx-auto">
-    <h2 id="directions-heading" class="section-heading text-center text-2xl lg:text-3xl mb-10">Getting Here</h2>
+    <h2 id="directions-heading" class="wbb-section-title section-heading text-center text-2xl lg:text-3xl mb-10">Getting Here</h2>
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
       <?php foreach ( $directions as $dir ) : ?>
-      <div class="bg-white rounded-3xl p-7 shadow-card">
+      <div class="wbb-card bg-white rounded-3xl p-7 shadow-card">
         <div class="w-10 h-10 bg-brand-navy rounded-xl flex items-center justify-center mb-4">
           <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <polygon points="3 11 22 2 13 21 11 13 3 11"/>
@@ -149,7 +149,7 @@ $directions = [
   <div class="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-6">
 
     <!-- Parking -->
-    <div class="bg-brand-cream rounded-3xl p-7">
+    <div class="wbb-card bg-brand-cream rounded-3xl p-7">
       <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center mb-4 shadow-card">
         <svg class="w-5 h-5 text-brand-navy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <rect x="1" y="3" width="15" height="13" rx="1"/>
@@ -163,7 +163,7 @@ $directions = [
     </div>
 
     <!-- Opening times -->
-    <div class="bg-brand-cream rounded-3xl p-7">
+    <div class="wbb-card bg-brand-cream rounded-3xl p-7">
       <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center mb-4 shadow-card">
         <svg class="w-5 h-5 text-brand-navy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <circle cx="12" cy="12" r="10"/>
