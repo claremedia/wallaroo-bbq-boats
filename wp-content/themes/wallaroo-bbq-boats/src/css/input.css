@@ -179,46 +179,6 @@
   100% { transform: translateY(0)    rotate(-1deg); }
 }
 
-/* --- Scroll reveal ----------------------------------------
-   Elements tagged with [data-reveal] start hidden and ease into
-   place when scrolled into view (JS adds .is-visible). Initial
-   hidden state only applies when JS is active (.js-reveal on
-   <html>), so no-JS visitors always see content.
-
-   Variants (set via the attribute value):
-     data-reveal         → rise up   (default)
-     data-reveal="left"  → enter from the right
-     data-reveal="right" → enter from the left
-     data-reveal="zoom"  → scale up
-   Stagger: set inline style="--reveal-d:1" (2, 3, …) for a
-   cascading delay within a group.
------------------------------------------------------------ */
-.js-reveal [data-reveal] {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-  transition-delay: calc(var(--reveal-d, 0) * 90ms);
-  will-change: opacity, transform;
-}
-
-.js-reveal [data-reveal="right"] { transform: translateX(-28px); }
-.js-reveal [data-reveal="left"]  { transform: translateX(28px); }
-.js-reveal [data-reveal="zoom"]  { transform: scale(0.94); }
-
-.js-reveal [data-reveal].is-visible {
-  opacity: 1;
-  transform: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .js-reveal [data-reveal] {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-  }
-}
-
 /* --- Utility overrides ------------------------------------- */
 @layer utilities {
   .text-shadow-hero {

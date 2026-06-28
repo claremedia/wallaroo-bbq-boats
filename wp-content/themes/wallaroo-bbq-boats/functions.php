@@ -67,6 +67,62 @@ add_filter( 'script_loader_tag', function ( $tag, $handle, $src ) {
 }, 10, 3 );
 
 // ============================================================
+// 2b. MOTION LAYER (scroll/hero animations) — additive, kept
+//     separate from the core assets above so nothing is disturbed.
+//     Motion One is bundled locally (caches at Cloudflare with the
+//     site, no third-party dependency). All deferred, never in <head>.
+// ============================================================
+add_action( 'wp_enqueue_scripts', function () {
+    $dir = get_template_directory();
+    $uri = get_template_directory_uri();
+
+    $motion_css  = $dir . '/assets/css/wbb-motion.css';
+    $motion_lib  = $dir . '/assets/js/vendor/motion.min.js';
+    $motion_init = $dir . '/assets/js/wbb-motion.js';
+
+    // Pre-animation start-state styles.
+    if ( file_exists( $motion_css ) ) {
+        wp_enqueue_style(
+            'wbb-motion',
+            $uri . '/assets/css/wbb-motion.css',
+            [ 'wallaroo-app' ],
+            filemtime( $motion_css )
+        );
+    }
+
+    // Motion One library (global `Motion`), deferred in footer.
+    if ( file_exists( $motion_lib ) ) {
+        wp_enqueue_script(
+            'motion',
+            $uri . '/assets/js/vendor/motion.min.js',
+            [],
+            filemtime( $motion_lib ),
+            [ 'in_footer' => true, 'strategy' => 'defer' ]
+        );
+    }
+
+    // Custom init — depends on Motion One, deferred in footer.
+    if ( file_exists( $motion_init ) ) {
+        wp_enqueue_script(
+            'wbb-motion',
+            $uri . '/assets/js/wbb-motion.js',
+            [ 'motion' ],
+            filemtime( $motion_init ),
+            [ 'in_footer' => true, 'strategy' => 'defer' ]
+        );
+    }
+} );
+
+// Older-WP fallback: ensure motion scripts carry defer even if the
+// 'strategy' arg above is unsupported (< WP 6.3).
+add_filter( 'script_loader_tag', function ( $tag, $handle, $src ) {
+    if ( ( 'motion' === $handle || 'wbb-motion' === $handle ) && false === strpos( $tag, ' defer' ) ) {
+        return str_replace( ' src=', ' defer src=', $tag );
+    }
+    return $tag;
+}, 10, 3 );
+
+// ============================================================
 // 3. REMOVE WORDPRESS BLOAT
 // ============================================================
 add_action( 'init', function () {

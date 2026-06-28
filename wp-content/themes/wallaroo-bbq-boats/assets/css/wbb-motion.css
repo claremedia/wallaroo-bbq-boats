@@ -1,0 +1,62 @@
+/* ============================================================
+   Wallaroo BBQ Boats — motion layer (additive, standalone)
+   Hand-authored — NOT part of the Tailwind build. Pairs with
+   /assets/js/wbb-motion.js (Motion One, scroll-driven).
+
+   Fail-safe model:
+   The "hidden" start-states below are scoped behind .wbb-motion-ready,
+   which JS adds to <html> ONLY when motion is allowed (JS on AND
+   prefers-reduced-motion: no). If JS is off, the library fails, or the
+   visitor reduces motion, the class is absent/removed and everything
+   renders in its natural, fully-visible, final-layout position.
+   Nothing is ever stuck hidden.
+   ============================================================ */
+
+/* --- Scrub start-states (only when motion is confirmed) -----
+   These elements are driven from opacity:0 by scroll progress.
+   .wbb-hero__content is NOT listed: it scrubs from opacity:1 → 0
+   as the hero leaves, so it must stay visible at rest. --- */
+.wbb-motion-ready .wbb-hero__title,
+.wbb-motion-ready .wbb-hero__sub,
+.wbb-motion-ready .wbb-hero__cta,
+.wbb-motion-ready .wbb-section-title,
+.wbb-motion-ready .wbb-card,
+.wbb-motion-ready .wbb-testimonial,
+.wbb-motion-ready .wbb-booking-cta {
+  opacity: 0;
+}
+
+/* --- Ambient hero accent ------------------------------------
+   One slow drifting gradient behind the hero (blue, on-palette),
+   out of the reading path. The only continuous ambient motion;
+   the JS leaves this element alone, so there is no transform
+   conflict with the scroll sequence. --- */
+@keyframes wbb-hero-drift {
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  50%  { transform: translate3d(3%, -2%, 0) scale(1.06); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+
+.wbb-motion-ready .wbb-hero__accent {
+  animation: wbb-hero-drift 11s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* --- Fail-safe: reduced motion → everything still & visible - */
+@media (prefers-reduced-motion: reduce) {
+  .wbb-hero__title,
+  .wbb-hero__sub,
+  .wbb-hero__cta,
+  .wbb-hero__content,
+  .wbb-section-title,
+  .wbb-card,
+  .wbb-testimonial,
+  .wbb-booking-cta {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .wbb-hero__accent {
+    animation: none !important;
+  }
+}

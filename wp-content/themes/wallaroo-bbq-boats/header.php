@@ -4,8 +4,11 @@
   <meta charset="<?php bloginfo( 'charset' ); ?>">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="profile" href="https://gmpg.org/xfn/11">
-  <?php // Flag JS early so scroll-reveal elements only start hidden when JS can reveal them (no FOUC, graceful no-JS fallback). ?>
-  <script>document.documentElement.classList.add('js-reveal');</script>
+  <?php // Enable motion start-states before first paint, but ONLY when JS runs and the
+        // visitor hasn't asked to reduce motion. If this fails, motion is off, OR the
+        // deferred init never runs, the class is removed and every wbb- element stays
+        // fully visible (no FOUC, no stuck opacity:0). ?>
+  <script>try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var d=document.documentElement;d.classList.add('wbb-motion-ready');setTimeout(function(){if(!window.__wbbMotionReady){d.classList.remove('wbb-motion-ready');}},3000);}}catch(e){}</script>
   <?php wp_head(); ?>
 </head>
 <body <?php body_class( 'bg-white text-gray-800 font-body' ); ?>>
@@ -21,7 +24,7 @@ $booking_url = wallaroo_option( 'booking_url' ) ?: home_url( '/book-now/' );
      ===================================================== -->
 <header
   id="site-header"
-  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/95 backdrop-blur-sm"
+  class="wbb-header fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/95 backdrop-blur-sm"
   role="banner"
 >
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

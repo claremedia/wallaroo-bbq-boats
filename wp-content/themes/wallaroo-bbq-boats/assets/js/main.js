@@ -82,32 +82,7 @@
   } );
 
   // ──────────────────────────────────────────────
-  // 4. Scroll reveal — fade/rise elements into view
-  // ──────────────────────────────────────────────
-  const reveals = document.querySelectorAll( '[data-reveal]' );
-
-  if ( reveals.length ) {
-    const prefersReduced = window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches;
-
-    // No motion or no observer support → just show everything immediately.
-    if ( prefersReduced || ! ( 'IntersectionObserver' in window ) ) {
-      reveals.forEach( function ( el ) { el.classList.add( 'is-visible' ); } );
-    } else {
-      const io = new IntersectionObserver( function ( entries, obs ) {
-        entries.forEach( function ( entry ) {
-          if ( entry.isIntersecting ) {
-            entry.target.classList.add( 'is-visible' );
-            obs.unobserve( entry.target ); // reveal once, then stop watching
-          }
-        } );
-      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' } );
-
-      reveals.forEach( function ( el ) { io.observe( el ); } );
-    }
-  }
-
-  // ──────────────────────────────────────────────
-  // 5. Smooth scroll for anchor links
+  // 4. Smooth scroll for anchor links
   // ──────────────────────────────────────────────
   document.querySelectorAll( 'a[href^="#"]' ).forEach( function ( anchor ) {
     anchor.addEventListener( 'click', function ( e ) {

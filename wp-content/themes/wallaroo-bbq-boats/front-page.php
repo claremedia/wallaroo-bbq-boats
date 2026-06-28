@@ -91,12 +91,12 @@ if ( $review_query->have_posts() ) {
      Rounded container, not full-bleed. Floating booking card.
      ===================================================== -->
 <section
-  class="relative bg-gradient-to-b from-gray-50 to-white py-6 px-4 sm:px-6 lg:px-8 bg-wave-sky"
+  class="wbb-hero relative bg-gradient-to-b from-gray-50 to-white py-6 px-4 sm:px-6 lg:px-8 bg-wave-sky"
   aria-label="Hero"
 >
   <!-- Decorative blob -->
   <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-    <div class="absolute -top-20 -right-20 w-96 h-96 rounded-full" style="background:radial-gradient(circle,rgba(63,169,220,0.07) 0%,transparent 70%)"></div>
+    <div class="wbb-hero__accent absolute -top-20 -right-20 w-96 h-96 rounded-full" style="background:radial-gradient(circle,rgba(63,169,220,0.07) 0%,transparent 70%)"></div>
     <div class="absolute top-1/2 -left-32 w-80 h-80 rounded-full" style="background:radial-gradient(circle,rgba(10,42,94,0.05) 0%,transparent 70%)"></div>
   </div>
 
@@ -115,7 +115,7 @@ if ( $review_query->have_posts() ) {
           loading="eager"
           fetchpriority="high"
           decoding="async"
-          class="absolute inset-0 w-full h-full object-cover"
+          class="wbb-hero__bg absolute inset-0 w-full h-full object-cover"
         >
       </picture>
 
@@ -123,23 +123,23 @@ if ( $review_query->have_posts() ) {
       <div class="absolute inset-0 bg-gradient-to-r from-brand-navy/80 via-brand-navy/50 to-transparent" aria-hidden="true"></div>
 
       <!-- Hero text content — left side -->
-      <div class="relative z-10 flex flex-col justify-end h-full p-8 lg:p-12 pb-14 lg:pb-16 max-w-xl">
+      <div class="wbb-hero__content relative z-10 flex flex-col justify-end h-full p-8 lg:p-12 pb-14 lg:pb-16 max-w-xl">
 
-        <h1 data-reveal style="--reveal-d:0" class="font-heading text-white uppercase text-4xl sm:text-5xl lg:text-6xl leading-tight text-shadow-hero mb-4">
+        <h1 class="wbb-hero__title font-heading text-white uppercase text-4xl sm:text-5xl lg:text-6xl leading-tight text-shadow-hero mb-4">
           <?php echo esc_html( $hero_headline ); ?>
         </h1>
 
-        <p data-reveal style="--reveal-d:1" class="font-body text-white/90 text-lg sm:text-xl mb-8 leading-relaxed">
+        <p class="wbb-hero__sub font-body text-white/90 text-lg sm:text-xl mb-8 leading-relaxed">
           <?php echo esc_html( $hero_subheading ); ?>
         </p>
 
-        <div data-reveal style="--reveal-d:2" class="flex flex-wrap gap-3">
+        <div class="wbb-hero__cta flex flex-wrap gap-3">
           <a href="<?php echo esc_url( $booking_url ); ?>" class="btn-primary text-base px-8 py-4">Book Now</a>
           <a href="#whats-on-board" class="btn-outline text-base px-8 py-4">See What's On Board</a>
         </div>
 
         <!-- Scroll indicator -->
-        <div data-reveal style="--reveal-d:3" class="flex items-center gap-2 mt-8 text-white/60 text-xs font-body uppercase tracking-widest" aria-hidden="true">
+        <div class="flex items-center gap-2 mt-8 text-white/60 text-xs font-body uppercase tracking-widest" aria-hidden="true">
           <div class="w-8 h-px bg-white/40"></div>
           Copper Cove Marina · Wallaroo SA
         </div>
@@ -172,8 +172,8 @@ if ( $review_query->have_posts() ) {
       class="flex flex-wrap items-center justify-center gap-6 lg:gap-12 list-none m-0 p-0"
       role="list"
     >
-      <?php foreach ( $trust_items as $ti => $item ) : ?>
-      <li data-reveal style="--reveal-d:<?php echo (int) $ti; ?>" class="flex items-center gap-3">
+      <?php foreach ( $trust_items as $item ) : ?>
+      <li class="flex items-center gap-3">
         <span class="w-8 h-8 flex-shrink-0 text-brand-navy" aria-hidden="true">
           <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><?php echo $item['svg']; ?></svg>
         </span>
@@ -202,17 +202,17 @@ if ( $review_query->have_posts() ) {
   </svg>
   <div class="max-w-7xl mx-auto">
 
-    <div data-reveal class="text-center mb-14">
+    <div class="text-center mb-14">
       <p class="section-subheading mb-3">Simple as that</p>
-      <h2 id="how-it-works-heading" class="section-heading text-4xl lg:text-5xl">How It Works</h2>
+      <h2 id="how-it-works-heading" class="wbb-section-title section-heading text-4xl lg:text-5xl">How It Works</h2>
     </div>
 
     <ol
-      class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 list-none m-0 p-0"
+      class="wbb-services grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 list-none m-0 p-0"
       role="list"
     >
-      <?php foreach ( $how_steps as $si => $step ) : ?>
-      <li data-reveal style="--reveal-d:<?php echo (int) $si; ?>" class="card group">
+      <?php foreach ( $how_steps as $step ) : ?>
+      <li class="wbb-card card group">
         <span class="font-heading text-brand-sky text-6xl lg:text-7xl leading-none block mb-4" aria-hidden="true">
           <?php echo esc_html( $step['step_number'] ); ?>
         </span>
@@ -240,15 +240,15 @@ if ( $review_query->have_posts() ) {
 >
   <div class="max-w-7xl mx-auto">
 
-    <div data-reveal class="text-center mb-14">
+    <div class="text-center mb-14">
       <p class="section-subheading mb-3">Anyone, really</p>
-      <h2 id="who-heading" class="section-heading text-4xl lg:text-5xl">Who It's For</h2>
+      <h2 id="who-heading" class="wbb-section-title section-heading text-4xl lg:text-5xl">Who It's For</h2>
     </div>
 
-    <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 list-none m-0 p-0" role="list">
+    <ul class="wbb-services grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 list-none m-0 p-0" role="list">
 
       <!-- Workmates -->
-      <li data-reveal style="--reveal-d:0" class="bg-white rounded-3xl shadow-card p-8 flex flex-col items-start">
+      <li class="wbb-card bg-white rounded-3xl shadow-card p-8 flex flex-col items-start">
         <div>
           <h3 class="font-heading text-brand-navy uppercase text-xl tracking-wide mb-2">Workmates</h3>
           <p class="font-body text-gray-600 text-sm leading-relaxed">The team day that actually gets people off their phones. Book one boat or several. Get out on the water and actually relax together.</p>
@@ -256,7 +256,7 @@ if ( $review_query->have_posts() ) {
       </li>
 
       <!-- Mates -->
-      <li data-reveal style="--reveal-d:1" class="bg-white rounded-3xl shadow-card p-8 flex flex-col items-start">
+      <li class="wbb-card bg-white rounded-3xl shadow-card p-8 flex flex-col items-start">
         <div>
           <h3 class="font-heading text-brand-navy uppercase text-xl tracking-wide mb-2">Mates</h3>
           <p class="font-body text-gray-600 text-sm leading-relaxed">Birthdays, bucks, hens, or just a Saturday that is not the pub. Bring the crew and book as many boats as you need.</p>
@@ -264,7 +264,7 @@ if ( $review_query->have_posts() ) {
       </li>
 
       <!-- Family -->
-      <li data-reveal style="--reveal-d:2" class="bg-white rounded-3xl shadow-card p-8 flex flex-col items-start">
+      <li class="wbb-card bg-white rounded-3xl shadow-card p-8 flex flex-col items-start">
         <div>
           <h3 class="font-heading text-brand-navy uppercase text-xl tracking-wide mb-2">Family</h3>
           <p class="font-body text-gray-600 text-sm leading-relaxed">Kids love it. So does everyone else. Easy to drive and genuinely good fun for a mixed group.</p>
@@ -272,7 +272,7 @@ if ( $review_query->have_posts() ) {
       </li>
 
       <!-- Visitors -->
-      <li data-reveal style="--reveal-d:3" class="bg-white rounded-3xl shadow-card p-8 flex flex-col items-start">
+      <li class="wbb-card bg-white rounded-3xl shadow-card p-8 flex flex-col items-start">
         <div>
           <h3 class="font-heading text-brand-navy uppercase text-xl tracking-wide mb-2">Visitors</h3>
           <p class="font-body text-gray-600 text-sm leading-relaxed">Coming through the Copper Coast? This is the thing to do. You will go home talking about it.</p>
@@ -296,9 +296,9 @@ if ( $review_query->have_posts() ) {
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
       <!-- Text side -->
-      <div data-reveal="right">
+      <div>
         <p class="section-subheading mb-3">Everything you need</p>
-        <h2 id="aboard-heading" class="section-heading text-4xl lg:text-5xl mb-10">What's On Board</h2>
+        <h2 id="aboard-heading" class="wbb-section-title section-heading text-4xl lg:text-5xl mb-10">What's On Board</h2>
 
         <ul class="flex flex-col gap-5 list-none m-0 p-0" role="list">
 
@@ -344,7 +344,7 @@ if ( $review_query->have_posts() ) {
       </div>
 
       <!-- Visual side — decorative card stack -->
-      <div data-reveal="left" class="relative hidden lg:block" aria-hidden="true">
+      <div class="relative hidden lg:block" aria-hidden="true">
         <div class="absolute inset-0 rounded-3xl bg-brand-cream -rotate-2 scale-95"></div>
         <div class="relative bg-brand-navy rounded-3xl overflow-hidden aspect-square shadow-card-hover">
           <picture>
@@ -382,17 +382,17 @@ if ( $review_query->have_posts() ) {
 >
   <div class="max-w-7xl mx-auto">
 
-    <div data-reveal class="text-center mb-14">
+    <div class="text-center mb-14">
       <p class="section-subheading mb-3">From the people</p>
-      <h2 id="testimonials-heading" class="section-heading text-4xl lg:text-5xl">What People Are Saying</h2>
+      <h2 id="testimonials-heading" class="wbb-section-title section-heading text-4xl lg:text-5xl">What People Are Saying</h2>
     </div>
 
-    <ul class="grid grid-cols-1 md:grid-cols-3 gap-6 list-none m-0 p-0" role="list">
-      <?php foreach ( $testimonials as $tk => $t ) :
+    <ul class="wbb-testimonials grid grid-cols-1 md:grid-cols-3 gap-6 list-none m-0 p-0" role="list">
+      <?php foreach ( $testimonials as $t ) :
         $rating = isset( $t['rating'] ) ? intval( $t['rating'] ) : 5;
         $rating = max( 1, min( 5, $rating ) );
       ?>
-      <li data-reveal style="--reveal-d:<?php echo (int) ( $tk % 3 ); ?>" class="card flex flex-col gap-5">
+      <li class="wbb-testimonial card flex flex-col gap-5">
 
         <!-- Stars -->
         <div class="star-rating" aria-label="<?php echo esc_attr( $rating ); ?> out of 5 stars" role="img">
@@ -460,14 +460,14 @@ if ( $review_query->have_posts() ) {
   </div>
 
   <div class="max-w-4xl mx-auto text-center relative z-10">
-    <h2 data-reveal style="--reveal-d:0" id="cta-heading" class="font-heading text-white uppercase text-4xl sm:text-5xl lg:text-6xl leading-tight mb-6">
+    <h2 id="cta-heading" class="wbb-section-title font-heading text-white uppercase text-4xl sm:text-5xl lg:text-6xl leading-tight mb-6">
       READY TO GET ON THE WATER?
     </h2>
-    <p data-reveal style="--reveal-d:1" class="font-body text-blue-200 text-lg lg:text-xl mb-10 max-w-2xl mx-auto leading-relaxed">
+    <p class="font-body text-blue-200 text-lg lg:text-xl mb-10 max-w-2xl mx-auto leading-relaxed">
       Book your BBQ boat session at Wallaroo Marina. One boat or several. Locally owned and operated, right here on the Copper Coast.
     </p>
-    <div data-reveal style="--reveal-d:2" class="flex flex-wrap items-center justify-center gap-4">
-      <a href="<?php echo esc_url( $booking_url ); ?>" class="btn-primary text-base px-10 py-4">
+    <div class="flex flex-wrap items-center justify-center gap-4">
+      <a href="<?php echo esc_url( $booking_url ); ?>" class="wbb-booking-cta btn-primary text-base px-10 py-4">
         Book Now
       </a>
     </div>
